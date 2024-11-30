@@ -1,3 +1,4 @@
+import Siderbar from '@/Components/Sidebar';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
@@ -10,6 +11,7 @@ export default function Dashboard() {
                 </h2>
             }
         >
+        <Siderbar  />
             <Head title="Dashboard" />
 
             <div className="py-12">

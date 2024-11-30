@@ -39,10 +39,13 @@ export default function Login({
                 </div>
             )}
 
-            <div className="loginGrid grid grid-cols-2 gap-x-8">
-                <div className="form">
+            <div className="loginGrid flex items-center gap-x-8 h-screen">
+                <div className="form px-44 w-1/2">
+
+                 <h1 className='text-2xl font-bold my-2'>Welcome back</h1>
+                 <p className='text-base font-medium'>Enter your credentials to access your account</p>
                     <form onSubmit={submit}>
-                        <div>
+                        <div className='my-8'>
                             <InputLabel htmlFor="email" value="Email" />
 
                             <TextInput
@@ -59,7 +62,7 @@ export default function Login({
                             <InputError message={errors.email} className="mt-2" />
                         </div>
 
-                        <div className="mt-4">
+                        <div className="mt-8">
                             <InputLabel htmlFor="password" value="Password" />
 
                             <TextInput
@@ -100,15 +103,15 @@ export default function Login({
                                 </Link>
                             )}
 
-                            <PrimaryButton className="ms-4" disabled={processing}>
+                            <PrimaryButton className="ms-4 bg-[#3A5B22]" disabled={processing}>
                                 Log in
                             </PrimaryButton>
                         </div>
                     </form>
                 </div>
 
-                <div className="loginLogo">
-                    <img src={LoginLogo} className='w-full' />
+                <div className="loginLogo w-1/2">
+                    <img src={LoginLogo} className='w-full h-full object-contain' />
                 </div>
             </div>
 
