@@ -14,13 +14,16 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                poppins: "var(--primary-font-family)"
             },
             backgroundColor: {
                 mainbg:  "#F1F8FF" 
             },
             colors: {
-                primary: "#3497F9"
+                primary: "#3497F9",
+                primarytextcolor: "#242222"
             }
+
         },
     },
 

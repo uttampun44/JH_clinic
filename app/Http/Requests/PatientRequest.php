@@ -24,7 +24,7 @@ class PatientRequest extends FormRequest
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => 'required|string',
             'gender' => 'required|string',
             'contact_number' => 'required|string',
             'address' => 'required'

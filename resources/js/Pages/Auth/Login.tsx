@@ -103,7 +103,7 @@ export default function Login({
                                 </Link>
                             )}
 
-                            <PrimaryButton className="ms-4 bg-[#3A5B22]" disabled={processing}>
+                            <PrimaryButton className="ms-4 bg-[#3A5B22] p-3 rounded-md" disabled={processing}>
                                 Log in
                             </PrimaryButton>
                         </div>

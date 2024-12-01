@@ -5,7 +5,10 @@ interface AuthValue {
   isToggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const AuthContext = createContext<AuthValue | null>(null);
+export const AuthContext = createContext<AuthValue>({
+  isToggle: false,
+  setToggle: () => {}
+});
 
 interface AuthProviderProps {
     children: ReactNode;

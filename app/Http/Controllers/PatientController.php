@@ -4,17 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
+use App\Repositories\PatientRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PatientController extends Controller
 {
+
+    public function __construct(public PatientRepositoryInterface $patientRespository)
+    {
+        
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render("Patients/Index");
+       $patients =  $this->patientRespository->getPatients();
+
+        return Inertia::render("Patients/Index", [
+            'patients' => $patients
+        ]);
     }
 
     /**
@@ -30,7 +40,12 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
-        $validation = $request->validate();
+        // dd($request);
+        $patientData = $request->validated();
+
+        $this->patientRespository->store($patientData);
+
+        return redirect()->route('patients.index');
     }
 
     /**
