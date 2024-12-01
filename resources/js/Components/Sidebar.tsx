@@ -54,7 +54,7 @@ export default function Siderbar() {
                 <div className="logout absolute bottom-10">
                   {
                      isToggle ? (
-                         <Link href="">Logout</Link>
+                       <> <LogoutIcon /> <Link href="">Logout</Link></>
                         ):(
                         <LogoutIcon />  
 
