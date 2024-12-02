@@ -22,9 +22,8 @@ class PatientController extends Controller
     {
        $patients =  $this->patientRespository->getPatients();
        $editPatients = $this->patientRespository->editPatients($patient);
-       
-       dd($editPatients);
-       
+    
+
        return Inertia::render("Patients/Index", [
             'patients' => $patients,
             'editPatients' => $editPatients
