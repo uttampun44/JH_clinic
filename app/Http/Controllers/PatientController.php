@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
 use App\Repositories\PatientRepositoryInterface;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PatientController extends Controller
@@ -18,16 +17,14 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Patient $patient)
+    public function index()
     {
        $patients =  $this->patientRespository->getPatients();
-       $editPatients = $this->patientRespository->editPatients($patient);
+     
     
 
        return Inertia::render("Patients/Index", [
-            'patients' => $patients,
-            'editPatients' => $editPatients
-            
+            'patients' => $patients, 
         ]);
     }
     
@@ -44,7 +41,7 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
-        // dd($request);
+      
         $patientData = $request->validated();
         
         $this->patientRespository->store($patientData);
@@ -65,21 +62,22 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        // $editPatients = $this->patientRespository->editPatients($patient);
-    
-        // return Inertia::render("Patients/Index", [
-           
-        //     'editPatients' => $editPatients
-        // ]);
+        
      
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Patient $patient)
+    public function update(PatientRequest $request, Patient $patient)
     {
-        //
+
+        
+        $validate = $request->validated();
+      
+        $this->patientRespository->update($patient, $validate);
+
+        return redirect()->route('patients.index');
     }
 
     /**

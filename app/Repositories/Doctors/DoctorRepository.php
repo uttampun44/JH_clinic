@@ -15,8 +15,28 @@ class DoctorRepository implements DoctorRepositoryInterface
         //
     }
 
-    public function getAllDoctors()
+    public function index()
     {
        return $this->doctor->all();
+    }
+
+    public function store(array $data):Doctor
+    {
+        return $this->doctor->create($data);
+    }
+
+    public function edit(Doctor $doctor):Doctor
+    {
+        return $doctor;
+    }
+
+    public function update(Doctor $doctor, array $data):bool
+    {
+          return $this->doctor->update($data);
+    }
+
+    public function destroy(Doctor $doctor)
+    {
+      return $doctor->delete();
     }
 }

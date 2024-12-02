@@ -30,7 +30,7 @@ class PatientRepository implements PatientRepositoryInterface
         return $patient;
     }
    
-    public function updatePatients(Patient $patient, array $data): bool
+    public function update(Patient $patient, array $data): bool
     {
         return $this->patient->update($data);
     }

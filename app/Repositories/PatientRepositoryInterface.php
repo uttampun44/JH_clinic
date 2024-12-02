@@ -11,7 +11,7 @@ interface PatientRepositoryInterface {
 
     public function editPatients(Patient $patient):Patient;
 
-    public function updatePatients(Patient $patient, array $data):bool;
+    public function update(Patient $patient, array $data):bool;
 
     public function destroyPatients(Patient $patient);
 }

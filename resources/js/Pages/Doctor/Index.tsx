@@ -27,6 +27,7 @@ export default function Index({ patients }) {
     const { post: post, data, setData, errors, delete: destroy, put: put, reset } = useForm({
         first_name: '',
         last_name: '',
+        specialization: '',
         date_of_birth: '',
         gender: '',
         contact_number: '',
@@ -131,6 +132,20 @@ export default function Index({ patients }) {
                                                 )
                                             }
                                         </div>
+
+                                        <div className="specialization">
+                                            <InputLabel>Specialization</InputLabel>
+                                            <TextInput type="text" name="last_name" className="w-full rounded-md"
+                                                value={data.specialization}
+                                                onChange={(e) => setData("specialization", e.target.value)}
+                                            />
+                                            {
+                                                errors.specialization && (
+                                                    <p className="text-red-500">{errors.specialization}</p>
+                                                )
+                                            }
+                                        </div>
+
                                         <div className="date">
                                             <InputLabel>Date of birth</InputLabel>
                                             <TextInput type="date" name="date_of_birth" className="w-full rounded-md"
@@ -194,7 +209,7 @@ export default function Index({ patients }) {
                         </Modal>
                     </div>
                     <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                        <h5 className="text-xl font-bold">Patients Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Patients</PrimaryButton>
+                        <h5 className="text-xl font-bold">Doctors Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Doctors</PrimaryButton>
                     </div>
                     <div className="search py-3 flex gap-x-4">
                         <div className="search relative">
@@ -210,8 +225,9 @@ export default function Index({ patients }) {
                             <thead className="p-1">
                                 <tr className="w-full border-b-2 text-primarytextcolor font-poppins">
                                     <th className="capitalize p-2">S.No</th>
-                                    <th className="capitalize p-2">Patient First Name</th>
-                                    <th className="capitalize p-2">Patient Last Name</th>
+                                    <th className="capitalize p-2">Doctor First Name</th>
+                                    <th className="capitalize p-2">Doctor Last Name</th>
+                                    <th className="capitalize p-2">Specialization</th>
                                     <th className="capitalize p-2">Date Of Birth</th>
                                     <th className="capitalize p-2">Gender</th>
                                     <th className="capitalize p-2">Contact</th>
@@ -220,7 +236,7 @@ export default function Index({ patients }) {
                                     <th className="capitalize p-2">Delete</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {/* <tbody>
                                 {
                                     patients.length > 0 ? (
                                         <React.Fragment>
@@ -248,7 +264,7 @@ export default function Index({ patients }) {
                                         </tr>
                                     )
                                 }
-                            </tbody>
+                            </tbody> */}
                         </table>
                     </div>
                 </div>

@@ -3,16 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Repositories\DoctorRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DoctorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct(public DoctorRepositoryInterface $doctorRepository)
+     {
+        
+     }
     public function index()
     {
-        //
+        $doctors = $this->doctorRepository->index();
+
+        // dd("hello doctors", $doctors);
+
+        return Inertia::render("Doctor/Index",[
+            'doctors' => $doctors
+        ]);
     }
 
     /**
