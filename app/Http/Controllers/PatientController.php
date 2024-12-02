@@ -18,15 +18,20 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Patient $patient)
     {
        $patients =  $this->patientRespository->getPatients();
-
-        return Inertia::render("Patients/Index", [
-            'patients' => $patients
+       $editPatients = $this->patientRespository->editPatients($patient);
+       
+       dd($editPatients);
+       
+       return Inertia::render("Patients/Index", [
+            'patients' => $patients,
+            'editPatients' => $editPatients
+            
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -34,7 +39,7 @@ class PatientController extends Controller
     {
         //
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -42,12 +47,12 @@ class PatientController extends Controller
     {
         // dd($request);
         $patientData = $request->validated();
-
+        
         $this->patientRespository->store($patientData);
-
+        
         return redirect()->route('patients.index');
     }
-
+    
     /**
      * Display the specified resource.
      */
@@ -55,13 +60,19 @@ class PatientController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Patient $patient)
     {
-        //
+        // $editPatients = $this->patientRespository->editPatients($patient);
+    
+        // return Inertia::render("Patients/Index", [
+           
+        //     'editPatients' => $editPatients
+        // ]);
+     
     }
 
     /**
@@ -77,6 +88,11 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        if($patient)
+        {
+            $this->patientRespository->destroyPatients($patient);
+        }
+
+        return redirect()->back();
     }
 }

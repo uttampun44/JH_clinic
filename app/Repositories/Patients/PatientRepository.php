@@ -17,13 +17,25 @@ class PatientRepository implements PatientRepositoryInterface
     public function store(array $data):Patient
     {
 
-        $patients = $this->patient->create($data);
-
-        return $patients;
+        return $this->patient->create($data);
     }
 
     public function getPatients() 
     {
         return $this->patient->all();
+    }
+
+    public function editPatients(Patient $patient): Patient
+    {
+        return $patient;
+    }
+   
+    public function updatePatients(Patient $patient, array $data): bool
+    {
+        return $this->patient->update($data);
+    }
+    public function destroyPatients(Patient $patient)
+    {
+        return $patient->delete();
     }
 }

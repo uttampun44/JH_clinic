@@ -15,12 +15,14 @@ import { useForm } from "@inertiajs/react";
 import { Delete, Edit } from "@mui/icons-material";
 
 
-export default function Index({ patients }) {
+export default function Index({ patients, editPatients }) {
 
+
+    console.log(editPatients)
     
     const { isToggle } = useContext(AuthContext);
     const [modal, setModal] = useState(false);
-    const { post: post, data, setData, errors } = useForm({
+    const { post: post, data, setData, errors, delete: destroy } = useForm({
         first_name: '',
         last_name: '',
         date_of_birth: '',
@@ -41,6 +43,10 @@ export default function Index({ patients }) {
         console.log(data)
         event.preventDefault()
         post(route("patients.store"))
+    }
+
+    const handleDelete = (id:number) =>{
+          destroy(route("patients.destroy", id))
     }
 
     return (
@@ -183,13 +189,15 @@ export default function Index({ patients }) {
                                                         <td>{patient.contact_number}</td>
                                                         <td>{patient.address}</td>
                                                         <td><Edit className="cursor-pointer" /></td>
-                                                        <td><Delete className="text-red-700 cursor-pointer" /></td>
+                                                        <td><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(patient.id)}/></td>
                                                     </React.Fragment>
                                                 ))
                                             }
                                         </tr>
                                     ) : (
-                                        <tr className="p-2">No Data Found</tr>
+                                        <tr className="p-2 text-center">
+                                            <td className="p-2" colSpan={6}>No Data Found</td>
+                                        </tr>
                                     )
                                 }
                             </tbody>

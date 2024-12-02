@@ -8,4 +8,10 @@ interface PatientRepositoryInterface {
     public function store(array $data):Patient;
 
     public function getPatients();
+
+    public function editPatients(Patient $patient):Patient;
+
+    public function updatePatients(Patient $patient, array $data):bool;
+
+    public function destroyPatients(Patient $patient);
 }
