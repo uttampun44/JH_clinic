@@ -20,7 +20,6 @@ class PatientController extends Controller
     public function index()
     {
        $patients =  $this->patientRespository->getPatients();
-     
     
 
        return Inertia::render("Patients/Index", [

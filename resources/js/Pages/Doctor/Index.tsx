@@ -11,8 +11,8 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
-import { useForm, usePage } from "@inertiajs/react";
-import { Delete, Edit } from "@mui/icons-material";
+import { Link, useForm, usePage } from "@inertiajs/react";
+import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
 
 
 export default function Index({ patients }) {
@@ -28,7 +28,6 @@ export default function Index({ patients }) {
         first_name: '',
         last_name: '',
         specialization: '',
-        date_of_birth: '',
         gender: '',
         contact_number: '',
         address: ''
@@ -40,7 +39,7 @@ export default function Index({ patients }) {
         setData({
             first_name: "",
             last_name: "",
-            date_of_birth: "",
+            specialization: "",
             gender: "",
             contact_number: "",
             address: "",
@@ -67,7 +66,7 @@ export default function Index({ patients }) {
                 },
             });
         } else {
-            post(route("patients.store", {
+            post(route("doctors.store", {
                 _token: props.csrf_token,
                 preserveScroll: true,
                 onSuccess: () => reset()
@@ -77,19 +76,20 @@ export default function Index({ patients }) {
 
     const handleEdit = (patient: any) => {
 
-            setModal(true)
-            setEditing(true)
-            setCurrentInd(patient.id)
+        setModal(true)
+        setEditing(true)
+        setCurrentInd(patient.id)
 
-            setData({
-                first_name: patient.first_name || "",
-                last_name: patient.last_name,
-                date_of_birth: patient.date_of_birth,
-                gender: patient.gender || "",
-                contact_number: patient.contact_number,
-                address: patient.address,
-            })
-      
+        setData({
+            first_name: patient.first_name || "",
+            last_name: patient.last_name,
+            specialization: patient.sepcialization,
+            date_of_birth: patient.date_of_birth,
+            gender: patient.gender || "",
+            contact_number: patient.contact_number,
+            address: patient.address,
+        })
+
 
     }
     const handleDelete = (id: number) => {
@@ -146,18 +146,6 @@ export default function Index({ patients }) {
                                             }
                                         </div>
 
-                                        <div className="date">
-                                            <InputLabel>Date of birth</InputLabel>
-                                            <TextInput type="date" name="date_of_birth" className="w-full rounded-md"
-                                                value={data.date_of_birth}
-                                                onChange={(e) => setData("date_of_birth", e.target.value)}
-                                            />
-                                            {
-                                                errors.date_of_birth && (
-                                                    <p className="text-red-500">{errors.date_of_birth}</p>
-                                                )
-                                            }
-                                        </div>
                                         <div className="gender">
                                             <InputLabel>Gender</InputLabel>
                                             <Select className="w-full rounded-md"
@@ -201,7 +189,7 @@ export default function Index({ patients }) {
                                             }
                                         </div>
                                         <div className="submit">
-                                            <DangerButton>{isEditing ? 'Update Patient' : 'Register Patient'}</DangerButton>
+                                            <DangerButton>{isEditing ? 'Update Doctor' : 'Register Doctor'}</DangerButton>
                                         </div>
                                     </div>
                                 </form>
@@ -228,7 +216,6 @@ export default function Index({ patients }) {
                                     <th className="capitalize p-2">Doctor First Name</th>
                                     <th className="capitalize p-2">Doctor Last Name</th>
                                     <th className="capitalize p-2">Specialization</th>
-                                    <th className="capitalize p-2">Date Of Birth</th>
                                     <th className="capitalize p-2">Gender</th>
                                     <th className="capitalize p-2">Contact</th>
                                     <th className="capitalize p-2">Address</th>
@@ -267,6 +254,35 @@ export default function Index({ patients }) {
                             </tbody> */}
                         </table>
                     </div>
+                    {/* <div className="flex items-center justify-center my-4 space-x-4">
+
+                        {patients.prev_page_url && (
+                            <Link
+                                href={patients.prev_page_url}
+
+                            >
+                                <ArrowLeft />
+                            </Link>
+                        )}
+
+
+                        {patients.links.map((link: any, index: number) => (
+                            <Link href={`${link.url}`} key={index}>
+                                <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
+                                    {link.label}
+                                </span>
+                            </Link>
+                        ))}
+
+                        {patients.next_page_url && (
+                            <Link
+                                href={patients.next_page_url}
+
+                            >
+                                <ArrowRight />
+                            </Link>
+                        )}
+                    </div> */}
                 </div>
             </div>
         </Authenticated>

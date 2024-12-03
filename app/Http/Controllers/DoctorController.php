@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DoctorRequest;
 use App\Models\Doctor;
 use App\Repositories\DoctorRepositoryInterface;
 use Illuminate\Http\Request;
@@ -39,9 +40,13 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DoctorRequest $request)
     {
-        //
+        $doctor = $request->validated();
+
+        $this->doctorRepository->store($doctor);
+
+        return redirect()->back();
     }
 
     /**

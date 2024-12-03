@@ -14,16 +14,16 @@ class PatientRepository implements PatientRepositoryInterface
         //
     }
 
+    public function getPatients() 
+    {
+        return Patient::paginate(50);
+    }
     public function store(array $data):Patient
     {
 
         return $this->patient->create($data);
     }
 
-    public function getPatients() 
-    {
-        return $this->patient->all();
-    }
 
     public function editPatients(Patient $patient): Patient
     {

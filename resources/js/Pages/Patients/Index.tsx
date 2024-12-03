@@ -11,11 +11,15 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
-import { useForm, usePage } from "@inertiajs/react";
-import { Delete, Edit } from "@mui/icons-material";
+import { Link, useForm, usePage } from "@inertiajs/react";
+import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
+
 
 
 export default function Index({ patients }) {
+
+
+    console.log(patients);
 
     const props = usePage().props
 
@@ -23,6 +27,9 @@ export default function Index({ patients }) {
     const [modal, setModal] = useState(false);
     const [isEditing, setEditing] = useState(false)
     const [currentId, setCurrentInd] = useState<string>("");
+    const [gender, setGender] = useState<string>("")
+
+    console.log(patients.last_page)
 
     const { post: post, data, setData, errors, delete: destroy, put: put, reset } = useForm({
         first_name: '',
@@ -47,6 +54,7 @@ export default function Index({ patients }) {
 
     }
 
+
     const handleClose = () => {
         setModal(false)
 
@@ -58,6 +66,7 @@ export default function Index({ patients }) {
         if (isEditing && currentId) {
 
             put(route("patients.update", currentId), {
+                data,
                 preserveScroll: true,
                 onSuccess: () => {
                     reset();
@@ -76,19 +85,22 @@ export default function Index({ patients }) {
 
     const handleEdit = (patient: any) => {
 
-            setModal(true)
-            setEditing(true)
-            setCurrentInd(patient.id)
+        setModal(true)
+        setEditing(true)
+        setCurrentInd(patient.id)
+        setGender(patient.gender)
 
-            setData({
-                first_name: patient.first_name || "",
-                last_name: patient.last_name,
-                date_of_birth: patient.date_of_birth,
-                gender: patient.gender || "",
-                contact_number: patient.contact_number,
-                address: patient.address,
-            })
-      
+        console.log(gender)
+
+        setData({
+            first_name: patient.first_name || "",
+            last_name: patient.last_name,
+            date_of_birth: patient.date_of_birth,
+            gender: patient.gender,
+            contact_number: patient.contact_number,
+            address: patient.address,
+        })
+
 
     }
     const handleDelete = (id: number) => {
@@ -146,7 +158,7 @@ export default function Index({ patients }) {
                                         <div className="gender">
                                             <InputLabel>Gender</InputLabel>
                                             <Select className="w-full rounded-md"
-                                                value={data.gender || ''}
+                                                defaultValue={gender}
                                                 onChange={(e) => setData("gender", e.target.value)}
                                             >
                                                 <option>Select Gender</option>
@@ -222,10 +234,10 @@ export default function Index({ patients }) {
                             </thead>
                             <tbody>
                                 {
-                                    patients.length > 0 ? (
+                                    patients.data.length > 0 ? (
                                         <React.Fragment>
                                             {
-                                                patients.map((patient: any, index: number) => (
+                                                patients.data.map((patient: any, index: number) => (
                                                     <tr className="p-2 text-center text-gray-500" key={index}>
 
                                                         <td className="capitalize p-2">{index + 1}</td>
@@ -250,6 +262,35 @@ export default function Index({ patients }) {
                                 }
                             </tbody>
                         </table>
+                    </div>
+                    <div className="flex items-center justify-center my-4 space-x-4">
+
+                        {patients.prev_page_url && (
+                            <Link
+                                href={patients.prev_page_url}
+
+                            >
+                                <ArrowLeft />
+                            </Link>
+                        )}
+
+
+                        {patients.links.map((link:any, index:number) => (
+                           <Link href={`${link.url}`} key={index}>
+                               <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
+                                {link.label}
+                            </span>
+                            </Link>
+                        ))}
+
+                        {patients.next_page_url && (
+                            <Link
+                                href={patients.next_page_url}
+
+                            >
+                                <ArrowRight />
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
