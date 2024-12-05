@@ -16,7 +16,7 @@ class PatientRepository implements PatientRepositoryInterface
 
     public function getPatients() 
     {
-        return Patient::paginate(50);
+        return Patient::paginate(25);
     }
     public function store(array $data):Patient
     {

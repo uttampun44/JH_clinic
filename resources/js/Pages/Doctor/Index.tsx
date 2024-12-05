@@ -15,7 +15,7 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
 
 
-export default function Index({ patients }) {
+export default function Index({ doctors }) {
 
     const props = usePage().props
 
@@ -57,7 +57,8 @@ export default function Index({ patients }) {
         event.preventDefault()
         if (isEditing && currentId) {
 
-            put(route("patients.update", currentId), {
+            put(route("doctors.update", currentId), {
+                data,
                 preserveScroll: true,
                 onSuccess: () => {
                     reset();
@@ -74,26 +75,25 @@ export default function Index({ patients }) {
         }
     }
 
-    const handleEdit = (patient: any) => {
+    const handleEdit = (doctor: any) => {
 
         setModal(true)
         setEditing(true)
-        setCurrentInd(patient.id)
+        setCurrentInd(doctor.id)
 
         setData({
-            first_name: patient.first_name || "",
-            last_name: patient.last_name,
-            specialization: patient.sepcialization,
-            date_of_birth: patient.date_of_birth,
-            gender: patient.gender || "",
-            contact_number: patient.contact_number,
-            address: patient.address,
+            first_name: doctor.first_name,
+            last_name: doctor.last_name,
+            specialization: doctor.specialization,
+            gender: doctor.gender,
+            contact_number: doctor.contact_number,
+            address: doctor.address,
         })
 
 
     }
     const handleDelete = (id: number) => {
-        destroy(route("patients.destroy", id))
+        destroy(route("doctors.destroy", id))
     }
 
     return (
@@ -223,23 +223,23 @@ export default function Index({ patients }) {
                                     <th className="capitalize p-2">Delete</th>
                                 </tr>
                             </thead>
-                            {/* <tbody>
+                             <tbody>
                                 {
-                                    patients.length > 0 ? (
+                                    doctors.data.length > 0 ? (
                                         <React.Fragment>
                                             {
-                                                patients.map((patient: any, index: number) => (
+                                                doctors.data.map((doctor: any, index: number) => (
                                                     <tr className="p-2 text-center text-gray-500" key={index}>
 
                                                         <td className="capitalize p-2">{index + 1}</td>
-                                                        <td className="capitalize p-2">{patient.first_name}</td>
-                                                        <td className="capitalize p-2">{patient.last_name}</td>
-                                                        <td className="capitalize p-2">{patient.date_of_birth}</td>
-                                                        <td className="capitalize p-2">{patient.gender}</td>
-                                                        <td className="capitalize p-2">{patient.contact_number}</td>
-                                                        <td className="capitalize p-2">{patient.address}</td>
-                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(patient)} /></td>
-                                                        <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(patient.id)} /></td>
+                                                        <td className="capitalize p-2">{doctor.first_name}</td>
+                                                        <td className="capitalize p-2">{doctor.last_name}</td>
+                                                        <td className="capitalize p-2">{doctor.specialization}</td>
+                                                        <td className="capitalize p-2">{doctor.gender}</td>
+                                                        <td className="capitalize p-2">{doctor.contact_number}</td>
+                                                        <td className="capitalize p-2">{doctor.address}</td>
+                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(doctor)} /></td>
+                                                        <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(doctor.id)} /></td>
 
                                                     </tr>
                                                 ))
@@ -251,14 +251,14 @@ export default function Index({ patients }) {
                                         </tr>
                                     )
                                 }
-                            </tbody> */}
+                            </tbody> 
                         </table>
                     </div>
-                    {/* <div className="flex items-center justify-center my-4 space-x-4">
+                    <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {patients.prev_page_url && (
+                        {doctors.prev_page_url && (
                             <Link
-                                href={patients.prev_page_url}
+                                href={doctors.prev_page_url}
 
                             >
                                 <ArrowLeft />
@@ -266,7 +266,7 @@ export default function Index({ patients }) {
                         )}
 
 
-                        {patients.links.map((link: any, index: number) => (
+                        {doctors.links.map((link: any, index: number) => (
                             <Link href={`${link.url}`} key={index}>
                                 <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
                                     {link.label}
@@ -274,15 +274,15 @@ export default function Index({ patients }) {
                             </Link>
                         ))}
 
-                        {patients.next_page_url && (
+                        {doctors.next_page_url && (
                             <Link
-                                href={patients.next_page_url}
+                                href={doctors.next_page_url}
 
                             >
                                 <ArrowRight />
                             </Link>
                         )}
-                    </div> */}
+                    </div> 
                 </div>
             </div>
         </Authenticated>

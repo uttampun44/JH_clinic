@@ -90,10 +90,8 @@ export default function Index({ patients }) {
         setCurrentInd(patient.id)
         setGender(patient.gender)
 
-        console.log(gender)
-
         setData({
-            first_name: patient.first_name || "",
+            first_name: patient.first_name,
             last_name: patient.last_name,
             date_of_birth: patient.date_of_birth,
             gender: patient.gender,

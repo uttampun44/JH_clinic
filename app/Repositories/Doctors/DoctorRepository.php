@@ -17,7 +17,7 @@ class DoctorRepository implements DoctorRepositoryInterface
 
     public function index()
     {
-       return Doctor::paginate(50);
+       return Doctor::paginate(25);
     }
 
     public function store(array $data):Doctor

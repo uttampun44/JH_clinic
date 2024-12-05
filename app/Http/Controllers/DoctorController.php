@@ -68,9 +68,13 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(DoctorRequest $request, Doctor $doctor)
     {
-        //
+        $validate = $request->validated();
+
+        $this->doctorRepository->update($doctor, $validate);
+
+         return redirect()->route('doctors.index');
     }
 
     /**
@@ -78,6 +82,12 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        if($doctor)
+        {
+            $doctor->delete();
+        }
+
+        return redirect()->route('doctors.index');
+        
     }
 }
