@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
@@ -17,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         })->name('dashboard');
         Route::resource('patients', PatientController::class);
         Route::resource('doctors', DoctorController::class);
+        Route::resource('appointments', AppointmentController::class);
     
 });
 
