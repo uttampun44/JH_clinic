@@ -12,6 +12,8 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import { Link, useForm } from "@inertiajs/react";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 export default function Index({ appointments }) {
@@ -36,6 +38,8 @@ export default function Index({ appointments }) {
     const filteredDoctors = query === '' ? doctors : doctors.filter((doctor) => {
         return (doctor.full_name ?? '').toLowerCase().includes(query.toLocaleLowerCase())
     })        
+   
+    console.log(filteredDoctors)
     const { data, setData, reset, post: post, put: put, errors } = useForm({
         patient_name: '',
         doctor_name: '',
@@ -80,31 +84,15 @@ export default function Index({ appointments }) {
                                 <form onSubmit={handleSubmit}>
                                     <div className="formGrid p-4 grid gap-y-4">
                                         <div className="firstName">
-                                            <InputLabel>Patient Name</InputLabel>
-                                            <Combobox value={selectedPerson} onChange={setSelectedPerson}>
-                                                <ComboboxInput
-                                                    className="w-full rounded-md"
-                                                    placeholder="Select a patient"
-                                                    displayValue={(patient) => patient?.full_name || ''} 
-                                                    onChange={(event) => setQuery(event.target.value)}
-                                                />
-                                                <ComboboxOptions className="border max-h-60 overflow-auto">
-                                                    {filteredPatients.length > 0 ? (
-                                                        filteredPatients.map((patient:any) => (
-                                                            <ComboboxOption
-                                                                key={patient.id}
-                                                                value={patient} 
-                                                                className=" text-black cursor-pointer px-2 py-1"
-                                                            >
-                                                                {patient.full_name}
-                                                            </ComboboxOption>
-                                                        ))
-                                                    ) : (
-                                                        <div className="text-gray-500 p-2">No patients found</div>
-                                                    )}
-                                                </ComboboxOptions>
-                                            </Combobox>
-
+                                           
+                                            <Autocomplete 
+                                             disablePortal
+                                             options={filteredPatients}
+                                             getOptionLabel={(option) => option.first_name || ''}
+                                             className="w-full rounded-md"
+                                             renderInput={(params) => <TextField {...params} label="Patient Name" />}
+                                            />
+                                           
                                             {
                                                 errors.patient_name && (
                                                     <p className="text-red-500">{errors.patient_name}</p>
@@ -112,30 +100,14 @@ export default function Index({ appointments }) {
                                             }
                                         </div>
                                         <div className="lastName">
-                                            <InputLabel>Doctor Name</InputLabel>
-                                            <Combobox value={selectedDoctor} onChange={setSelectedDoctor}>
-                                                <ComboboxInput
-                                                    className="w-full rounded-md"
-                                                    placeholder="Select a patient"
-                                                    displayValue={(doctor) => doctor?.full_name || ''} 
-                                                    onChange={(event) => setQuery(event.target.value)}
-                                                />
-                                                <ComboboxOptions className="border max-h-60 overflow-auto">
-                                                    {filteredDoctors.length > 0 ? (
-                                                        filteredDoctors.map((doctor:any) => (
-                                                            <ComboboxOption
-                                                                key={doctor.id}
-                                                                value={doctor} 
-                                                                className=" text-black cursor-pointer px-2 py-1"
-                                                            >
-                                                                {doctor.full_name}
-                                                            </ComboboxOption>
-                                                        ))
-                                                    ) : (
-                                                        <div className="text-gray-500 p-2">No Doctors found</div>
-                                                    )}
-                                                </ComboboxOptions>
-                                            </Combobox>
+                                          
+                                            <Autocomplete 
+                                             disablePortal
+                                             options={filteredDoctors}
+                                             getOptionLabel={(option) => option.first_name || ''}
+                                             className="w-full rounded-md"
+                                             renderInput={(params) => <TextField {...params} label="Search Doctors Name" />}
+                                            />
                                             {
                                                 errors.doctor_name && (
                                                     <p className="text-red-500">{errors.doctor_name}</p>
