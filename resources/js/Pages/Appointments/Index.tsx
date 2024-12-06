@@ -2,7 +2,6 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Input, Select, Textarea } from "@headlessui/react";
 import React, { useContext, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,21 +10,31 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { Input, Select } from "@headlessui/react";
 
 
-export default function Index({ appointments }) {
+export default function Index({ appointments, status }) {
+
+ 
+    const props = usePage().props
 
     const patients = appointments.patients.map((patient) => patient)
     const doctors = appointments.doctors.map((doctor) => doctor)
 
     const { isToggle } = useContext(AuthContext)
     const [isEditing, setEditing] = useState<boolean>(false)
-    const [selectedPerson, setSelectedPerson] = useState(patients[0])
-    const [selectedDoctor, setSelectedDoctor] = useState(doctors[0]);
+
     const [query, setQuery] = useState('');
+
+    const {post:post, data, setData, errors, reset, put:put} = useForm({
+        patient_id: "",
+        doctor_id: "",
+        appointment_date: "",
+        status: "",
+    })
 
     const filteredPatients =
         query === ''
@@ -39,13 +48,7 @@ export default function Index({ appointments }) {
         return (doctor.full_name ?? '').toLowerCase().includes(query.toLocaleLowerCase())
     })        
    
-    console.log(filteredDoctors)
-    const { data, setData, reset, post: post, put: put, errors } = useForm({
-        patient_name: '',
-        doctor_name: '',
-        appointment_date: '',
-        appointment_time: ''
-    })
+
 
     const [modal, setModal] = useState<boolean>(false);
 
@@ -57,20 +60,24 @@ export default function Index({ appointments }) {
         setModal(false)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault()
         if (isEditing) {
-            post(route("appointments.store"), {
+            put(route("appointments.update"))
+           
+        } else {
+            post(route("appointments.store"),  {
+                _token: props.csrf_token,
+                preserveScroll: true,
                 onSuccess: () => {
                     reset();
                 }
             })
-        } else {
-            put(route("appointments.update"))
         }
     }
 
     const handleEdit = () => {
-
+      setEditing(true)
     }
     return (
         <Authenticated>
@@ -79,45 +86,59 @@ export default function Index({ appointments }) {
                 <div className="patientContainer">
                     <div className="modal">
                         <Modal show={modal} onClose={handleClose} maxWidth="xl">
-                            <div className="modalForm p-4 relative">
-                                <CloseIcon onClick={handleClose} className="absolute top-4 right-5" />
+                            <div className="modalForm p-6 relative">
+                                <CloseIcon onClick={handleClose} className="absolute top-2 right-4" />
                                 <form onSubmit={handleSubmit}>
                                     <div className="formGrid p-4 grid gap-y-4">
-                                        <div className="firstName">
+                                        <div className="patient">
                                            
                                             <Autocomplete 
                                              disablePortal
                                              options={filteredPatients}
                                              getOptionLabel={(option) => option.first_name || ''}
-                                             className="w-full rounded-md"
-                                             renderInput={(params) => <TextField {...params} label="Patient Name" />}
+                                             className="w-full rounded-md z-50"
+                                           
+                                             value={data.patient_id ? patients.find(patient => patient.id === data.patient_id) : null} 
+                                             onChange={(event, newValue) => {
+                                              
+                                                 setData("patient_id", newValue ? newValue.id : ""); 
+                                             }}
+                                             renderInput={(params) => <TextField
+                                               
+                                                {...params} label="Patient Name"  />}
                                             />
                                            
                                             {
-                                                errors.patient_name && (
-                                                    <p className="text-red-500">{errors.patient_name}</p>
+                                                errors.patient_id && (
+                                                    <p className="text-red-500">{errors.patient_id}</p>
                                                 )
                                             }
                                         </div>
-                                        <div className="lastName">
+                                        <div className="doctor">
                                           
                                             <Autocomplete 
                                              disablePortal
                                              options={filteredDoctors}
+                                             
                                              getOptionLabel={(option) => option.first_name || ''}
                                              className="w-full rounded-md"
-                                             renderInput={(params) => <TextField {...params} label="Search Doctors Name" />}
+                                             value={data.doctor_id ? patients.find(doctor => doctor.id === data.doctor_id) : null} 
+                                             onChange={(event, newValue) => {
+                                              
+                                                 setData("doctor_id", newValue ? newValue.id : ""); 
+                                             }}
+                                             renderInput={(params) => <TextField  {...params} label="Search Doctors Name" />}
                                             />
                                             {
-                                                errors.doctor_name && (
-                                                    <p className="text-red-500">{errors.doctor_name}</p>
+                                                errors.doctor_id && (
+                                                    <p className="text-red-500">{errors.doctor_id}</p>
                                                 )
                                             }
                                         </div>
 
                                         <div className="specialization">
                                             <InputLabel>Appoinment Date</InputLabel>
-                                            <TextInput type="text" name="last_name" className="w-full rounded-md"
+                                            <TextInput type="date" name="last_name" className="w-full rounded-md"
                                                 value={data.appointment_date}
                                                 onChange={(e) => setData("appointment_date", e.target.value)}
                                             />
@@ -128,18 +149,20 @@ export default function Index({ appointments }) {
                                             }
                                         </div>
 
-                                        <div className="contact">
-                                            <InputLabel>Appointment Time</InputLabel>
-                                            <TextInput type="text" name="contact_number" className="w-full rounded-md"
-                                                value={data.appointment_time}
-                                                onChange={(e) => setData("appointment_time", e.target.value)}
-                                            />
-                                            {
-                                                errors.appointment_time && (
-                                                    <p className="text-red-500">{errors.appointment_time}</p>
-                                                )
-                                            }
+                                        <div className="status">
+                                            <Select value={data.status} onChange={(e) => setData("status", e.target.value)} name="status" className="w-full rounded-md">
+                                                <option>Select Status</option>
+                                                {
+                                                    status.map((stat:any, index:number) => (
+                                                       <React.Fragment key={index}>
+                                                            <option value={stat.id}>{stat.value}</option>
+                                                       </React.Fragment>
+                                                    ))
+                                                }
+                                            </Select>
                                         </div>
+
+                                      
 
                                         <div className="submit">
                                             <DangerButton>{isEditing ? 'Update Doctor' : 'Register Doctor'}</DangerButton>

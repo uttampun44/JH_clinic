@@ -5,7 +5,7 @@ namespace App\Repositories\Appointments;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
-use Dflydev\DotAccessData\Data;
+
 
 class AppointmentRepository
 {
@@ -32,9 +32,11 @@ class AppointmentRepository
         ];
     }
 
-    public function store(array $data)
+    public function store(array $data):Appointment
     {
-        return $this->appointment->store($data);
+        $data['appointment_time'] = now()->format('H:i');
+        
+        return $this->appointment->create($data);
     }
 
     public function edit(Appointment $appointment)

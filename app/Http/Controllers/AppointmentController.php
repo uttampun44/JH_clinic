@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusEnum;
+use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
 use App\Repositories\Appointments\AppointmentRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class AppointmentController extends Controller
@@ -15,34 +18,37 @@ class AppointmentController extends Controller
     public function __construct(public AppointmentRepository $appointment)
     {
         $this->appointment = $appointment;
-        
     }
     public function index()
     {
-       
+        $status = array_map(fn($value) => ['id' => $value->name, 'value' => $value->value], StatusEnum::cases());
+
         $appointments =  $this->appointment->index();
 
-        return Inertia::render("Appointments/Index", compact('appointments'));
+        return Inertia::render("Appointments/Index", compact('appointments', 'status'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Appointment $appointment, Request $request)
+    public function store(AppointmentRequest $appointment)
     {
-        $validation = $request->validated();
+        try {
+            $data = $appointment->validated();
+            
+            $this->appointment->store($data);
+            
 
-        return $this->appointment->store($validation);
-
-        return redirect()->back();
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Log::error('Appointment Error' . $th->getMessage());
+    
+        }
     }
 
     /**
