@@ -6,6 +6,7 @@ use App\Http\Requests\DoctorRequest;
 use App\Models\Doctor;
 use App\Repositories\DoctorRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DoctorController extends Controller
@@ -41,11 +42,15 @@ class DoctorController extends Controller
      */
     public function store(DoctorRequest $request)
     {
+       try {
         $doctor = $request->validated();
 
         $this->doctorRepository->store($doctor);
 
         return redirect()->back();
+       } catch (\Throwable $th) {
+         Log::error('Error in store doctor' . $th->getMessage());
+       }
     }
 
     /**
@@ -69,11 +74,15 @@ class DoctorController extends Controller
      */
     public function update(DoctorRequest $request, Doctor $doctor)
     {
-        $validate = $request->validated();
+        try {
+            $validate = $request->validated();
 
-        $this->doctorRepository->update($doctor, $validate);
-
-         return redirect()->route('doctors.index');
+            $this->doctorRepository->update($doctor, $validate);
+    
+             return redirect()->route('doctors.index');
+        } catch (\Throwable $th) {
+            Log::error('Doctor Update' . $th->getMessage());
+        }
     }
 
     /**

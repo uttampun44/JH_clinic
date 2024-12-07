@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
 use App\Repositories\PatientRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PatientController extends Controller
@@ -41,11 +42,15 @@ class PatientController extends Controller
     public function store(PatientRequest $request)
     {
       
+       try {
         $patientData = $request->validated();
         
         $this->patientRespository->store($patientData);
         
         return redirect()->route('patients.index');
+       } catch (\Throwable $th) {
+         Log::error('Error in patient store' . $th->getMessage());
+       }
     }
     
     /**
@@ -69,14 +74,16 @@ class PatientController extends Controller
      * Update the specified resource in storage.
      */
     public function update(PatientRequest $request, Patient $patient)
-    {
-
-        
-        $validate = $request->validated();
+    {        
+          try {
+            $validate = $request->validated();
       
-        $this->patientRespository->update($patient, $validate);
-
-        return redirect()->route('patients.index');
+            $this->patientRespository->update($patient, $validate);
+    
+            return redirect()->route('patients.index');
+          } catch (\Throwable $th) {
+            Log::error('Error in update patient' . $th->getMessage());
+          }
     }
 
     /**

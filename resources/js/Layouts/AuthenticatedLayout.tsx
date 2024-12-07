@@ -14,7 +14,8 @@ export default function Authenticated({
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage().props.auth.user;
     
-    const {setToggle} = useContext(AuthContext);
+    const {isToggle, setToggle} = useContext(AuthContext);
+
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -25,7 +26,7 @@ export default function Authenticated({
     return (
         <div className="min-h-screen bg-mainbg">
             <nav className="border-b border-gray-100">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className={` px-4 sm:px-6 lg:px-8 ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                     <div className="flex h-16 justify-between items-center">
                         <div className="flex">
                           <MenuIcon  onClick={handleToggle} />

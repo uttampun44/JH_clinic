@@ -61,19 +61,14 @@ export default function Index({ appointments, status }) {
     }
 
     const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault()
-        if (isEditing) {
-            put(route("appointments.update"))
-           
-        } else {
-            post(route("appointments.store"),  {
+          event.preventDefault()
+            post(route("appointments.store",  {
                 _token: props.csrf_token,
                 preserveScroll: true,
                 onSuccess: () => {
                     reset();
                 }
-            })
-        }
+            }))
     }
 
     const handleEdit = () => {
