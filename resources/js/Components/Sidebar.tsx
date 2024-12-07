@@ -9,13 +9,18 @@ import CastForEducationIcon from '@mui/icons-material/CastForEducation';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/Context/ContextProvider";
 
 
 export default function Siderbar() {
 
     const { isToggle } = useContext(AuthContext);
+    const [dropDown, setDropDown] = useState(false)
+
+    const handleInventory = () => {
+        setDropDown((prev) => !prev)
+    }
 
     return (
         <aside>
@@ -33,8 +38,20 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500"><PersonIcon /><Link href="/doctors" className="text-base font-medium ">Doctors</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><AppRegistrationIcon /><Link href="/appointments" className="text-base font-medium ">Appointments</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><MessageIcon /><Link href="/messages" className="text-base font-medium ">Messages</Link></li>
-                                <li className="flex items-center gap-x-2 text-gray-500"><CastForEducationIcon /><Link href="/education-content" className="text-base font-medium ">Education Content</Link></li>
-                                <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /><Link href="/medicine-inventory" className="text-base font-medium ">Medicine Inventory</Link></li>
+                                <li className="flex items-center gap-x-2 text-gray-500" ><CastForEducationIcon /><Link href="/education-content" className="text-base font-medium ">Education Content</Link></li>
+                                <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleInventory}><MedicalServicesIcon /><span className="text-base font-medium ">Medicine Inventory</span></li>
+                                {
+                                    dropDown && (
+                                        <ul>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Show Details</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drug Category</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drugs</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drug Supplies</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Sales</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Stocks</Link></li>
+                                        </ul>
+                                    )
+                                }
                                 <li className="flex items-center gap-x-2 text-gray-500"><SettingsIcon /><Link href="/settings" className="text-base font-medium ">Settings</Link></li>
                             </ul>
                         ) : (
@@ -52,14 +69,14 @@ export default function Siderbar() {
                 </div>
 
                 <div className="logout absolute bottom-10">
-                  {
-                     isToggle ? (
-                       <> <LogoutIcon /> <Link href="">Logout</Link></>
-                        ):(
-                        <LogoutIcon />  
+                    {
+                        isToggle ? (
+                            <> <LogoutIcon /> <Link href="">Logout</Link></>
+                        ) : (
+                            <LogoutIcon />
 
-                     )
-                  }
+                        )
+                    }
                 </div>
             </div>
         </aside>
