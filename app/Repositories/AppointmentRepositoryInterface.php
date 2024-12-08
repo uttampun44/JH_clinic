@@ -4,13 +4,13 @@ namespace App\Repositories;
 
 use App\Models\Appointment;
 
-interface AppointmentRepository{
+interface AppointmentRepositoryInterface{
 
     public function index();
 
     public function store(array $data ):Appointment;
 
-    public function edit();
+    public function edit(Appointment $appointment);
 
     public function update(Appointment $appointment, array $data):bool;
 

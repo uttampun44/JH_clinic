@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StatusEnum;
 use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
-use App\Repositories\Appointments\AppointmentRepository;
+use App\Repositories\AppointmentRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -15,9 +15,9 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(public AppointmentRepository $appointment)
+    public function __construct(public AppointmentRepositoryInterface $appointment)
     {
-        $this->appointment = $appointment;
+        
     }
     public function index()
     {

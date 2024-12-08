@@ -5,9 +5,9 @@ namespace App\Repositories\Appointments;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Repositories\AppointmentRepositoryInterface;
 
-
-class AppointmentRepository
+class AppointmentRepository implements AppointmentRepositoryInterface
 {
     /**
      * Create a new class instance.
