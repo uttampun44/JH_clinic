@@ -18,7 +18,7 @@ export default function Dashboard() {
         <Siderbar  />
             <Head title="Dashboard" />
 
-            <div className="py-12">
+           
                 <div className={` ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'} sm:px-6 lg:px-8`}>
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
@@ -26,7 +26,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-            </div>
+          
         </AuthenticatedLayout>
     );
 }

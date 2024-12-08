@@ -11,6 +11,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useContext, useState } from "react";
 import { AuthContext } from "@/Context/ContextProvider";
+import MedicationIcon from '@mui/icons-material/Medication';
+import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 
 
 export default function Siderbar() {
@@ -43,12 +49,12 @@ export default function Siderbar() {
                                 {
                                     dropDown && (
                                         <ul>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Show Details</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drug Category</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drugs</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Drug Supplies</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Sales</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /><Link href="/dashboard" className="text-base font-medium">Stocks</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><SpaceDashboardIcon /><Link href="/dashboard" className="text-base font-medium">Show Details</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href="/dashboard" className="text-base font-medium">Drug Category</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href="/dashboard" className="text-base font-medium">Drugs</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href="/dashboard" className="text-base font-medium">Drug Supplies</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href="/dashboard" className="text-base font-medium">Sales</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href="/dashboard" className="text-base font-medium">Stocks</Link></li>
                                         </ul>
                                     )
                                 }
