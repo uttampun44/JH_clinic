@@ -40,10 +40,11 @@ class DrugCategoriesController extends Controller
      */
     public function store(DrugCategoryRequest $request)
     {
+       
         try {
             $data = $request->validated();
 
-            return $this->drugCategory->store($data);
+            $this->drugCategory->store($data);
 
             return redirect()->back();
         } catch (\Throwable $th) {

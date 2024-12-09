@@ -8,16 +8,18 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { Input } from "@headlessui/react";
+import { Input, Textarea } from "@headlessui/react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import DangerButton from "@/Components/DangerButton";
 
 
 export default function Index() {
 
     const { isToggle } = useContext(AuthContext);
+    const [isEditingMode, setEditing] = useState(false);
 
-    const {errors, setData, data, post:post} = useForm({
+    const {errors, setData, data, post:post, reset} = useForm({
         name: "",
         description: ""
     })
@@ -32,8 +34,14 @@ export default function Index() {
         showModal(true)
     }
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (event:React.FormEvent) => {
+      
+        event.preventDefault();
+      post(route('drug-categories.store'), {
+        onSuccess:() =>{
+            reset()
+        }
+      })
     }
 
     return (
@@ -62,7 +70,7 @@ export default function Index() {
                                         </div>
                                         <div className="lastName">
                                             <InputLabel> Description</InputLabel>
-                                            <TextInput type="text" name="description" className="w-full rounded-md"
+                                            <Textarea  name="description" className="w-full rounded-md"
                                                 value={data.description}
                                                 onChange={(e) => setData("description", e.target.value)}
                                             />
@@ -72,14 +80,16 @@ export default function Index() {
                                                 )
                                             }
                                         </div>
-                                     
+                                        <div className="submit">
+                                            <DangerButton>{isEditingMode ? 'Update Patient' : 'Register Patient'}</DangerButton>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
                         </Modal>
                     </div>
                     <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                        <h5 className="text-xl font-bold">Patients Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Drug Category</PrimaryButton>
+                        <h5 className="text-xl font-bold">Drug Category Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Drug Category</PrimaryButton>
                     </div>
                     <div className="search py-3 flex gap-x-4">
                         <div className="search relative">
