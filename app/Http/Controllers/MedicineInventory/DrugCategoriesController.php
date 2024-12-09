@@ -71,9 +71,20 @@ class DrugCategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DrugCategory $drugCategory)
+    public function update(DrugCategoryRequest $request, DrugCategory $drugCategory)
     {
-        //
+        // dd($request->all());
+
+        try {
+            $data = $request->validated();
+
+           $this->drugCategory->update($drugCategory, $data);
+           return redirect()->back();
+
+        } catch (\Throwable $th) {
+            Log::error('Unable to update' . $th->getMessage());
+
+        }
     }
 
     /**

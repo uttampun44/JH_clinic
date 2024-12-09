@@ -4,7 +4,7 @@ namespace App\Repositories\DrugInventory;
 
 use App\Models\DrugCategory;
 use App\Repositories\DrugCategoryRepositoryInterface;
-
+use Illuminate\Support\Facades\Log;
 
 class DrugCategoryRepository implements DrugCategoryRepositoryInterface
 {
@@ -32,6 +32,7 @@ class DrugCategoryRepository implements DrugCategoryRepositoryInterface
 
     public function update(DrugCategory $drugCategory, array $data): bool
     {
-        return $this->drugCategory->update($data);
+      
+        return $drugCategory->update($data);
     }
 }

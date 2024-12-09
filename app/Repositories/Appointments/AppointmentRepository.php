@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Repositories\AppointmentRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentRepository implements AppointmentRepositoryInterface
 {
@@ -19,21 +20,12 @@ class AppointmentRepository implements AppointmentRepositoryInterface
 
     public function index()
     {
-        $patients = Patient::select('id', 'first_name')->get();
-
-        $doctors = Doctor::select('id', 'first_name')->get();
-
-        $appointments =  $this->appointment->paginate(25);
-
-        return [
-            'patients' => $patients,
-            'doctors' => $doctors,
-            'appointments' => $appointments
-        ];
+       return Appointment::paginate(50);
     }
 
     public function store(array $data):Appointment
     {
+        Log::error('error', $data);
         $data['appointment_time'] = now()->format('H:i');
         
         return $this->appointment->create($data);

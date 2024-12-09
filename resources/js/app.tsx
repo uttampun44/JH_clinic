@@ -6,6 +6,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import AuthProvider from './Context/ContextProvider';
+import { Toaster } from 'sonner';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -24,6 +25,7 @@ createInertiaApp({
 
         createRoot(el).render(<AuthProvider>
             <App {...props} />
+            <Toaster position='top-right' />
         </AuthProvider>);
     },
     progress: {

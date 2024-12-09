@@ -2,46 +2,79 @@ import Modal from "@/Components/Modal";
 import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Input, Textarea } from "@headlessui/react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import DangerButton from "@/Components/DangerButton";
+import { toast } from "sonner";
+import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
 
-
-export default function Index() {
+export default function Index({ drug_categories }) {
 
     const { isToggle } = useContext(AuthContext);
     const [isEditingMode, setEditing] = useState(false);
+    const [drugCategoryId, setDrugCategoryId] = useState()
 
-    const {errors, setData, data, post:post, reset} = useForm({
+ 
+    const { errors, setData, data, post: post, put:put, reset } = useForm({
         name: "",
         description: ""
     })
 
-    const [modal, showModal] = useState(false);
+    const [modal, setModal] = useState(false);
 
-    const handleClose = () =>{
-       showModal(false)
+    const handleClose = () => {
+          setModal(false)
     }
 
-    const handleModal = () =>{
-        showModal(true)
+    const handleModal = () => {
+          setModal(true)
     }
 
-    const handleSubmit = (event:React.FormEvent) => {
-      
+    const handleEdit = (drugCategory:any) =>{
+       setEditing(true);
+       setModal(true)
+       setDrugCategoryId(drugCategory.id)
+       setData({
+        name: drugCategory.name,
+        description: drugCategory.description
+       })
+
+    }
+
+    const handleSubmit = (event: React.FormEvent) => {
+
         event.preventDefault();
-      post(route('drug-categories.store'), {
-        onSuccess:() =>{
-            reset()
-        }
-      })
+       if(isEditingMode){
+         put(route('drug-categories.update', drugCategoryId), {
+            data,
+            preserveScroll: true,
+            onSuccess:()=>{
+                toast.success("Drug Category Update")
+            },
+            onError: () =>{
+                toast.error("Update Successfully")
+            }
+         })
+
+       }else{
+        post(route('drug-categories.store'), {
+            onSuccess: () => {
+                toast.success("Drug Category Createrd")
+                reset()
+
+            },
+            onError: () =>{
+                toast.error("Unable to create")
+            }
+        })
+       }
     }
 
     return (
@@ -49,7 +82,7 @@ export default function Index() {
             <div className={`drugCategory bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
                 <div className="modal">
-                <div className="modal">
+                    <div className="modal">
                         <Modal show={modal} onClose={handleClose} maxWidth="xl">
                             <div className="modalForm p-4 relative">
                                 <CloseIcon onClick={handleClose} className="absolute top-4 right-5" />
@@ -70,7 +103,7 @@ export default function Index() {
                                         </div>
                                         <div className="lastName">
                                             <InputLabel> Description</InputLabel>
-                                            <Textarea  name="description" className="w-full rounded-md"
+                                            <Textarea name="description" className="w-full rounded-md"
                                                 value={data.description}
                                                 onChange={(e) => setData("description", e.target.value)}
                                             />
@@ -81,7 +114,7 @@ export default function Index() {
                                             }
                                         </div>
                                         <div className="submit">
-                                            <DangerButton>{isEditingMode ? 'Update Patient' : 'Register Patient'}</DangerButton>
+                                            <DangerButton>{isEditingMode ? 'Update Drug Category' : 'Register Drug Category'}</DangerButton>
                                         </div>
                                     </div>
                                 </form>
@@ -110,9 +143,61 @@ export default function Index() {
                                 </tr>
                             </thead>
                             <tbody>
-                              
+                                {
+                                    drug_categories.data.length > 0 ? (
+                                        <React.Fragment>
+                                            {
+                                                drug_categories.data.map((drugCategory: any, index: number) => (
+                                                    <tr className="p-2 text-center text-gray-500" key={index}>
+
+                                                        <td className="capitalize p-2">{index + 1}</td>
+                                                        <td className="capitalize p-2">{drugCategory.name}</td>
+                                                        <td className="capitalize p-2">{drugCategory.description}</td>
+
+                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(drugCategory)} /></td>
+
+
+                                                    </tr>
+                                                ))
+                                            }
+                                        </React.Fragment>
+                                    ) : (
+                                        <tr className="p-2 text-center">
+                                            <td className="p-2" colSpan={6}>No Data Found</td>
+                                        </tr>
+                                    )
+                                }
                             </tbody>
                         </table>
+                    </div>
+                    <div className="flex items-center justify-center my-4 space-x-4">
+
+                        {drug_categories.prev_page_url && (
+                            <Link
+                                href={drug_categories.prev_page_url}
+
+                            >
+                                <ArrowLeft />
+                            </Link>
+                        )}
+
+
+                        {drug_categories.links.map((link: any, index: number) => (
+                            <Link href={`${link.url}`} key={index}>
+                                <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
+                                    {link.label}
+                                </span>
+                            </Link>
+                        ))}
+
+                        {drug_categories.next_page_url && (
+                            <Link
+                                href={drug_categories.next_page_url}
+
+                            >
+                                <ArrowRight />
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

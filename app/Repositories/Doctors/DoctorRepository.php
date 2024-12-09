@@ -32,7 +32,7 @@ class DoctorRepository implements DoctorRepositoryInterface
 
     public function update(Doctor $doctor, array $data):bool
     {
-          return $this->doctor->update($data);
+          return $doctor->update($data);
     }
 
     public function destroy(Doctor $doctor)

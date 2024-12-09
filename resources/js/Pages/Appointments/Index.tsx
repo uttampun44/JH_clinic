@@ -168,7 +168,7 @@ export default function Index({ appointments, status }) {
                         </Modal>
                     </div>
                     <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                        <h5 className="text-xl font-bold">Doctors Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Appointments</PrimaryButton>
+                        <h5 className="text-xl font-bold">Appointments</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Appointments</PrimaryButton>
                     </div>
                     <div className="search py-3 flex gap-x-4">
                         <div className="search relative">

@@ -19,8 +19,6 @@ import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
 export default function Index({ patients }) {
 
 
-    console.log(patients);
-
     const props = usePage().props
 
     const { isToggle } = useContext(AuthContext);
