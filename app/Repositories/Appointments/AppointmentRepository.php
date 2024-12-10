@@ -20,7 +20,17 @@ class AppointmentRepository implements AppointmentRepositoryInterface
 
     public function index()
     {
-       return Appointment::paginate(50);
+        $patients = Patient::select('id', 'first_name')->get();
+
+        $doctors = Doctor::select('id', 'first_name')->get();
+
+        $appointments =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->paginate(25);
+
+        return [
+            'patients' => $patients,
+            'doctors' => $doctors,
+            'appointments' => $appointments
+        ];
     }
 
     public function store(array $data):Appointment

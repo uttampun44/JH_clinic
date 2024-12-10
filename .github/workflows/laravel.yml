@@ -27,7 +27,7 @@ jobs:
     - name: Create Database
       run: |
         mkdir -p database
-        touch database/database.mysql
+        touch database/database.sqlite
     # - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
     #   env:
     #     DB_CONNECTION: mysql

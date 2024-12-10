@@ -51,7 +51,7 @@ export default function Siderbar() {
                                         <ul>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><SpaceDashboardIcon /><Link href="/dashboard" className="text-base font-medium">Show Details</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Drug Category</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href="/dashboard" className="text-base font-medium">Drugs</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href="/dashboard" className="text-base font-medium">Drug Supplies</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href="/dashboard" className="text-base font-medium">Sales</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href="/dashboard" className="text-base font-medium">Stocks</Link></li>
@@ -62,13 +62,13 @@ export default function Siderbar() {
                             </ul>
                         ) : (
                             <ul className="grid gap-y-4">
-                                <li><DashboardIcon /></li>
-                                <li><GroupIcon /></li>
-                                <li><AppRegistrationIcon /></li>
-                                <li><MessageIcon /></li>
-                                <li><CastForEducationIcon /></li>
-                                <li><MedicalServicesIcon /></li>
-                                <li><SettingsIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><DashboardIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><GroupIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><AppRegistrationIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><MessageIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><CastForEducationIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /></li>
+                                <li className="flex items-center gap-x-2 text-gray-500"><SettingsIcon /></li>
                             </ul>
                         )
                     }

@@ -22,7 +22,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $status = array_map(fn($value) => ['id' => $value->name, 'value' => $value->value], StatusEnum::cases());
-
+        
         $appointments =  $this->appointment->index();
 
         return Inertia::render("Appointments/Index", compact('appointments', 'status'));

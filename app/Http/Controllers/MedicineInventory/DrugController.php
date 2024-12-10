@@ -4,16 +4,26 @@ namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\Drug;
+use APP\Repositories\DrugRepositoryInterface;
+use App\Repositories\DrugsRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DrugController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct(public DrugsRepositoryInterface $drugRepositoryInterface)
+    {
+        $this->drugRepositoryInterface = $drugRepositoryInterface;
+    }
     public function index()
     {
-        //
+        $data = $this->drugRepositoryInterface->index();
+
+        
+        return Inertia::render('MedicineInventory/Drugs/Index', compact('data'));
     }
 
     /**
@@ -21,7 +31,9 @@ class DrugController extends Controller
      */
     public function create()
     {
-        //
+        $categories =  $this->drugRepositoryInterface->create();
+
+        return Inertia::render('MedicineInventory/Drugs/Create', compact('categories'));
     }
 
     /**

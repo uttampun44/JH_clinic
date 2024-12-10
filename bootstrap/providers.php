@@ -6,5 +6,6 @@ return [
     App\Providers\Doctors\DorctorServiceProvider::class,
     App\Providers\DrugCategoryProvider::class,
     App\Providers\DrugCategory\DrugCategoryProvider::class,
+    App\Providers\Drugs\DrugProvider::class,
     App\Providers\Patients\PattientServiceProvider::class,
 ];

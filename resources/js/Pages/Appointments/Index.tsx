@@ -10,17 +10,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Input, Select } from "@headlessui/react";
+import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
 
 
 export default function Index({ appointments, status }) {
 
- 
+
     const props = usePage().props
 
+    console.log(appointments)
     const patients = appointments.patients.map((patient) => patient)
     const doctors = appointments.doctors.map((doctor) => doctor)
 
@@ -29,7 +31,7 @@ export default function Index({ appointments, status }) {
 
     const [query, setQuery] = useState('');
 
-    const {post:post, data, setData, errors, reset, put:put} = useForm({
+    const { post: post, data, setData, errors, reset, put: put } = useForm({
         patient_id: "",
         doctor_id: "",
         appointment_date: "",
@@ -43,11 +45,11 @@ export default function Index({ appointments, status }) {
                 return (patient.full_name ?? '').toLowerCase().includes(query.toLowerCase());
             })
 
-   
+
     const filteredDoctors = query === '' ? doctors : doctors.filter((doctor) => {
         return (doctor.full_name ?? '').toLowerCase().includes(query.toLocaleLowerCase())
-    })        
-   
+    })
+
 
 
     const [modal, setModal] = useState<boolean>(false);
@@ -61,18 +63,18 @@ export default function Index({ appointments, status }) {
     }
 
     const handleSubmit = (event: React.FormEvent) => {
-          event.preventDefault()
-            post(route("appointments.store",  {
-                _token: props.csrf_token,
-                preserveScroll: true,
-                onSuccess: () => {
-                    reset();
-                }
-            }))
+        event.preventDefault()
+        post(route("appointments.store", {
+            _token: props.csrf_token,
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+            }
+        }))
     }
 
     const handleEdit = () => {
-      setEditing(true)
+        setEditing(true)
     }
     return (
         <Authenticated>
@@ -86,23 +88,23 @@ export default function Index({ appointments, status }) {
                                 <form onSubmit={handleSubmit}>
                                     <div className="formGrid p-4 grid gap-y-4">
                                         <div className="patient">
-                                           
-                                            <Autocomplete 
-                                             disablePortal
-                                             options={filteredPatients}
-                                             getOptionLabel={(option) => option.first_name || ''}
-                                             className="w-full rounded-md z-50"
-                                           
-                                             value={data.patient_id ? patients.find(patient => patient.id === data.patient_id) : null} 
-                                             onChange={(event, newValue) => {
-                                              
-                                                 setData("patient_id", newValue ? newValue.id : ""); 
-                                             }}
-                                             renderInput={(params) => <TextField
-                                               
-                                                {...params} label="Patient Name"  />}
+
+                                            <Autocomplete
+                                                disablePortal
+                                                options={filteredPatients}
+                                                getOptionLabel={(option) => option.first_name || ''}
+                                                className="w-full rounded-md z-50"
+
+                                                value={data.patient_id ? patients.find(patient => patient.id === data.patient_id) : null}
+                                                onChange={(event, newValue) => {
+
+                                                    setData("patient_id", newValue ? newValue.id : "");
+                                                }}
+                                                renderInput={(params) => <TextField
+
+                                                    {...params} label="Patient Name" />}
                                             />
-                                           
+
                                             {
                                                 errors.patient_id && (
                                                     <p className="text-red-500">{errors.patient_id}</p>
@@ -110,19 +112,19 @@ export default function Index({ appointments, status }) {
                                             }
                                         </div>
                                         <div className="doctor">
-                                          
-                                            <Autocomplete 
-                                             disablePortal
-                                             options={filteredDoctors}
-                                             
-                                             getOptionLabel={(option) => option.first_name || ''}
-                                             className="w-full rounded-md"
-                                             value={data.doctor_id ? patients.find(doctor => doctor.id === data.doctor_id) : null} 
-                                             onChange={(event, newValue) => {
-                                              
-                                                 setData("doctor_id", newValue ? newValue.id : ""); 
-                                             }}
-                                             renderInput={(params) => <TextField  {...params} label="Search Doctors Name" />}
+
+                                            <Autocomplete
+                                                disablePortal
+                                                options={filteredDoctors}
+
+                                                getOptionLabel={(option) => option.first_name || ''}
+                                                className="w-full rounded-md"
+                                                value={data.doctor_id ? patients.find(doctor => doctor.id === data.doctor_id) : null}
+                                                onChange={(event, newValue) => {
+
+                                                    setData("doctor_id", newValue ? newValue.id : "");
+                                                }}
+                                                renderInput={(params) => <TextField  {...params} label="Search Doctors Name" />}
                                             />
                                             {
                                                 errors.doctor_id && (
@@ -148,16 +150,16 @@ export default function Index({ appointments, status }) {
                                             <Select value={data.status} onChange={(e) => setData("status", e.target.value)} name="status" className="w-full rounded-md">
                                                 <option>Select Status</option>
                                                 {
-                                                    status.map((stat:any, index:number) => (
-                                                       <React.Fragment key={index}>
+                                                    status.map((stat: any, index: number) => (
+                                                        <React.Fragment key={index}>
                                                             <option value={stat.id}>{stat.value}</option>
-                                                       </React.Fragment>
+                                                        </React.Fragment>
                                                     ))
                                                 }
                                             </Select>
                                         </div>
 
-                                      
+
 
                                         <div className="submit">
                                             <DangerButton>{isEditing ? 'Update Doctor' : 'Register Doctor'}</DangerButton>
@@ -191,42 +193,42 @@ export default function Index({ appointments, status }) {
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
-                            {/* <tbody>
-                                {
-                                    doctors.data.length > 0 ? (
-                                        <React.Fragment>
-                                            {
-                                                doctors.data.map((doctor: any, index: number) => (
-                                                    <tr className="p-2 text-center text-gray-500" key={index}>
+                            <tbody>
+                                <tbody>
+                                    {
+                                        appointments.data.length > 0 ? (
+                                            <React.Fragment>
+                                                {
 
-                                                        <td className="capitalize p-2">{index + 1}</td>
-                                                        <td className="capitalize p-2">{doctor.first_name}</td>
-                                                        <td className="capitalize p-2">{doctor.last_name}</td>
-                                                        <td className="capitalize p-2">{doctor.specialization}</td>
-                                                        <td className="capitalize p-2">{doctor.gender}</td>
-                                                        <td className="capitalize p-2">{doctor.contact_number}</td>
-                                                        <td className="capitalize p-2">{doctor.address}</td>
-                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(doctor)} /></td>
-                                                        <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(doctor.id)} /></td>
+                                                    appointments.data.map((appointment: any, index: number) => (
+                                                        <tr className="p-2 text-center text-gray-500" key={index}>
+                                                            <td className="capitalize p-2">{index + 1}</td>
+                                                            <td className="capitalize p-2">{appointment.patient?.first_name}</td>
+                                                            <td className="capitalize p-2">{appointment.doctors?.first_name}</td>
+                                                            <td className="capitalize p-2">{appointment.appointment_date}</td>
+                                                            <td className="capitalize p-2">{appointment.appointment_time}</td>
+                                                            <td className="capitalize p-2">{appointment.status}</td>
+                                                            <td className="capitalize p-2">{appointment.status}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </React.Fragment>
+                                        ) : (
+                                            <tr className="p-2 text-center">
+                                                <td className="p-2 " colSpan={6}>No Data Found</td>
+                                            </tr>
+                                        )
+                                    }
+                                </tbody>
 
-                                                    </tr>
-                                                ))
-                                            }
-                                        </React.Fragment>
-                                    ) : (
-                                        <tr className="p-2 text-center">
-                                            <td className="p-2" colSpan={6}>No Data Found</td>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>  */}
+                            </tbody>
                         </table>
                     </div>
-                    {/* <div className="flex items-center justify-center my-4 space-x-4">
+                    <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {doctors.prev_page_url && (
+                        {appointments.prev_page_url && (
                             <Link
-                                href={doctors.prev_page_url}
+                                href={appointments.prev_page_url}
 
                             >
                                 <ArrowLeft />
@@ -234,7 +236,7 @@ export default function Index({ appointments, status }) {
                         )}
 
 
-                        {doctors.links.map((link: any, index: number) => (
+                        {appointments.links?.map((link: any, index: number) => (
                             <Link href={`${link.url}`} key={index}>
                                 <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
                                     {link.label}
@@ -242,15 +244,15 @@ export default function Index({ appointments, status }) {
                             </Link>
                         ))}
 
-                        {doctors.next_page_url && (
+                        {appointments.next_page_url && (
                             <Link
-                                href={doctors.next_page_url}
+                                href={appointments.next_page_url}
 
                             >
                                 <ArrowRight />
                             </Link>
                         )}
-                    </div>  */}
+                    </div>
 
                 </div>
             </div>

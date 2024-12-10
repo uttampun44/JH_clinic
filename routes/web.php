@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineInventory\DrugCategoriesController;
+use App\Http\Controllers\MedicineInventory\DrugController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('doctors', DoctorController::class);
         Route::resource('appointments', AppointmentController::class);
         Route::resource('drug-categories', DrugCategoriesController::class);
+        Route::resource('drugs', DrugController::class)->only(['index', 'create']);
     
 });
 

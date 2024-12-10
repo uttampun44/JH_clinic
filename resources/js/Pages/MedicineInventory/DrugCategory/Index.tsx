@@ -13,10 +13,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import DangerButton from "@/Components/DangerButton";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
+import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
 
 export default function Index({ drug_categories }) {
 
+   
     const { isToggle } = useContext(AuthContext);
     const [isEditingMode, setEditing] = useState(false);
     const [drugCategoryId, setDrugCategoryId] = useState()
