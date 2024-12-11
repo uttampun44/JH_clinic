@@ -21,7 +21,7 @@ class DrugsRepository implements DrugsRepositoryInterface
        return Drug::Paginate(25);
     }
 
-    public function create()
+    public function getData()
     {
         $drug_cat = DrugCategory::select('id', 'name')->get();
       

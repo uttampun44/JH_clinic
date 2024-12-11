@@ -6,7 +6,7 @@ use App\Models\Drug;
 interface DrugsRepositoryInterface{
     public function index();
 
-    public function create();
+    public function getData();
 
     public function store(array $data): Drug;
 

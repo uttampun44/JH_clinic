@@ -9,6 +9,5 @@ class Drug extends Model
     protected $table = "drugs";
 
     protected $fillable = ['name', 'sku', 'description', 'manufacturer', 'dosage_from', 'strength', 'unit_price',
-    'expiration_date', 'drug_category_id'
-];
+    'expiration_date', 'drug_category_id'];
 }

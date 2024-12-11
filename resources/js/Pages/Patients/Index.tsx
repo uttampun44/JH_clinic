@@ -27,8 +27,6 @@ export default function Index({ patients }) {
     const [currentId, setCurrentInd] = useState<string>("");
     const [gender, setGender] = useState<string>("")
 
-    console.log(patients.last_page)
-
     const { post: post, data, setData, errors, delete: destroy, put: put, reset } = useForm({
         first_name: '',
         last_name: '',

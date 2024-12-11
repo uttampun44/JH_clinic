@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('manufacturer')->nullable();
             $table->string('dosage_form')->nullable();
             $table->string('strength')->nullable();    
-            $table->decimal('unit_price', 10, 2);
+            $table->string('unit_price');
             $table->date('expiration_date')->nullable();
             $table->foreignId('drug_category_id')->constrained('drug_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

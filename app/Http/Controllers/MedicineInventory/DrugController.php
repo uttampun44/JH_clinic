@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DrugRequest;
 use App\Models\Drug;
-use APP\Repositories\DrugRepositoryInterface;
 use App\Repositories\DrugsRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DrugController extends Controller
@@ -31,7 +32,7 @@ class DrugController extends Controller
      */
     public function create()
     {
-        $categories =  $this->drugRepositoryInterface->create();
+        $categories =  $this->drugRepositoryInterface->getData();
 
         return Inertia::render('MedicineInventory/Drugs/Create', compact('categories'));
     }
@@ -39,9 +40,21 @@ class DrugController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DrugRequest $drug)
     {
-        //
+
+        
+        try {
+            $data = $drug->validated();
+            Log::info("message, $data");
+
+
+             $this->drugRepositoryInterface->store($data);
+
+            return redirect()->back();;
+        } catch (\Throwable $th) {
+           Log::error('Create unsuccessfull' .$th->getMessage());
+        }
     }
 
     /**

@@ -22,7 +22,6 @@ export default function Index({ appointments, status }) {
 
     const props = usePage().props
 
-    console.log(appointments)
     const patients = appointments.patients.map((patient) => patient)
     const doctors = appointments.doctors.map((doctor) => doctor)
 

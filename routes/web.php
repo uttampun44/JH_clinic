@@ -22,7 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('doctors', DoctorController::class);
         Route::resource('appointments', AppointmentController::class);
         Route::resource('drug-categories', DrugCategoriesController::class);
-        Route::resource('drugs', DrugController::class)->only(['index', 'create']);
+        Route::resource('drugs', DrugController::class)->only(['index', 'create', 'store']);
     
 });
 
