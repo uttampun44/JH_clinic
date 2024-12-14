@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Requests\DrugRequest;
 use App\Models\Drug;
+use App\Models\DrugCategory;
 use App\Repositories\DrugsRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,10 +23,9 @@ class DrugController extends Controller
     }
     public function index()
     {
-        $data = $this->drugRepositoryInterface->index();
+        $drugs = $this->drugRepositoryInterface->index();
 
-        
-        return Inertia::render('MedicineInventory/Drugs/Index', compact('data'));
+        return Inertia::render('MedicineInventory/Drugs/Index', compact('drugs'));
     }
 
     /**
@@ -43,17 +44,19 @@ class DrugController extends Controller
     public function store(DrugRequest $drug)
     {
 
-        
         try {
+            
             $data = $drug->validated();
-            Log::info("message, $data");
-
+        
 
              $this->drugRepositoryInterface->store($data);
 
             return redirect()->back();;
         } catch (\Throwable $th) {
-           Log::error('Create unsuccessfull' .$th->getMessage());
+           Log::error('Create unsuccessfull', [
+             'message' => $th->getMessage(),
+             'data' => isset($data) ? $data : 'Data not available',
+           ]);
         }
     }
 
@@ -70,15 +73,27 @@ class DrugController extends Controller
      */
     public function edit(Drug $drug)
     {
-        //
+        $categories = DrugCategory::select('id', 'name')->get();
+
+        return Inertia::render('MedicineInventory/Drugs/Edit', compact('drug', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Drug $drug)
+    public function update(DrugRequest $request, Drug $drug)
     {
-        //
+        
+        try {
+            $data = $request->validated();
+
+
+         $this->drugRepositoryInterface->update($drug, $data);
+         return redirect()->route('drugs.index')->with('success', 'Drug updated successfully.');
+
+        } catch (\Throwable $th) {
+           Log::error('Cannot Update' .$th->getMessage());
+        }
     }
 
     /**

@@ -10,29 +10,32 @@ import { ArrowLeft, Title } from "@mui/icons-material";
 import { FormEvent, useContext } from "react";
 import { toast } from "sonner";
 
-export default function Create({ categories }) {
+export default function Edit({categories, drug}) {
 
+  
     const { isToggle } = useContext(AuthContext);
-    const { errors, setData, data, post: post, reset, clearErrors } = useForm({
-        name: '',
-        sku: '',
-        description: '',
-        manufacturer: '',
-        dosage_from: '',
-        strength: '',
-        unit_price: '',
-        expiration_date: '',
-        drug_category_id: ''
+    const { errors, setData, data, put: put, reset, clearErrors } = useForm({
+        name: drug.name,
+        sku: drug.sku,
+        description: drug.description,
+        manufacturer: drug.manufacturer,
+        dosage_from: drug.dosage_from,
+        strength: drug.strength,
+        unit_price: drug.unit_price,
+        expiration_date: drug.expiration_date,
+        drug_category_id: drug.id
     })
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        post(route('drugs.store'), {
+        put(route('drugs.update', drug.id), {
+            data,
+            preserveScroll: true,
             onSuccess: () => {
                 clearErrors()
                 reset();
-                toast.success("Drug create successfully");
+                toast.success("Drug update successfully");
             },
             onError: () => {
                 toast.error('There was an error while creating the drug');
@@ -46,7 +49,7 @@ export default function Create({ categories }) {
 
                 <div className="durgsForm">
                     <div className="title flex justify-between">
-                        <h1 className="text-xl font-bold">Create Drug</h1> <PrimaryButton className="pr-1"><Link href={route("drugs.index")} className="p-2"><ArrowLeft></ArrowLeft></Link>Back</PrimaryButton>
+                        <h1 className="text-xl font-bold">Update Drug</h1> <PrimaryButton className="pr-1"><Link href={route("drugs.index")} className="p-2"><ArrowLeft></ArrowLeft></Link>Back</PrimaryButton>
                     </div>
                     <div className="form">
                         <form onSubmit={handleSubmit}>
@@ -125,10 +128,10 @@ export default function Create({ categories }) {
                                 </div>
                                 <div className="drugs_categories">
                                     <InputLabel htmlFor="drug_Categories" value="Drug Category" className="text-xl text-gray-500 font-medium" />
-                                    <Select value={data.drug_category_id} onChange={(e) => setData("drug_category_id", e.target.value)} className="rounded-md my-1 w-full">
+                                    <Select value={data.drug_category_id}  onChange={(e) => setData("drug_category_id", e.target.value)} className="rounded-md my-1 w-full">
                                         <option>Select Drug Categories</option>
                                         {
-                                            categories.drug_categories.map((category: any, index: number) => (
+                                            categories.map((category: any, index: number) => (
                                                 <option value={category.id} key={index}>{category.name}</option>
                                             ))
                                         }
@@ -141,7 +144,7 @@ export default function Create({ categories }) {
                                 </div>
                             </div>
                             <div className="submit flex gap-x-2">
-                                <PrimaryButton className="p-2">Create</PrimaryButton>  <DangerButton><Link href={route("drugs.index")} className="p-1">Cancel</Link></DangerButton>
+                                <PrimaryButton className="p-2">Update</PrimaryButton>  <DangerButton><Link href={route("drugs.index")} className="p-1">Cancel</Link></DangerButton>
                             </div>
                         </form>
                     </div>

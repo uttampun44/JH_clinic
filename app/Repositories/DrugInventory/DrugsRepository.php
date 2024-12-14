@@ -6,6 +6,7 @@ use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Repositories\DrugsRepositoryInterface;
 
+
 class DrugsRepository implements DrugsRepositoryInterface
 {
     /**
@@ -18,7 +19,7 @@ class DrugsRepository implements DrugsRepositoryInterface
 
     public function index()
     {
-       return Drug::Paginate(25);
+         return Drug::with('drugs_categories:id,name')->paginate(25);
     }
 
     public function getData()
@@ -32,6 +33,7 @@ class DrugsRepository implements DrugsRepositoryInterface
 
     public function store(array $data):Drug
     {
+      
         return $this->drug->create($data);
     }
 

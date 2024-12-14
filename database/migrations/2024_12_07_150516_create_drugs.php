@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sku')->unique()->nullable();
             $table->text('description')->nullable();
             $table->string('manufacturer')->nullable();
-            $table->string('dosage_form')->nullable();
+            $table->integer('dosage_from')->nullable();
             $table->string('strength')->nullable();    
             $table->string('unit_price');
             $table->date('expiration_date')->nullable();

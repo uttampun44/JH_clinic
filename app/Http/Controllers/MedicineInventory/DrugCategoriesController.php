@@ -73,8 +73,7 @@ class DrugCategoriesController extends Controller
      */
     public function update(DrugCategoryRequest $request, DrugCategory $drugCategory)
     {
-        // dd($request->all());
-
+       
         try {
             $data = $request->validated();
 

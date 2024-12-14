@@ -9,9 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "@inertiajs/react";
 
-export default function Index(){
+export default function Index({drugs = { data: [] }}){
 
-   
 
     const {isToggle} = useContext(AuthContext)
     return(
@@ -46,19 +45,25 @@ export default function Index(){
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
-                            {/* <tbody>
+                             <tbody>
                                 {
-                                    drug_categories.data.length > 0 ? (
+                                    drugs.data.length > 0 ? (
                                         <React.Fragment>
                                             {
-                                                drug_categories.data.map((drugCategory: any, index: number) => (
+                                                drugs.data.map((drugCategory: any, index: number) => (
                                                     <tr className="p-2 text-center text-gray-500" key={index}>
 
                                                         <td className="capitalize p-2">{index + 1}</td>
                                                         <td className="capitalize p-2">{drugCategory.name}</td>
+                                                        <td className="capitalize p-2">{drugCategory.sku}</td>
                                                         <td className="capitalize p-2">{drugCategory.description}</td>
-
-                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(drugCategory)} /></td>
+                                                        <td className="capitalize p-2">{drugCategory.manufacturer}</td>
+                                                        <td className="capitalize p-2">{drugCategory.dosage}</td>
+                                                        <td className="capitalize p-2">{drugCategory.strength}</td>
+                                                        <td className="capitalize p-2">{drugCategory.unit}</td>
+                                                        <td className="capitalize p-2">{drugCategory.expiration_date}</td>
+                                                        <td className="capitalize p-2">{drugCategory.drugs_categories.name}</td>
+                                                        <td className="capitalize p-2"><Link href={route("drugs.edit", drugCategory.id)}> <Edit className="cursor-pointer" /></Link></td>
 
 
                                                     </tr>
@@ -71,7 +76,7 @@ export default function Index(){
                                         </tr>
                                     )
                                 }
-                            </tbody> */}
+                            </tbody> 
                         </table>
                     </div>
         </div>

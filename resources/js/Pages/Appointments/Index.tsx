@@ -17,7 +17,7 @@ import { Input, Select } from "@headlessui/react";
 import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
 
 
-export default function Index({ appointments, status }) {
+export default function Index({ appointments =  { data: [] }, status }) {
 
 
     const props = usePage().props
@@ -192,14 +192,14 @@ export default function Index({ appointments, status }) {
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            
                                 <tbody>
                                     {
-                                        appointments.data.length > 0 ? (
+                                        appointments.appointments.data.length > 0 ? (
                                             <React.Fragment>
                                                 {
 
-                                                    appointments.data.map((appointment: any, index: number) => (
+                                                    appointments.appointments.data.map((appointment: any, index: number) => (
                                                         <tr className="p-2 text-center text-gray-500" key={index}>
                                                             <td className="capitalize p-2">{index + 1}</td>
                                                             <td className="capitalize p-2">{appointment.patient?.first_name}</td>
@@ -207,7 +207,7 @@ export default function Index({ appointments, status }) {
                                                             <td className="capitalize p-2">{appointment.appointment_date}</td>
                                                             <td className="capitalize p-2">{appointment.appointment_time}</td>
                                                             <td className="capitalize p-2">{appointment.status}</td>
-                                                            <td className="capitalize p-2">{appointment.status}</td>
+                                                           
                                                         </tr>
                                                     ))
                                                 }
@@ -220,7 +220,7 @@ export default function Index({ appointments, status }) {
                                     }
                                 </tbody>
 
-                            </tbody>
+                           
                         </table>
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
