@@ -11,7 +11,7 @@ interface DrugSupplierInterface{
 
     public function store(array $data):DrugSupplier;
 
-    public function edit(DrugSale $drugSale);
+    public function edit(DrugSupplier $drugSale);
 
-    public function update(DrugSale $drugSale, array $data):bool;
+    public function update(DrugSupplier $drugSale, array $data):bool;
 }

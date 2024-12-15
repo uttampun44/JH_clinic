@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DrugSupplierRequest;
 use App\Models\DrugSupplier;
+use App\Repositories\DrugSupplierInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DrugSupplierController extends Controller
@@ -12,9 +15,16 @@ class DrugSupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct(public DrugSupplierInterface $drugSupplierInterface)
+    {
+       $this->drugSupplierInterface = $drugSupplierInterface;
+    }
+
     public function index()
     {
-        return Inertia::render('MedicineInventory/DrugSuppliers/Index');
+        $suppliers = $this->drugSupplierInterface->index();
+
+        return Inertia::render('MedicineInventory/DrugSuppliers/Index', compact('suppliers'));
     }
 
     /**
@@ -28,9 +38,19 @@ class DrugSupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DrugSupplierRequest $request)
     {
-        //
+      
+        try {
+            $data = $request->validated();
+
+
+            $this->drugSupplierInterface->store($data);
+            return redirect()->back();
+            
+        } catch (\Throwable $th) {
+            Log::error('Cannont Create' . $th->getMessage());
+        }
     }
 
     /**

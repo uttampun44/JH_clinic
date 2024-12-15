@@ -6,19 +6,22 @@ import TextInput from "@/Components/TextInput";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link, useForm } from "@inertiajs/react";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
+import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
 import SearchIcon from '@mui/icons-material/Search';
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Input, Textarea } from "@headlessui/react";
 import useModal from "@/Hooks/useModal";
+import { toast } from "sonner";
 
-export default function Index(){
+export default function Index({suppliers}){
 
+  
     const {isToggle} = useContext(AuthContext)
     const [isEditing, setEditing] = useState(false);
-    const{errors, data, setData} = useForm({
+    const{errors, data, setData, reset, post:post, put:put, clearErrors} = useForm({
       name: "",
       contact_person: "",
       phone: "",
@@ -27,8 +30,43 @@ export default function Index(){
     })
     const {modal, setModal} = useModal();
 
-    const handleSubmit = () =>{
+    const handleSubmit = (event: React.FormEvent) =>{
+        event.preventDefault();
+      if(isEditing){
+        post(route("drug-suppliers.store"), {
+            onSuccess:() =>{
+               reset(),
+               clearErrors(),
+               toast.success("Supplier created")
+            },
+            onError: () =>{
+              toast.error("Unable to create")
+            }
+         })
+      }else{
+        put(route("drug-suppliers.update", suppliers.id), {
+            onSuccess:() =>{
+               reset(),
+               clearErrors(),
+               toast.success("Supplier created")
+            },
+            onError: () =>{
+              toast.error("Unable to create")
+            }
+         })
+      }
+    }
 
+    const handleEdit = (supplier:any) =>{
+        setEditing(true)
+        setModal(true)
+        setData({
+            name: supplier.name,
+            contact_person: supplier.contact_person,
+            phone: supplier.phone,
+            email: supplier.email,
+            address: supplier.address
+        })
     }
 
     const handleModal = () => {
@@ -52,7 +90,7 @@ export default function Index(){
                                     <div className="formGrid p-4 grid gap-y-4">
                                         <div className="name">
                                             <InputLabel> Name</InputLabel>
-                                            <TextInput type="text" name="first_name" className="w-full rounded-md"
+                                            <TextInput type="text" name="name" className="w-full rounded-md"
 
                                                 value={data.name}
                                                 onChange={(e) => setData("name", e.target.value)}
@@ -78,7 +116,7 @@ export default function Index(){
 
                                         <div className="phone">
                                             <InputLabel>Phone</InputLabel>
-                                            <TextInput type="text" name="last_name" className="w-full rounded-md"
+                                            <TextInput type="text" name="phone" className="w-full rounded-md"
                                                 value={data.phone}
                                                 onChange={(e) => setData("phone", e.target.value)}
                                             />
@@ -92,7 +130,7 @@ export default function Index(){
                                        
                                         <div className="email">
                                             <InputLabel>Email</InputLabel>
-                                            <TextInput type="email" name="contact_number" className="w-full rounded-md"
+                                            <TextInput type="email" name="email" className="w-full rounded-md"
                                                 value={data.email}
                                                 onChange={(e) => setData("email", e.target.value)}
                                             />
@@ -104,7 +142,7 @@ export default function Index(){
                                         </div>
                                         <div className="address">
                                             <InputLabel>Address</InputLabel>
-                                            <Textarea name="last_name" className="w-full rounded-md"
+                                            <Textarea name="address" className="w-full rounded-md"
                                                 value={data.address}
                                                 onChange={(e) => setData("address", e.target.value)}
                                             />
@@ -148,22 +186,22 @@ export default function Index(){
                                 </tr>
                             </thead>
                              <tbody>
-                                {/* {
-                                    doctors.data.length > 0 ? (
+                                {
+                                    suppliers.data.length > 0 ? (
                                         <React.Fragment>
                                             {
-                                                doctors.data.map((doctor: any, index: number) => (
+                                                suppliers.data.map((supplier: any, index: number) => (
                                                     <tr className="p-2 text-center text-gray-500" key={index}>
 
                                                         <td className="capitalize p-2">{index + 1}</td>
-                                                        <td className="capitalize p-2">{doctor.first_name}</td>
-                                                        <td className="capitalize p-2">{doctor.last_name}</td>
-                                                        <td className="capitalize p-2">{doctor.specialization}</td>
-                                                        <td className="capitalize p-2">{doctor.gender}</td>
-                                                        <td className="capitalize p-2">{doctor.contact_number}</td>
-                                                        <td className="capitalize p-2">{doctor.address}</td>
-                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(doctor)} /></td>
-                                                        <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(doctor.id)} /></td>
+                                                        <td className="capitalize p-2">{supplier.name}</td>
+                                                        <td className="capitalize p-2">{supplier.contact_person}</td>
+                                                        <td className="capitalize p-2">{supplier.phone}</td>
+                                                        <td className="capitalize p-2">{supplier.email}</td>
+                                                     
+                                                        <td className="capitalize p-2">{supplier.address}</td>
+                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(supplier)} /></td>
+                                                       
 
                                                     </tr>
                                                 ))
@@ -174,15 +212,15 @@ export default function Index(){
                                             <td className="p-2" colSpan={6}>No Data Found</td>
                                         </tr>
                                     )
-                                } */}
+                                } 
                             </tbody> 
                         </table>
                     </div>
-                    {/* <div className="flex items-center justify-center my-4 space-x-4">
+                  <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {doctors.prev_page_url && (
+                        {suppliers.prev_page_url && (
                             <Link
-                                href={doctors.prev_page_url}
+                                href={suppliers.prev_page_url}
 
                             >
                                 <ArrowLeft />
@@ -190,7 +228,7 @@ export default function Index(){
                         )}
 
 
-                        {doctors.links.map((link: any, index: number) => (
+                        {suppliers.links.map((link: any, index: number) => (
                             <Link href={`${link.url}`} key={index}>
                                 <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
                                     {link.label}
@@ -198,15 +236,15 @@ export default function Index(){
                             </Link>
                         ))}
 
-                        {doctors.next_page_url && (
+                        {suppliers.next_page_url && (
                             <Link
-                                href={doctors.next_page_url}
+                                href={suppliers.next_page_url}
 
                             >
                                 <ArrowRight />
                             </Link>
                         )}
-                    </div>  */}
+                    </div>  
                 </div>         
              </div>
         </Authenticated>

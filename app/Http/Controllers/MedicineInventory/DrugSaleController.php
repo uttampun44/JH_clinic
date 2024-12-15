@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DrugSupplierRequest;
 use App\Models\DrugSale;
-use App\Models\DrugSupplier;
 use App\Repositories\DrugSupplierInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 
 class DrugSaleController extends Controller
 {
@@ -18,7 +16,7 @@ class DrugSaleController extends Controller
 
      public function __construct(public DrugSupplierInterface $drugSupplierInterface)
      {
-        $this->DrugSupplierInterface = $drugSupplierInterface;
+        $this->drugSupplierInterface = $drugSupplierInterface;
      }
     public function index()
     {
@@ -36,15 +34,9 @@ class DrugSaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DrugSupplierRequest $request)
+    public function store(Request $request)
     {
-        try {
-            $data = $request->validated();
-
-            return $this->drugSupplierInterface->store($data);
-        } catch (\Throwable $th) {
-            Log::error('Cannont Create' . $th->getMessage());
-        }
+       
     }
 
     /**

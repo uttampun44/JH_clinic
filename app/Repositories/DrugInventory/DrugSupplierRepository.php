@@ -18,7 +18,7 @@ class DrugSupplierRepository implements DrugSupplierInterface
 
     public function index()
     {
-        
+       return DrugSupplier::paginate(25);   
     }
 
     public function store(array $data): DrugSupplier
@@ -28,12 +28,12 @@ class DrugSupplierRepository implements DrugSupplierInterface
         
     }
 
-    public function edit(DrugSale $drugSale)
+    public function edit(DrugSupplier $drugSupplier)
     {
-        return $drugSale;
+        return $drugSupplier;
     }
 
-    public function update(DrugSale $drugSale, array $data): bool
+    public function update(DrugSupplier $drugSale, array $data): bool
     {
 
         return $drugSale->update($data);
