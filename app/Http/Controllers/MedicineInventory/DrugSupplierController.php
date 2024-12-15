@@ -72,9 +72,17 @@ class DrugSupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DrugSupplier $drugSupplier)
+    public function update(DrugSupplierRequest $request, DrugSupplier $drugSupplier)
     {
-        //
+       
+        try {
+           $data = $request->validated();
+
+           $this->drugSupplierInterface->update($drugSupplier, $data);
+           return redirect()->back('Update Successfully');
+        } catch (\Throwable $th) {
+            Log::error('Cannot Update' . $th->getMessage());
+        }
     }
 
     /**

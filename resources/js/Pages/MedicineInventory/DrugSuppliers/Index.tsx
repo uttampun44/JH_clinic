@@ -16,50 +16,54 @@ import { Input, Textarea } from "@headlessui/react";
 import useModal from "@/Hooks/useModal";
 import { toast } from "sonner";
 
-export default function Index({suppliers}){
+export default function Index({ suppliers }) {
 
-  
-    const {isToggle} = useContext(AuthContext)
-    const [isEditing, setEditing] = useState(false);
-    const{errors, data, setData, reset, post:post, put:put, clearErrors} = useForm({
-      name: "",
-      contact_person: "",
-      phone: "",
-      email: "",
-      address: "",
+
+    const { isToggle } = useContext(AuthContext)
+    const [supplierId, setSupplierId] = useState("");
+
+    const { errors, data, setData, reset, post: post, put: put, clearErrors } = useForm({
+        name: "",
+        contact_person: "",
+        phone: "",
+        email: "",
+        address: "",
     })
-    const {modal, setModal} = useModal();
+    const { modal, setModal, isEditing, setEditing } = useModal();
 
-    const handleSubmit = (event: React.FormEvent) =>{
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-      if(isEditing){
-        post(route("drug-suppliers.store"), {
-            onSuccess:() =>{
-               reset(),
-               clearErrors(),
-               toast.success("Supplier created")
-            },
-            onError: () =>{
-              toast.error("Unable to create")
-            }
-         })
-      }else{
-        put(route("drug-suppliers.update", suppliers.id), {
-            onSuccess:() =>{
-               reset(),
-               clearErrors(),
-               toast.success("Supplier created")
-            },
-            onError: () =>{
-              toast.error("Unable to create")
-            }
-         })
-      }
+        if (isEditing) {
+            put(route("drug-suppliers.update", supplierId), {
+                onSuccess: () => {
+                    reset(),
+                        clearErrors(),
+                        toast.success("Supplier update successfully")
+                },
+                onError: () => {
+                    toast.error("Unable to update successfully")
+                }
+            })
+
+        } else {
+
+            post(route("drug-suppliers.store"), {
+                onSuccess: () => {
+                    reset(),
+                        clearErrors(),
+                        toast.success("Supplier created")
+                },
+                onError: () => {
+                    toast.error("Unable to create")
+                }
+            })
+        }
     }
 
-    const handleEdit = (supplier:any) =>{
+    const handleEdit = (supplier: any) => {
         setEditing(true)
         setModal(true)
+        setSupplierId(supplier.id)
         setData({
             name: supplier.name,
             contact_person: supplier.contact_person,
@@ -73,15 +77,15 @@ export default function Index({suppliers}){
         setModal(true)
     }
 
-    const handleClose = () =>{
-      setModal(false)
+    const handleClose = () => {
+        setModal(false)
     }
-    
-    return(
+
+    return (
         <Authenticated>
-             <div className={`drugSupplier bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
-                 <Siderbar />
-                 <div className="patientContainer">
+            <div className={`drugSupplier bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
+                <Siderbar />
+                <div className="patientContainer">
                     <div className="modal">
                         <Modal show={modal} onClose={handleClose} maxWidth="xl">
                             <div className="modalForm p-4 relative">
@@ -127,7 +131,7 @@ export default function Index({suppliers}){
                                             }
                                         </div>
 
-                                       
+
                                         <div className="email">
                                             <InputLabel>Email</InputLabel>
                                             <TextInput type="email" name="email" className="w-full rounded-md"
@@ -153,7 +157,7 @@ export default function Index({suppliers}){
                                             }
                                         </div>
                                         <div className="submit">
-                                            <DangerButton>{isEditing ? 'Update Doctor' : 'Register Doctor'}</DangerButton>
+                                            <DangerButton>{isEditing ? 'Update Suppliers' : 'Register Suppliers'}</DangerButton>
                                         </div>
                                     </div>
                                 </form>
@@ -185,7 +189,7 @@ export default function Index({suppliers}){
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
-                             <tbody>
+                            <tbody>
                                 {
                                     suppliers.data.length > 0 ? (
                                         <React.Fragment>
@@ -198,10 +202,10 @@ export default function Index({suppliers}){
                                                         <td className="capitalize p-2">{supplier.contact_person}</td>
                                                         <td className="capitalize p-2">{supplier.phone}</td>
                                                         <td className="capitalize p-2">{supplier.email}</td>
-                                                     
+
                                                         <td className="capitalize p-2">{supplier.address}</td>
                                                         <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(supplier)} /></td>
-                                                       
+
 
                                                     </tr>
                                                 ))
@@ -212,11 +216,11 @@ export default function Index({suppliers}){
                                             <td className="p-2" colSpan={6}>No Data Found</td>
                                         </tr>
                                     )
-                                } 
-                            </tbody> 
+                                }
+                            </tbody>
                         </table>
                     </div>
-                  <div className="flex items-center justify-center my-4 space-x-4">
+                    <div className="flex items-center justify-center my-4 space-x-4">
 
                         {suppliers.prev_page_url && (
                             <Link
@@ -244,9 +248,9 @@ export default function Index({suppliers}){
                                 <ArrowRight />
                             </Link>
                         )}
-                    </div>  
-                </div>         
-             </div>
+                    </div>
+                </div>
+            </div>
         </Authenticated>
     )
 }

@@ -3,17 +3,25 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DrugPurchaseRequest;
 use App\Models\DrugPurchase;
+use App\Repositories\DrugPurchaseRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class DrugPurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct(public DrugPurchaseRepositoryInterface $drugPurchaseRepositoryInterface)
+    {
+        $this->drugPurchaseRepositoryInterface = $drugPurchaseRepositoryInterface;
+    }
     public function index()
     {
-        //
+        return Inertia::render('MedicineInventory/Purchases/Index');
     }
 
     /**
@@ -21,15 +29,23 @@ class DrugPurchaseController extends Controller
      */
     public function create()
     {
-        //
+        $datas = $this->drugPurchaseRepositoryInterface->create();
+
+        return Inertia::render('MedicineInventory/Purchases/Create', compact('datas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DrugPurchaseRequest $request)
     {
-        //
+        try {
+            $data = $request->validated();
+            
+            $this->drugPurchaseRepositoryInterface->store($data);
+        } catch (\Throwable $th) {
+            Log::error('cannot create store' . $th->getMessage());
+        }
     }
 
     /**

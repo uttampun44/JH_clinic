@@ -6,7 +6,7 @@ import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Input, Select } from "@headlessui/react";
 import { Link, useForm } from "@inertiajs/react";
-import { ArrowLeft, Title } from "@mui/icons-material";
+import { ArrowLeft} from "@mui/icons-material";
 import { FormEvent, useContext } from "react";
 import { toast } from "sonner";
 
@@ -41,12 +41,12 @@ export default function Create({ categories }) {
     }
     return (
         <Authenticated>
-            <div className={`drugCategory bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
+            <div className={`drug bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
 
                 <div className="durgsForm">
                     <div className="title flex justify-between">
-                        <h1 className="text-xl font-bold">Create Drug</h1> <PrimaryButton className="pr-1"><Link href={route("drugs.index")} className="p-2"><ArrowLeft></ArrowLeft></Link>Back</PrimaryButton>
+                        <h1 className="text-xl font-bold">Create Drug</h1> <PrimaryButton className="pr-1"><Link href={route("drugs.index")} className="p-2"><ArrowLeft />Back</Link></PrimaryButton>
                     </div>
                     <div className="form">
                         <form onSubmit={handleSubmit}>
