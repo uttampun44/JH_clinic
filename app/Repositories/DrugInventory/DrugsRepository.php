@@ -44,7 +44,8 @@ class DrugsRepository implements DrugsRepositoryInterface
 
     public function update(Drug $drug, array $data): bool
     {
-        return $this->drug->update($data);
+       
+        return $drug->update($data);
     }
 
     public function delete(Drug $data)
