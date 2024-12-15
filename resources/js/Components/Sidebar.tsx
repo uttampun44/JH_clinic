@@ -49,7 +49,7 @@ export default function Siderbar() {
                                 {
                                     dropDown && (
                                         <ul>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><SpaceDashboardIcon /><Link href="/dashboard" className="text-base font-medium">Show Details</Link></li>
+                                    
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Drug Category</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Drug Supplies</Link></li>
