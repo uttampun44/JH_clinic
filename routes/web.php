@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineInventory\DrugCategoriesController;
 use App\Http\Controllers\MedicineInventory\DrugController;
 use App\Http\Controllers\MedicineInventory\DrugPurchaseController;
+use App\Http\Controllers\MedicineInventory\DrugSaleController;
 use App\Http\Controllers\MedicineInventory\DrugSupplierController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('drugs', DrugController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::resource('drug-suppliers', DrugSupplierController::class)->only(['index', 'store', 'edit', 'update']);
         Route::resource('drugs-purchases', DrugPurchaseController::class)->only(['index', 'create', 'store', 'edit', 'update']);
+        Route::resource('drugs-sales', DrugSaleController::class)->only(['index']);
 });
 
 Route::middleware('auth')->group(function () {

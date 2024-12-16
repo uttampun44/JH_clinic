@@ -7,8 +7,10 @@ import React, { useContext } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "@inertiajs/react";
+import { Edit } from "@mui/icons-material";
 
-export default function Index() {
+
+export default function Index({ purchases }) {
 
     const { isToggle } = useContext(AuthContext)
     return (
@@ -36,39 +38,39 @@ export default function Index() {
                                     <th className="capitalize p-2">Supplier Name</th>
                                     <th className="capitalize p-2">Drug Category</th>
                                     <th className="capitalize p-2">Quantity</th>
-                                    <th className="capitalize p-2">Purchase</th>
+                                    <th className="capitalize p-2">Purchase Price</th>
                                     <th className="capitalize p-2">Purchase Date</th>
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {
-                                                           suppliers.data.length > 0 ? (
-                                                               <React.Fragment>
-                                                                   {
-                                                                       suppliers.data.map((supplier: any, index: number) => (
-                                                                           <tr className="p-2 text-center text-gray-500" key={index}>
-                       
-                                                                               <td className="capitalize p-2">{index + 1}</td>
-                                                                               <td className="capitalize p-2">{supplier.name}</td>
-                                                                               <td className="capitalize p-2">{supplier.contact_person}</td>
-                                                                               <td className="capitalize p-2">{supplier.phone}</td>
-                                                                               <td className="capitalize p-2">{supplier.email}</td>
-                       
-                                                                               <td className="capitalize p-2">{supplier.address}</td>
-                                                                               <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(supplier)} /></td>
-                       
-                       
-                                                                           </tr>
-                                                                       ))
-                                                                   }
-                                                               </React.Fragment>
-                                                           ) : (
-                                                               <tr className="p-2 text-center">
-                                                                   <td className="p-2" colSpan={6}>No Data Found</td>
-                                                               </tr>
-                                                           )
-                                                       } */}
+                                {
+                                    purchases.data.length > 0 ? (
+                                        <React.Fragment>
+                                            {
+                                                purchases.data.map((purchase: any, index: number) => (
+                                                    <tr className="p-2 text-center text-gray-500" key={index}>
+
+                                                        <td className="capitalize p-2">{index + 1}</td>
+                                                        <td className="capitalize p-2">{purchase.drugs?.name}</td>
+                                                        <td className="capitalize p-2">{purchase.supplier?.name}</td>
+                                                        <td className="capitalize p-2">{purchase.drug_category?.name}</td>
+                                                        <td className="capitalize p-2">{purchase.quantity}</td>
+                                                        <td className="capitalize p-2">{purchase.purchase_price}</td>
+                                                        <td className="capitalize p-2">{purchase.purchase_date}</td>
+                                                        <td className="capitalize p-2"><Link href={route("drugs-purchases.edit", purchase.id)}><Edit className="cursor-pointer" /></Link></td>
+
+
+                                                    </tr>
+                                                ))
+                                            }
+                                        </React.Fragment>
+                                    ) : (
+                                        <tr className="p-2 text-center">
+                                            <td className="p-2" colSpan={6}>No Data Found</td>
+                                        </tr>
+                                    )
+                                }
                             </tbody>
                         </table>
                     </div>

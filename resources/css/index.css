@@ -4,3 +4,8 @@
     --primary-font-family: "Poppins", sans-serif;
     --font-style: normal;
 }
+
+table tbody tr:nth-child(odd) {
+    background-color: #F1F8FF;
+    
+  }

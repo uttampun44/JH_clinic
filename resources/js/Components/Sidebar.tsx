@@ -54,7 +54,7 @@ export default function Siderbar() {
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Drug Category</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href={route("drugs-purchases.index")} className="text-base font-medium">Purchases</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href="/dashboard" className="text-base font-medium">Sales</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href={route("drugs-sales.index")} className="text-base font-medium">Sales</Link></li>
                                         </ul>
                                     )
                                 }

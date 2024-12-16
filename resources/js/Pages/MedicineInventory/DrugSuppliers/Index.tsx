@@ -85,7 +85,7 @@ export default function Index({ suppliers }) {
         <Authenticated>
             <div className={`drugSupplier bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
-                <div className="patientContainer">
+                <div className="suppliersContainer">
                     <div className="modal">
                         <Modal show={modal} onClose={handleClose} maxWidth="xl">
                             <div className="modalForm p-4 relative">

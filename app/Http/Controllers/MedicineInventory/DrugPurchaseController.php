@@ -5,8 +5,10 @@ namespace App\Http\Controllers\MedicineInventory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DrugPurchaseRequest;
 use App\Models\DrugPurchase;
+use App\Models\DrugStock;
 use App\Repositories\DrugPurchaseRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -21,7 +23,9 @@ class DrugPurchaseController extends Controller
     }
     public function index()
     {
-        return Inertia::render('MedicineInventory/Purchases/Index');
+        $purchases = $this->drugPurchaseRepositoryInterface->index();
+
+        return Inertia::render('MedicineInventory/Purchases/Index', compact('purchases'));
     }
 
     /**
@@ -39,10 +43,22 @@ class DrugPurchaseController extends Controller
      */
     public function store(DrugPurchaseRequest $request)
     {
+        DB::beginTransaction();
         try {
             $data = $request->validated();
+
+        
+                for ($i = 0; $i < $data['quantity']; $i++) {
+                    DrugStock::create([
+                        'drug_id' => $data['drug_id'],
+                        'quantity' => 1
+                    ]);
+                }
+         
             
             $this->drugPurchaseRepositoryInterface->store($data);
+            DB::commit();
+            return to_route('drugs-purchases.index');
         } catch (\Throwable $th) {
             Log::error('cannot create store' . $th->getMessage());
         }
@@ -61,7 +77,8 @@ class DrugPurchaseController extends Controller
      */
     public function edit(DrugPurchase $drugPurchase)
     {
-        //
+    
+        return Inertia::render('MedicineInventory/Purchases/Edit', compact('drugPurchase'));
     }
 
     /**

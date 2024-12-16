@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DrugSale;
 use App\Repositories\DrugSupplierInterface;
 use Illuminate\Http\Request;
-
+use Inertia\Inertia;
 
 class DrugSaleController extends Controller
 {
@@ -20,7 +20,7 @@ class DrugSaleController extends Controller
      }
     public function index()
     {
-        //
+        return Inertia::render('MedicineInventory/Sales/Index');
     }
 
     /**

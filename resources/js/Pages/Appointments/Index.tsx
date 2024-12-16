@@ -74,6 +74,7 @@ export default function Index({ appointments =  { data: [] }, status }) {
 
     const handleEdit = () => {
         setEditing(true)
+        setModal(true)
     }
     return (
         <Authenticated>
@@ -189,6 +190,7 @@ export default function Index({ appointments =  { data: [] }, status }) {
                                     <th className="capitalize p-2">Doctor Name</th>
                                     <th className="capitalize p-2">Appointment Date</th>
                                     <th className="capitalize p-2">Appointment Time</th>
+                                    <th className="capitalize p-2">Status</th>
                                     <th className="capitalize p-2">Edit</th>
                                 </tr>
                             </thead>
@@ -207,7 +209,7 @@ export default function Index({ appointments =  { data: [] }, status }) {
                                                             <td className="capitalize p-2">{appointment.appointment_date}</td>
                                                             <td className="capitalize p-2">{appointment.appointment_time}</td>
                                                             <td className="capitalize p-2">{appointment.status}</td>
-                                                           
+                                                            <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(appointment)} /></td>
                                                         </tr>
                                                     ))
                                                 }

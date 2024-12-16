@@ -10,7 +10,7 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Input } from 
 import { toast } from "sonner";
 
 
-export function Edit(){
+export function Edit({drugPurchase}){
 
     const {isToggle} = useContext(AuthContext);
 

@@ -21,7 +21,7 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
 
     public function index()
     {
-        return $this->drugPurchase->index();
+        return DrugPurchase::with(['drugs:id,name', 'supplier:id,name', 'drug_category:id,name'])->paginate(25);
     }
 
     public function create()
@@ -39,14 +39,7 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
 
     public function store(array $data): DrugPurchase
     {
-        foreach ($data as $purchase) {
-            for ($i = 0; $i < $purchase['quantity']; $i++) {
-                DrugStock::createOrUpdate([
-                    'drug_id' => $purchase['drug_id'],
-                    'quantity' => 1
-                ]);
-            }
-        }
+        
         return $this->drugPurchase->create($data);
     }
 
