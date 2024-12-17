@@ -11,7 +11,7 @@ interface DrugPurchaseRepositoryInterface{
 
     public function store(array $data):DrugPurchase;
 
-    public function edit(DrugPurchase $drugPurchase):DrugPurchase;
+    public function edit(DrugPurchase $drugPurchase, $id):DrugPurchase;
 
     public function update(DrugPurchase $drugPurchase, array $data):bool;
 }

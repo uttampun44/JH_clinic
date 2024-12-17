@@ -10,17 +10,18 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Input } from 
 import { toast } from "sonner";
 
 
-export function Edit({drugPurchase}){
+export default function Edit({editDatas}){
 
+    console.log(editDatas)
     const {isToggle} = useContext(AuthContext);
 
     const { errors, data, setData, reset, put: put } = useForm({
-        drug_id: '',
+        drug_id: editDatas.drug_category_id || "",
         supplier_id: '',
         drug_category_id: '',
-        quantity: '',
-        purchase_price: '',
-        purchase_date: '',
+        quantity: editDatas.quantity,
+        purchase_price: editDatas.purchase_price || "",
+        purchase_date: editDatas.purchase_date || "",
     })
 
     const handleSubmit = () =>{
@@ -78,15 +79,23 @@ export function Edit({drugPurchase}){
                                 </div>
                                 <div className="quantity">
                                     <InputLabel htmlFor="quantity" value="Quantity" className="text-xl text-gray-500 font-medium" />
-                                    <Input type="number" className="rounded-md my-1 w-full" />
+                                    <Input type="number" className="rounded-md my-1 w-full" value={data.quantity} 
+                                     onChange={(e) => setData("quantity", e.target.value)}
+                                    />
                                 </div>
                                 <div className="price">
                                     <InputLabel htmlFor="price" value="Price" className="text-xl text-gray-500 font-medium" />
-                                    <Input type="number" className="rounded-md my-1 w-full" />
+                                    <Input type="number" className="rounded-md my-1 w-full" 
+                                      value={data.purchase_price}
+                                      onChange={(e) => setData("purchase_price", e.target.value)}
+                                    />
                                 </div>
                                 <div className="date">
                                     <InputLabel htmlFor="date" value="Date" className="text-xl text-gray-500 font-medium" />
-                                    <Input type="date" className="rounded-md my-1 w-full" />
+                                    <Input type="date" className="rounded-md my-1 w-full"
+                                      value={data.purchase_date}
+                                      onChange={(e) => setData("purchase_date", e.target.value)}
+                                    />
                                 </div>
                             </div>
                         </form>

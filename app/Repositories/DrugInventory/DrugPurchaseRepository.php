@@ -43,9 +43,10 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
         return $this->drugPurchase->create($data);
     }
 
-    public function edit(DrugPurchase $drugPurchase): DrugPurchase
+    public function edit(DrugPurchase $drugPurchase, $id): DrugPurchase
     {
-        return $drugPurchase;
+       
+        return  $this->drugPurchase->with(['drugs:id,name', 'supplier:id,name', 'drug_category:id,name'])->findOrFail($id);
     }
 
     public function update(DrugPurchase $drugPurchase, array $data): bool

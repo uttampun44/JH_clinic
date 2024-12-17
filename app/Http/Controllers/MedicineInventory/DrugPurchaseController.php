@@ -61,6 +61,7 @@ class DrugPurchaseController extends Controller
             return to_route('drugs-purchases.index');
         } catch (\Throwable $th) {
             Log::error('cannot create store' . $th->getMessage());
+            DB::rollBack();
         }
     }
 
@@ -75,10 +76,13 @@ class DrugPurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DrugPurchase $drugPurchase)
+    public function edit(DrugPurchase $drugPurchase, $id)
     {
-    
-        return Inertia::render('MedicineInventory/Purchases/Edit', compact('drugPurchase'));
+
+       
+        $editDatas =  $this->drugPurchaseRepositoryInterface->edit($drugPurchase, $id);
+      
+        return Inertia::render('MedicineInventory/Purchases/Edit', compact('editDatas'));
     }
 
     /**
