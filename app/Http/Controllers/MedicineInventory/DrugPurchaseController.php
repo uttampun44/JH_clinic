@@ -88,9 +88,25 @@ class DrugPurchaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DrugPurchase $drugPurchase)
-    {
-        //
+    public function update(DrugPurchaseRequest $request, DrugPurchase $drugPurchase)
+    {   
+        DB::beginTransaction();
+        try {
+            $data = $request->validated();
+
+           
+            $drugStock = DrugStock::where('drug_id', $data['drug_id'])->first();
+
+
+        
+        $this->drugPurchaseRepositoryInterface->update($drugPurchase, $data);
+        DB::commit();
+        return to_route('drugs-purchases.index');
+            
+        } catch (\Throwable $th) {
+            Log::error('Cannot Update' . $th->getMessage());
+            DB::rollBack();
+        }
     }
 
     /**

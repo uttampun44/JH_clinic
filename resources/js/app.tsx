@@ -8,7 +8,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import AuthProvider from './Context/ContextProvider';
 import { Toaster } from 'sonner';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Jh_clinic';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
