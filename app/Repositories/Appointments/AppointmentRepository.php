@@ -24,7 +24,7 @@ class AppointmentRepository implements AppointmentRepositoryInterface
 
         $doctors = Doctor::select('id', 'first_name')->get();
 
-        $appointments =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->paginate(25);
+        $appointments =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->where("status", "pending")->paginate(25);
 
         return [
             'patients' => $patients,

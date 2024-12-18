@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DrugPurchase extends Model
 {
@@ -14,7 +15,6 @@ class DrugPurchase extends Model
         'supplier_id',
         'drug_category_id',
         'category_id',
-        'quantity',
         'purchase_price',
         'purchase_date'
     ];
@@ -32,5 +32,10 @@ class DrugPurchase extends Model
     public function drug_category(): BelongsTo
     {
         return $this->belongsTo(DrugCategory::class, 'drug_category_id');
+    }
+
+    public function drugStocks():HasMany
+    {
+        return $this->hasMany(DrugStock::class, 'purchase_id');
     }
 }

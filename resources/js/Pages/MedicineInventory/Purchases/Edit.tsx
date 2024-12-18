@@ -19,7 +19,7 @@ export default function Edit({ editDatas }) {
         drug_id: editDatas.drugs.name || "",
         supplier_id: editDatas.supplier.name || "",
         drug_category_id: editDatas.drug_category.name || "",
-        quantity: editDatas.quantity,
+        quantity: editDatas.drug_stocks.map(stock => stock.quantity),
         purchase_price: editDatas.purchase_price || "",
         purchase_date: editDatas.purchase_date || "",
        

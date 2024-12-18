@@ -8,6 +8,8 @@ use App\Models\DrugPurchase;
 use App\Models\DrugStock;
 use App\Models\DrugSupplier;
 use App\Repositories\DrugPurchaseRepositoryInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
 {
@@ -21,7 +23,17 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
 
     public function index()
     {
-        return DrugPurchase::with(['drugs:id,name', 'supplier:id,name', 'drug_category:id,name'])->paginate(25);
+        return DrugPurchase::with([
+            'drugs:id,name', 
+            'supplier:id,name', 
+            'drug_category:id,name', 
+           'drugStocks' => function($query){
+            $query->select('purchase_id', 'quantity')
+            ->groupBy('purchase_id', 'quantity');
+           }
+           ])->paginate(25);
+
+           
     }
 
     public function create()
@@ -46,11 +58,64 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
     public function edit(DrugPurchase $drugPurchase, $id): DrugPurchase
     {
        
-        return  $this->drugPurchase->with(['drugs:id,name', 'supplier:id,name', 'drug_category:id,name'])->findOrFail($id);
+        return  $this->drugPurchase->with(['drugs:id,name', 
+        'supplier:id,name', 
+        'drug_category:id,name',
+         'drugStocks' => function($query){
+            $query->select('purchase_id', 'quantity')->groupBy('purchase_id', 'quantity');
+         }])->findOrFail($id);
     }
 
     public function update(DrugPurchase $drugPurchase, array $data): bool
     {
-        return $drugPurchase->update($data);
+        DB::beginTransaction();
+    
+
+        try {
+        
+            $drugPurchase->update([
+                'drug_id' => $data['drug_id'],
+                'supplier_id' => $data['supplier_id'],
+                'drug_category_id' => $data['drug_category_id'],
+                'category_id' => $data['category_id'],
+                'purchase_price' => $data['purchase_price'],
+                'purchase_date' => $data['purchase_date'],
+            ]);
+    
+        
+            $existingQuantity = $drugPurchase->drugStocks()->sum('quantity');
+            $newQuantity = $data['quantity'];
+    
+            if ($newQuantity > $existingQuantity) {
+                
+                $quantityToAdd = $newQuantity - $existingQuantity;
+                for ($i = 0; $i < $quantityToAdd; $i++) {
+                    $drugPurchase->drugStocks()->create([
+                        'purchase_id' => $drugPurchase->id,
+                        'quantity' => $newQuantity,
+                    ]);
+                }
+            } elseif ($newQuantity < $existingQuantity) {
+              
+                $quantityToReduce = $existingQuantity - $newQuantity;
+    
+                $drugStocksToDelete = $drugPurchase->drugStocks()
+                    ->take($quantityToReduce)
+                    ->get();
+    
+                foreach ($drugStocksToDelete as $drugStock) {
+                    $drugStock->delete();
+                }
+            }
+    
+            DB::commit();
+            return true;
+    
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error('Error updating DrugPurchase: ' . $th->getMessage());
+            return false;
+        }
     }
+    
 }

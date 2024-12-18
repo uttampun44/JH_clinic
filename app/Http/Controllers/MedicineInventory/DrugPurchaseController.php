@@ -23,6 +23,7 @@ class DrugPurchaseController extends Controller
     }
     public function index()
     {
+       
         $purchases = $this->drugPurchaseRepositoryInterface->index();
 
         return Inertia::render('MedicineInventory/Purchases/Index', compact('purchases'));
@@ -47,16 +48,16 @@ class DrugPurchaseController extends Controller
         try {
             $data = $request->validated();
 
-        
+           $drugPurchase =  $this->drugPurchaseRepositoryInterface->store($data);
+
                 for ($i = 0; $i < $data['quantity']; $i++) {
                     DrugStock::create([
-                        'drug_id' => $data['drug_id'],
-                        'quantity' => 1
+                        'purchase_id' => $drugPurchase->id ,
+                        'quantity' => $data['quantity']
                     ]);
                 }
          
             
-            $this->drugPurchaseRepositoryInterface->store($data);
             DB::commit();
             return to_route('drugs-purchases.index');
         } catch (\Throwable $th) {
@@ -94,18 +95,19 @@ class DrugPurchaseController extends Controller
         try {
             $data = $request->validated();
 
-           
-            $drugStock = DrugStock::where('drug_id', $data['drug_id'])->first();
-
-
-        
-        $this->drugPurchaseRepositoryInterface->update($drugPurchase, $data);
-        DB::commit();
-        return to_route('drugs-purchases.index');
+            $success = $this->drugPurchaseRepositoryInterface->update($drugPurchase, $data);
+    
+            if ($success) {
+                DB::commit();
+                return to_route('drugs-purchases.index')->with('success', 'Drug purchase updated successfully.');
+            }
+    
+            throw new \Exception('Failed to update drug purchase.');
             
         } catch (\Throwable $th) {
-            Log::error('Cannot Update' . $th->getMessage());
+            Log::error('Cannot Update: ' . $th->getMessage());
             DB::rollBack();
+            return back()->with('error', 'An error occurred while updating the drug purchase.');
         }
     }
 

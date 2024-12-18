@@ -12,6 +12,7 @@ import { Edit } from "@mui/icons-material";
 
 export default function Index({ purchases }) {
 
+
     const { isToggle } = useContext(AuthContext)
     return (
         <Authenticated>
@@ -55,7 +56,7 @@ export default function Index({ purchases }) {
                                                         <td className="capitalize p-2">{purchase.drugs?.name}</td>
                                                         <td className="capitalize p-2">{purchase.supplier?.name}</td>
                                                         <td className="capitalize p-2">{purchase.drug_category?.name}</td>
-                                                        <td className="capitalize p-2">{purchase.quantity}</td>
+                                                        <td className="capitalize p-2">{purchase.drug_stocks.map(stock => stock.quantity)}</td>
                                                         <td className="capitalize p-2">{purchase.purchase_price}</td>
                                                         <td className="capitalize p-2">{purchase.purchase_date}</td>
                                                         <td className="capitalize p-2"><Link href={route("drugs-purchases.edit", purchase.id)}><Edit className="cursor-pointer" /></Link></td>
