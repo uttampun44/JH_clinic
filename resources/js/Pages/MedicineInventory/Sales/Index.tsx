@@ -14,7 +14,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 
-export default function Index() {
+export default function Index({drugs}) {
 
     const { isToggle } = useContext(AuthContext)
 

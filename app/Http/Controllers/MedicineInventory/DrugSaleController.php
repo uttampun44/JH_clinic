@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\DrugSale;
+use App\Repositories\DrugSaleRepositoryInterface;
 use App\Repositories\DrugSupplierInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,13 +15,14 @@ class DrugSaleController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct(public DrugSupplierInterface $drugSupplierInterface)
+     public function __construct(public DrugSaleRepositoryInterface $drugSaleRepositoryInterface)
      {
-        $this->drugSupplierInterface = $drugSupplierInterface;
+        $this->drugSaleRepositoryInterface = $drugSaleRepositoryInterface;
      }
     public function index()
     {
-        return Inertia::render('MedicineInventory/Sales/Index');
+        $drugs = $this->drugSaleRepositoryInterface->index();
+        return Inertia::render('MedicineInventory/Sales/Index', compact('drugs'));
     }
 
     /**

@@ -11,5 +11,5 @@ interface DrugSaleRepositoryInterface{
 
    public function edit(DrugSale $drugSale):DrugSale;
 
-   public function update(DrugSale $drugSale, array $data):DrugSale;
+   public function update(DrugSale $drugSale, array $data):bool;
 }

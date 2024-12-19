@@ -2,9 +2,11 @@
 
 namespace App\Repositories\DrugInventory;
 
+use App\Models\Drug;
 use App\Models\DrugSale;
+use App\Repositories\DrugSaleRepositoryInterface;
 
-class DrugSaleRepository
+class DrugSaleRepository implements DrugSaleRepositoryInterface
 {
     /**
      * Create a new class instance.
@@ -16,6 +18,7 @@ class DrugSaleRepository
 
     public function index()
     {
+        return Drug::select('id', 'name')->get();
 
     }
 
