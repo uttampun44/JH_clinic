@@ -30,6 +30,7 @@
         "@inertiajs/react": "^1.2.0",
         "@mui/icons-material": "^6.1.9",
         "@mui/material": "^6.1.9",
+        "chart.js": "^4.4.7",
         "sonner": "^1.7.1"
     }
 }

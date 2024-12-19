@@ -59,7 +59,7 @@ export default function Index({ drugs }) {
             <div className={`sales bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
                 <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                    <h5 className="text-xl font-bold">Drugs Sales Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleShowModal} ><AddIcon className="text-white" />Add Sales</PrimaryButton>
+                    <h5 className="text-xl font-bold">Sales Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleShowModal} ><AddIcon className="text-white" />Add Sales</PrimaryButton>
                 </div>
                 <div className="search py-3 flex gap-x-4">
                     <div className="search relative">

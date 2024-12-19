@@ -15,11 +15,12 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Input, Select, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
+import Paginate from "@/Components/Paginate";
 
 
-export default function Index({ appointments = { data: [] }, status }) {
+export default function Index({ appointments, status}) {
 
-
+console.log(appointments)
     const props = usePage().props
 
     const patients = appointments.patients.map((patient) => patient)
@@ -252,39 +253,126 @@ export default function Index({ appointments = { data: [] }, status }) {
                                     </div>
                                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                                        {appointments.prev_page_url && (
-                                            <Link
-                                                href={appointments.prev_page_url}
-
-                                            >
-                                                <ArrowLeft />
-                                            </Link>
-                                        )}
-
-
-                                        {appointments.links?.map((link: any, index: number) => (
-                                            <Link href={`${link.url}`} key={index}>
-                                                <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
-                                                    {link.label}
-                                                </span>
-                                            </Link>
-                                        ))}
-
-                                        {appointments.next_page_url && (
-                                            <Link
-                                                href={appointments.next_page_url}
-
-                                            >
-                                                <ArrowRight />
-                                            </Link>
-                                        )}
+                                        <Paginate links={appointments.appointments.links} />
                                     </div>
                                 </TabPanel>
                                 <TabPanel>
-                                    ca
+                                    <div className="search py-3 flex gap-x-4">
+                                        <div className="search relative">
+                                            <SearchIcon className="absolute left-2 top-2" /> <Input type="text" className="rounded-md p-1 pl-10 bg-mainbg" placeholder="search" />
+                                        </div>
+                                        <div className="date">
+                                            <Input type="date" className="rounded-md p-1 bg-mainbg" placeholder="search" />
+                                        </div>
+                                    </div>
+
+                                    <div className="table my-4 w-full">
+                                        <table className="table-auto w-full">
+                                            <thead className="p-1">
+                                                <tr className="w-full border-b-2 text-primarytextcolor font-poppins">
+                                                    <th className="capitalize p-2">S.No</th>
+                                                    <th className="capitalize p-2">Patient Name</th>
+                                                    <th className="capitalize p-2">Doctor Name</th>
+                                                    <th className="capitalize p-2">Appointment Date</th>
+                                                    <th className="capitalize p-2">Appointment Time</th>
+                                                    <th className="capitalize p-2">Status</th>
+                                                    <th className="capitalize p-2">Edit</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    appointments.completed.data.length > 0 ? (
+                                                        <React.Fragment>
+                                                            {
+
+                                                                appointments.completed.data.map((completed: any, index: number) => (
+                                                                    <tr className="p-2 text-center text-gray-500" key={index}>
+                                                                        <td className="capitalize p-2">{index + 1}</td>
+                                                                        <td className="capitalize p-2">{completed.patient?.first_name}</td>
+                                                                        <td className="capitalize p-2">{completed.doctors?.first_name}</td>
+                                                                        <td className="capitalize p-2">{completed.appointment_date}</td>
+                                                                        <td className="capitalize p-2">{completed.appointment_time}</td>
+                                                                        <td className="capitalize p-2">{completed.status}</td>
+                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(appointment)} /></td>
+                                                                    </tr>
+                                                                ))
+                                                            }
+                                                        </React.Fragment>
+                                                    ) : (
+                                                        <tr className="p-2 text-center">
+                                                            <td className="p-2 " colSpan={6}>No Data Found</td>
+                                                        </tr>
+                                                    )
+                                                }
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+                                    <div className="flex items-center justify-center my-4 space-x-4">
+
+                                        <Paginate links={appointments.completed.links} />
+                                    </div>
                                 </TabPanel>
                                 <TabPanel>
-                                    fa
+                                    <div className="search py-3 flex gap-x-4">
+                                        <div className="search relative">
+                                            <SearchIcon className="absolute left-2 top-2" /> <Input type="text" className="rounded-md p-1 pl-10 bg-mainbg" placeholder="search" />
+                                        </div>
+                                        <div className="date">
+                                            <Input type="date" className="rounded-md p-1 bg-mainbg" placeholder="search" />
+                                        </div>
+                                    </div>
+
+                                    <div className="table my-4 w-full">
+                                        <table className="table-auto w-full">
+                                            <thead className="p-1">
+                                                <tr className="w-full border-b-2 text-primarytextcolor font-poppins">
+                                                    <th className="capitalize p-2">S.No</th>
+                                                    <th className="capitalize p-2">Patient Name</th>
+                                                    <th className="capitalize p-2">Doctor Name</th>
+                                                    <th className="capitalize p-2">Appointment Date</th>
+                                                    <th className="capitalize p-2">Appointment Time</th>
+                                                    <th className="capitalize p-2">Status</th>
+                                                    <th className="capitalize p-2">Edit</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    appointments.cancelled.data.length > 0 ? (
+                                                        <React.Fragment>
+                                                            {
+
+                                                                appointments.cancelled.data.map((cancel: any, index: number) => (
+                                                                    <tr className="p-2 text-center text-gray-500" key={index}>
+                                                                        <td className="capitalize p-2">{index + 1}</td>
+                                                                        <td className="capitalize p-2">{cancel.patient?.first_name}</td>
+                                                                        <td className="capitalize p-2">{cancel.doctors?.first_name}</td>
+                                                                        <td className="capitalize p-2">{cancel.appointment_date}</td>
+                                                                        <td className="capitalize p-2">{cancel.appointment_time}</td>
+                                                                        <td className="capitalize p-2">{cancel.status}</td>
+                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(appointment)} /></td>
+                                                                    </tr>
+                                                                ))
+                                                            }
+                                                        </React.Fragment>
+                                                    ) : (
+                                                        <tr className="p-2 text-center">
+                                                            <td className="p-2 " colSpan={6}>No Data Found</td>
+                                                        </tr>
+                                                    )
+                                                }
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+                                    <div className="flex items-center justify-center my-4 space-x-4">
+
+                                        <Paginate links={appointments.cancelled.links} />
+                                    </div>
                                 </TabPanel>
                             </TabPanels>
                         </TabGroup>

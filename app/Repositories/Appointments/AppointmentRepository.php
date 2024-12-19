@@ -26,10 +26,16 @@ class AppointmentRepository implements AppointmentRepositoryInterface
 
         $appointments =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->where("status", "pending")->paginate(25);
 
+        $completed =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->where("status", "completed")->paginate(25);
+
+        $cancelled =  Appointment::with(['patient:id,first_name','doctors:id,first_name'])->where("status", "cancelled")->paginate(25);
+
         return [
             'patients' => $patients,
             'doctors' => $doctors,
-            'appointments' => $appointments
+            'appointments' => $appointments,
+            'completed' => $completed,
+            'cancelled' => $cancelled
         ];
     }
 

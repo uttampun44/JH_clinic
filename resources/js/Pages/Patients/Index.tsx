@@ -13,6 +13,7 @@ import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
+import Paginate from "@/Components/Paginate";
 
 
 
@@ -259,32 +260,7 @@ export default function Index({ patients }) {
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {patients.prev_page_url && (
-                            <Link
-                                href={patients.prev_page_url}
-
-                            >
-                                <ArrowLeft />
-                            </Link>
-                        )}
-
-
-                        {patients.links.map((link:any, index:number) => (
-                           <Link href={`${link.url}`} key={index}>
-                               <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
-                                {link.label}
-                            </span>
-                            </Link>
-                        ))}
-
-                        {patients.next_page_url && (
-                            <Link
-                                href={patients.next_page_url}
-
-                            >
-                                <ArrowRight />
-                            </Link>
-                        )}
+                       <Paginate links={patients.links}/>
                     </div>
                 </div>
             </div>
