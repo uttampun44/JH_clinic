@@ -28,7 +28,6 @@ class DrugRequest extends FormRequest
             'manufacturer' => 'required',
             'dosage_from' => 'required',
             'strength' => 'required',
-            'unit_price' => 'required',
             'expiration_date' => 'required|date',
             'drug_category_id' => 'required',
 

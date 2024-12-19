@@ -1,7 +1,7 @@
 import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -13,9 +13,16 @@ import { useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
+import { Autocomplete, TextField } from "@mui/material";
+import { toast } from "sonner";
 
-export default function Index({drugs}) {
+export default function Index({ drugs }) {
 
+
+
+    const filteredDrugsName = drugs.filter((drug) => {return drug.name.toLowerCase()})
+
+   
     const { isToggle } = useContext(AuthContext)
 
     const { modal, setModal, editing, setEditing } = useModal()
@@ -30,8 +37,17 @@ export default function Index({drugs}) {
         sale_date: ''
     })
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+      post(route("drugs-sales.store"), {
+         onSuccess: () => {
+            reset(),
+            toast.success("Sales Created Successfull")
+         },
+         onError: () =>{
+            toast.success("Unable to create")
+         }
+      })
     }
 
     const handleShowModal = () => {
@@ -61,14 +77,22 @@ export default function Index({drugs}) {
                             <div className="formGrid p-4 grid gap-y-4">
                                 <div className="name">
                                     <InputLabel>Drug Name</InputLabel>
-                                    <TextInput type="text" name="name" className="w-full rounded-md"
+                                    <Autocomplete
+                                        disablePortal
+                                        options={filteredDrugsName}
 
-                                        value={data.drug_id}
-                                        onChange={(e) => setData("drug_id", e.target.value)}
+                                        getOptionLabel={(drug) => drug.name || ''}
+                                        className="w-full rounded-md my-1"
+                                        value={drugs.find(drug => drug.id === data.drug_id) || null}
+                                        onChange={(event, newValue) => {
+
+                                            setData("drug_id", newValue ? newValue.id : "");
+                                        }}
+                                        renderInput={(params) => <TextField  {...params} label="Search Drug Name" />}
                                     />
                                     {
                                         errors.drug_id && (
-                                            <p className="text-red-500">{errors.drug_id}</p>
+                                            <p className="text-red-600">The Drug name field is required</p>
                                         )
                                     }
                                 </div>
@@ -100,15 +124,15 @@ export default function Index({drugs}) {
 
 
                                 <div className="quantity">
-                                    <InputLabel>Sale Quantity</InputLabel>
+                                    <InputLabel>Sale Date</InputLabel>
 
-                                    <TextInput type="text" name="quantity" className="w-full rounded-md"
-                                        value={data.sale_price}
-                                        onChange={(e) => setData("sale_price", e.target.value)}
+                                    <TextInput type="date" name="quantity" className="w-full rounded-md"
+                                        value={data.sale_date}
+                                        onChange={(e) => setData("sale_date", e.target.value)}
                                     />
                                     {
-                                        errors.sale_price && (
-                                            <p className="text-red-500">{errors.sale_price}</p>
+                                        errors.sale_date && (
+                                            <p className="text-red-500">{errors.sale_date}</p>
                                         )
                                     }
                                 </div>

@@ -68,54 +68,7 @@ class DrugPurchaseRepository implements DrugPurchaseRepositoryInterface
 
     public function update(DrugPurchase $drugPurchase, array $data): bool
     {
-        DB::beginTransaction();
-    
-
-        try {
-        
-            $drugPurchase->update([
-                'drug_id' => $data['drug_id'],
-                'supplier_id' => $data['supplier_id'],
-                'drug_category_id' => $data['drug_category_id'],
-                'category_id' => $data['category_id'],
-                'purchase_price' => $data['purchase_price'],
-                'purchase_date' => $data['purchase_date'],
-            ]);
-    
-        
-            $existingQuantity = $drugPurchase->drugStocks()->sum('quantity');
-            $newQuantity = $data['quantity'];
-    
-            if ($newQuantity > $existingQuantity) {
-                
-                $quantityToAdd = $newQuantity - $existingQuantity;
-                for ($i = 0; $i < $quantityToAdd; $i++) {
-                    $drugPurchase->drugStocks()->create([
-                        'purchase_id' => $drugPurchase->id,
-                        'quantity' => $newQuantity,
-                    ]);
-                }
-            } elseif ($newQuantity < $existingQuantity) {
-              
-                $quantityToReduce = $existingQuantity - $newQuantity;
-    
-                $drugStocksToDelete = $drugPurchase->drugStocks()
-                    ->take($quantityToReduce)
-                    ->get();
-    
-                foreach ($drugStocksToDelete as $drugStock) {
-                    $drugStock->delete();
-                }
-            }
-    
-            DB::commit();
-            return true;
-    
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Log::error('Error updating DrugPurchase: ' . $th->getMessage());
-            return false;
-        }
+       return $this->drugPurchase->update($data);
     }
     
 }

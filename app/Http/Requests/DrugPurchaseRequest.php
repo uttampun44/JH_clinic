@@ -25,6 +25,7 @@ class DrugPurchaseRequest extends FormRequest
             'drug_id' => 'required',
         'supplier_id' => 'required',
         'drug_category_id' => 'required',
+        'unit_price' => 'required',
         'quantity' => 'required|integer',
         'purchase_price' => 'required',
         'purchase_date' => 'required|date',

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DrugSaleRequest;
 use App\Models\DrugSale;
 use App\Repositories\DrugSaleRepositoryInterface;
 use App\Repositories\DrugSupplierInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DrugSaleController extends Controller
@@ -15,10 +17,10 @@ class DrugSaleController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct(public DrugSaleRepositoryInterface $drugSaleRepositoryInterface)
-     {
+    public function __construct(public DrugSaleRepositoryInterface $drugSaleRepositoryInterface)
+    {
         $this->drugSaleRepositoryInterface = $drugSaleRepositoryInterface;
-     }
+    }
     public function index()
     {
         $drugs = $this->drugSaleRepositoryInterface->index();
@@ -36,9 +38,17 @@ class DrugSaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DrugSaleRequest $request)
     {
-       
+        // dd($request);
+
+        try {
+            $data = $request->validated();
+
+            $this->drugSaleRepositoryInterface->store($data);
+        } catch (\Throwable $th) {
+            Log::error('Unable to create');
+        }
     }
 
     /**

@@ -25,7 +25,6 @@ class DrugFactory extends Factory
                 'manufacturer' => $this->faker->company(), 
                 'dosage_from' => $this->faker->randomDigitNotNull(), 
                 'strength' => $this->faker->word(),
-                'unit_price' => $this->faker->randomFloat(2, 10, 100),
                 'expiration_date' => $this->faker->date(), 
                 'drug_category_id' => DrugCategory::inRandomOrder()->first()->id, 
         ];

@@ -21,7 +21,6 @@ export default function Edit({categories, drug}) {
         manufacturer: drug.manufacturer,
         dosage_from: drug.dosage_from,
         strength: drug.strength,
-        unit_price: drug.unit_price,
         expiration_date: drug.expiration_date,
         drug_category_id: drug.id
     })
@@ -108,15 +107,7 @@ export default function Edit({categories, drug}) {
                                         )
                                     }
                                 </div>
-                                <div className="unit_price">
-                                    <InputLabel htmlFor="unit_price" value="Unit Price" className="text-xl text-gray-500 font-medium" />
-                                    <Input type="text" value={data.unit_price} onChange={(e) => setData("unit_price", e.target.value)} className="rounded-md my-1 w-full" />
-                                    {
-                                        errors.unit_price && (
-                                            <p className="text-red-600">{errors.unit_price}</p>
-                                        )
-                                    }
-                                </div>
+                              
                                 <div className="expiration_date">
                                     <InputLabel htmlFor="expiration_date" value="Expiration Date" className="text-xl text-gray-500 font-medium" />
                                     <Input type="date" value={data.expiration_date} onChange={(e) => setData("expiration_date", e.target.value)} className="rounded-md my-1 w-full" />

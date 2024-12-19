@@ -38,6 +38,7 @@ export default function Index({ purchases }) {
                                     <th className="capitalize p-2">Drug Name</th>
                                     <th className="capitalize p-2">Supplier Name</th>
                                     <th className="capitalize p-2">Drug Category</th>
+                                    <th className="capitalize p-2">Unit Price</th>
                                     <th className="capitalize p-2">Quantity</th>
                                     <th className="capitalize p-2">Purchase Price</th>
                                     <th className="capitalize p-2">Purchase Date</th>
@@ -56,6 +57,7 @@ export default function Index({ purchases }) {
                                                         <td className="capitalize p-2">{purchase.drugs?.name}</td>
                                                         <td className="capitalize p-2">{purchase.supplier?.name}</td>
                                                         <td className="capitalize p-2">{purchase.drug_category?.name}</td>
+                                                        <td className="capitalize p-2">{purchase.unit_price}</td>
                                                         <td className="capitalize p-2">{purchase.drug_stocks.map(stock => stock.quantity)}</td>
                                                         <td className="capitalize p-2">{purchase.purchase_price}</td>
                                                         <td className="capitalize p-2">{purchase.purchase_date}</td>
@@ -68,7 +70,7 @@ export default function Index({ purchases }) {
                                         </React.Fragment>
                                     ) : (
                                         <tr className="p-2 text-center">
-                                            <td className="p-2" colSpan={6}>No Data Found</td>
+                                            <td className="p-2" colSpan={10}>No Data Found</td>
                                         </tr>
                                     )
                                 }

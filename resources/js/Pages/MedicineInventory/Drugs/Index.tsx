@@ -39,7 +39,6 @@ export default function Index({ drugs = { data: [] } }) {
                                 <th className="capitalize p-2">Manufacturer</th>
                                 <th className="capitalize p-2">Dosage</th>
                                 <th className="capitalize p-2">Strength</th>
-                                <th className="capitalize p-2">Unit Price</th>
                                 <th className="capitalize p-2">Expiration Date</th>
                                 <th className="capitalize p-2">Drugs Category</th>
                                 <th className="capitalize p-2">Edit</th>
@@ -60,7 +59,6 @@ export default function Index({ drugs = { data: [] } }) {
                                                     <td className="capitalize p-2">{drugCategory.manufacturer}</td>
                                                     <td className="capitalize p-2">{drugCategory.dosage_from}</td>
                                                     <td className="capitalize p-2">{drugCategory.strength}</td>
-                                                    <td className="capitalize p-2">{drugCategory.unit_price}</td>
                                                     <td className="capitalize p-2">{drugCategory.expiration_date}</td>
                                                     <td className="capitalize p-2">{drugCategory.drugs_categories.name}</td>
                                                     <td className="capitalize p-2"><Link href={route("drugs.edit", drugCategory.id)}> <Edit className="cursor-pointer" /></Link></td>
@@ -72,7 +70,7 @@ export default function Index({ drugs = { data: [] } }) {
                                     </React.Fragment>
                                 ) : (
                                     <tr className="p-2 text-center">
-                                        <td className="p-2" colSpan={6}>No Data Found</td>
+                                        <td className="p-2" colSpan={10}>No Data Found</td>
                                     </tr>
                                 )
                             }

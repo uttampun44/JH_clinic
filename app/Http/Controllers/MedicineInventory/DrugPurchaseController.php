@@ -50,12 +50,11 @@ class DrugPurchaseController extends Controller
 
            $drugPurchase =  $this->drugPurchaseRepositoryInterface->store($data);
 
-                for ($i = 0; $i < $data['quantity']; $i++) {
                     DrugStock::create([
                         'purchase_id' => $drugPurchase->id ,
                         'quantity' => $data['quantity']
                     ]);
-                }
+              
          
             
             DB::commit();
@@ -94,6 +93,8 @@ class DrugPurchaseController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->validated();
+            
+            DrugStock::where('purchase_id', $drugPurchase->id)->findOrFail();
 
             $success = $this->drugPurchaseRepositoryInterface->update($drugPurchase, $data);
     

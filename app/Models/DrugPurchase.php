@@ -15,6 +15,8 @@ class DrugPurchase extends Model
         'supplier_id',
         'drug_category_id',
         'category_id',
+        'unit_price',
+        'quantity',
         'purchase_price',
         'purchase_date'
     ];

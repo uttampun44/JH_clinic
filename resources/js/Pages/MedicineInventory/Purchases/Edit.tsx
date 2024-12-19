@@ -19,7 +19,8 @@ export default function Edit({ editDatas }) {
         drug_id: editDatas.drugs.name || "",
         supplier_id: editDatas.supplier.name || "",
         drug_category_id: editDatas.drug_category.name || "",
-        quantity: editDatas.drug_stocks.map(stock => stock.quantity),
+        unit_price: editDatas.unit_price || "",
+        quantity: editDatas.quantity,
         purchase_price: editDatas.purchase_price || "",
         purchase_date: editDatas.purchase_date || "",
        
@@ -46,7 +47,7 @@ export default function Edit({ editDatas }) {
 
                 <div className="durgsForm">
                     <div className="title flex justify-between">
-                        <h1 className="text-xl font-bold">Update Drug Purchases</h1> <PrimaryButton className="pr-1"><Link href={route("drugs-purchases.index")} className="p-2"><ArrowLeft />Back</Link></PrimaryButton>
+                        <h1 className="text-xl font-bold">Update Purchases</h1> <PrimaryButton className="pr-1"><Link href={route("drugs-purchases.index")} className="p-2"><ArrowLeft />Back</Link></PrimaryButton>
                     </div>
                     <div className="form">
                         <div className="form">
@@ -75,6 +76,18 @@ export default function Edit({ editDatas }) {
                                             onChange={(e) => setData("drug_category_id", e.target.value)}
                                             readOnly
                                         />
+                                    </div>
+
+                                    <div className="unit_price">
+                                        <InputLabel htmlFor="unit_price" value="Unit Price" className="text-xl text-gray-500 font-medium" />
+                                        <Input type="number" className="rounded-md my-1 w-full" value={data.unit_price}
+                                            onChange={(e) => setData("unit_price", e.target.value)}
+                                        />
+                                        {
+                                            errors.unit_price && (
+                                                <p className="text-red-500">{errors.unit_price}</p>
+                                            )
+                                        }
                                     </div>
                                     <div className="quantity">
                                         <InputLabel htmlFor="quantity" value="Quantity" className="text-xl text-gray-500 font-medium" />

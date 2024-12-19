@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('drug_id')->constrained('drugs')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('supplier_id')->constrained('drug_suppliers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('drug_category_id')->constrained('drug_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->decimal('unit_price');
+            $table->decimal('quantity');
             $table->decimal('purchase_price', 10, 2);
             $table->date('purchase_date');
             $table->timestamps();

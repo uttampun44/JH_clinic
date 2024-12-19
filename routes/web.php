@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('drugs', DrugController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::resource('drug-suppliers', DrugSupplierController::class)->only(['index', 'store', 'edit', 'update']);
         Route::resource('drugs-purchases', DrugPurchaseController::class)->only(['index', 'create', 'store', 'edit', 'update']);
-        Route::resource('drugs-sales', DrugSaleController::class)->only(['index']);
+        Route::resource('drugs-sales', DrugSaleController::class)->only(['index', 'store']);
 });
 
 Route::middleware('auth')->group(function () {

@@ -213,7 +213,7 @@ export default function Index({ suppliers }) {
                                         </React.Fragment>
                                     ) : (
                                         <tr className="p-2 text-center">
-                                            <td className="p-2" colSpan={6}>No Data Found</td>
+                                            <td className="p-2" colSpan={7}>No Data Found</td>
                                         </tr>
                                     )
                                 }

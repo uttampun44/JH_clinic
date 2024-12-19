@@ -14,12 +14,12 @@ class Drug extends Model
     
     protected $table = 'drugs';
 
-    protected $fillable = ['name', 'sku', 'description', 'manufacturer', 'dosage_from', 'strength', 'unit_price',
+    protected $fillable = ['name', 'sku', 'description', 'manufacturer', 'dosage_from', 'strength',
     'expiration_date', 'drug_category_id'];
 
-    public function drugs_categories():HasOne
+    public function drugs_categories():BelongsTo
     {
-        return $this->hasOne(DrugCategory::class, 'drug_category_id');
+        return $this->belongsTo(DrugCategory::class, 'drug_category_id');
     }
 
     public function supplier():HasMany

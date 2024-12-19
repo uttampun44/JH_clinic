@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('manufacturer')->nullable();
             $table->integer('dosage_from')->nullable();
             $table->string('strength')->nullable();    
-            $table->string('unit_price');
             $table->date('expiration_date')->nullable();
             $table->foreignId('drug_category_id')->constrained('drug_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

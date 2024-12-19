@@ -30,6 +30,7 @@ export default function Create({ datas }) {
         drug_id: '',
         supplier_id: '',
         drug_category_id: '',
+        unit_price: '',
         quantity: '',
         purchase_price: '',
         purchase_date: '',
@@ -55,7 +56,7 @@ export default function Create({ datas }) {
 
                 <div className="durgsForm">
                     <div className="title flex justify-between">
-                        <h1 className="text-xl font-bold">Create Drug Purchases</h1> <PrimaryButton className="pr-1"><Link href={route("drugs-purchases.index")} className="p-2"><ArrowLeft />Back</Link></PrimaryButton>
+                        <h1 className="text-xl font-bold">Create Purchases</h1> <PrimaryButton className="pr-1"><Link href={route("drugs-purchases.index")} className="p-2"><ArrowLeft />Back</Link></PrimaryButton>
                     </div>
                     <div className="form">
                         <div className="form">
@@ -125,6 +126,16 @@ export default function Create({ datas }) {
                                             )
                                         }
                                     </div>
+                                    <div className="unit_price">
+                                        <InputLabel htmlFor="unit_price" value="Unit Price" className="text-xl text-gray-500 font-medium" />
+                                        <Input type="text" className="rounded-md my-1 w-full" value={data.unit_price} onChange={(e) => setData("unit_price", e.target.value)} />
+                                        {
+                                            errors.unit_price && (
+                                                <p className="text-red-600">{errors.unit_price}</p>
+                                            )
+                                        }
+                                    </div>
+
                                     <div className="quantity">
                                         <InputLabel htmlFor="quantity" value="Quantity" className="text-xl text-gray-500 font-medium" />
                                         <Input type="text" className="rounded-md my-1 w-full" value={data.quantity} onChange={(e) => setData("quantity", e.target.value)} />
