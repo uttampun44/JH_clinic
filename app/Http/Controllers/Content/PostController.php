@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         $data =  $this->postRepositoryInterface->getPost();
 
-        return Inertia::render('Content/Post/index');
+        return Inertia::render('Content/Post/Index');
     }
 
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\Content\PostCategory;
 
-use App\PostCategoryRepository;
+use App\Repositories\Content\PostCategoryRepository;
 use App\Repositories\PostCategoryRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 

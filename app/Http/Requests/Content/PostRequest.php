@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Content;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,12 +22,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string:max:255',
-            'meta_title' => 'required|string:max:255',
-            'slug' => 'required|string:max:255',
-            'tags' => 'required|string:max:255',
-            'short_summary' => 'required|string:max:255',
-            'summary' => 'required|string:max:255',
+            //
         ];
     }
 }

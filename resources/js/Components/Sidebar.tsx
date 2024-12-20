@@ -16,20 +16,22 @@ import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import PagesIcon from '@mui/icons-material/Pages';
 
 
 export default function Siderbar() {
 
     const { isToggle } = useContext(AuthContext);
     const [dropDown, setDropDown] = useState(false)
+    const [post, setPost] = useState(false);
 
     const handleInventory = () => {
         setDropDown((prev) => !prev)
     }
 
     const handleContent = () => {
-        setDropDown((prev) => !prev)
+        setPost((prev) => !prev)
     }
     return (
         <aside>
@@ -47,13 +49,13 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500"><PersonIcon /><Link href="/doctors" className="text-base font-medium ">Doctors</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><AppRegistrationIcon /><Link href="/appointments" className="text-base font-medium ">Appointments</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><MessageIcon /><Link href="/messages" className="text-base font-medium ">Messages</Link></li>
-                                <li className="flex items-center gap-x-2 text-gray-500" ><CastForEducationIcon /><span className="text-base font-medium " onClick={handleContent}>Education Content</span></li>
+                                <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" ><CastForEducationIcon /><span className="text-base font-medium " onClick={handleContent}>Education Content</span></li>
 
                                 {
-                                    dropDown && (
+                                    post && (
                                         <ul>
-                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /><Link href={route("blog-categories.index")} className="text-base font-medium ">Post Category</Link></li>
-                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /><Link href={route("blog-categories.index")} className="text-base font-medium ">Post</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><CategoryIcon /><Link href="/blog-categories" className="text-base font-medium ">Post Category</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><PagesIcon /><Link href={route("blog-post.index")} className="text-base font-medium ">Post</Link></li>
                                         </ul>
                                     )
                                 }

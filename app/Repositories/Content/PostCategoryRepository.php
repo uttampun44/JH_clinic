@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Repositories\Content;
 
 use App\Models\PostCategory;
 use App\Repositories\PostCategoryRepositoryInterface;
+
 
 class PostCategoryRepository implements PostCategoryRepositoryInterface
 {
@@ -12,26 +13,32 @@ class PostCategoryRepository implements PostCategoryRepositoryInterface
      */
     public function __construct(public PostCategory $postCategory)
     {
-        //
+        
     }
 
     public function getPostCategory()
     {
-
+        return PostCategory::paginate(10);
     }
 
-    public function getPostCategoryStore(array $data): PostCategory
+    public function storePostCategory(array $data):PostCategory
     {
-         return $this->postCategory->store($data);
+       
+        return $this->postCategory->create($data);
     }
 
-    public function getPostCategoryEdit(PostCategory $postCategory): PostCategory
+    public function editPostCategory(PostCategory $postCategory): PostCategory
     {
         return $postCategory;
     }
 
-    public function getPostCategoryUpdate(PostCategory $postCategory, array $data): bool
+    public function updatePostCategory(PostCategory $postCategory, array $data): bool
     {
-        return $this->postCategory->update($data);
+        return $postCategory->update($data);
+    }
+
+    public function deletePostCategory(PostCategory $postCategory)
+    {
+        
     }
 }

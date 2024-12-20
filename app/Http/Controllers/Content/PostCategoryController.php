@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostCategoryRequest;
+use App\Http\Requests\Content\PostCategoryRequest;
 use App\Models\PostCategory;
 use App\Repositories\PostCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+
 
 class PostCategoryController extends Controller
 {
@@ -22,7 +24,9 @@ class PostCategoryController extends Controller
      }
     public function index()
     {
-        return Inertia::render('Content/Category/index');
+        $datas = $this->postCategoryRepositoryInterface->getPostCategory();
+
+        return Inertia::render('Content/Category/Index', compact('datas'));
     }
 
     /**
@@ -38,14 +42,21 @@ class PostCategoryController extends Controller
      */
     public function store(PostCategoryRequest $request)
     {
+
         try {
 
             $data = $request->validated();
 
-            return $this->postCategoryRepositoryInterface->getPostCategoryStore($data);
+            $data['meta_title'] = Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title']);
+
+        
+            $this->postCategoryRepositoryInterface->storePostCategory($data);
+
+            return to_route('blog-categories.index');
 
         } catch (\Throwable $th) {
-            Log::error('Unable to create');
+            Log::error('Unable to create' . $th->getMessage());
         }
     }
 
@@ -68,9 +79,22 @@ class PostCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PostCategory $postCategory)
+    public function update(PostCategoryRequest $request, PostCategory $postCategory)
     {
-        //
+        try {
+         
+            $data = $request->validated();
+
+            $data['meta_title'] = Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title']);
+
+            $this->postCategoryRepositoryInterface->updatePostCategory($postCategory, $data);
+
+            return to_route('blog-categories.index');
+
+        } catch (\Throwable $th) {
+            Log::error('Unable to update' . $th->getMessage());
+        }
     }
 
     /**

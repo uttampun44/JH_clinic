@@ -3,6 +3,8 @@
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Appointments\AppointmentProvider::class,
+    App\Providers\Content\PostCategory\PostCategoryProvider::class,
+    App\Providers\Content\PostCategory\PostProvider::class,
     App\Providers\Doctors\DorctorServiceProvider::class,
     App\Providers\DrugCategory\DrugCategoryProvider::class,
     App\Providers\DrugPurchase\DrugPurchase::class,
