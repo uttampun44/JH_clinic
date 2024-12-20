@@ -10,11 +10,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Input, Select, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
+import {  Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
 
 
@@ -28,6 +28,7 @@ console.log(appointments)
 
     const { isToggle } = useContext(AuthContext)
     const [isEditing, setEditing] = useState<boolean>(false)
+    const [currentId, setCurrentId] = useState<string>("");
 
     const [query, setQuery] = useState('');
 
@@ -65,6 +66,17 @@ console.log(appointments)
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
+       if(isEditing && currentId){
+           put(route("appointments.update", currentId), {
+               data,
+               preserveScroll: true,
+               onSuccess: () => {
+                   reset();
+                   setModal(false);
+                   setEditing(false);
+               },
+           });
+       }else{
         post(route("appointments.store", {
             _token: props.csrf_token,
             preserveScroll: true,
@@ -72,11 +84,20 @@ console.log(appointments)
                 reset();
             }
         }))
+       }
     }
 
-    const handleEdit = () => {
+    const handleEdit = (completed:any) => {
         setEditing(true)
         setModal(true)
+        setCurrentId(completed.id)
+        setData({
+            patient_id: completed.id,
+            doctor_id: completed.id,
+            appointment_date: completed.appointment_date,
+            appointment_time: completed.appointment_time,
+            status: completed,
+        })
     }
     return (
         <Authenticated>
@@ -294,7 +315,7 @@ console.log(appointments)
                                                                         <td className="capitalize p-2">{completed.appointment_date}</td>
                                                                         <td className="capitalize p-2">{completed.appointment_time}</td>
                                                                         <td className="capitalize p-2">{completed.status}</td>
-                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(appointment)} /></td>
+                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(completed)} /></td>
                                                                     </tr>
                                                                 ))
                                                             }
@@ -353,7 +374,7 @@ console.log(appointments)
                                                                         <td className="capitalize p-2">{cancel.appointment_date}</td>
                                                                         <td className="capitalize p-2">{cancel.appointment_time}</td>
                                                                         <td className="capitalize p-2">{cancel.status}</td>
-                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(appointment)} /></td>
+                                                                        <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(cancel)} /></td>
                                                                     </tr>
                                                                 ))
                                                             }

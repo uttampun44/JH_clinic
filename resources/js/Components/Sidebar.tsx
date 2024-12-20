@@ -72,6 +72,11 @@ export default function Siderbar() {
                                     )
                                 }
                                 <li className="flex items-center gap-x-2 text-gray-500"><SettingsIcon /><Link href="/settings" className="text-base font-medium ">Settings</Link></li>
+                                {
+                                    dropDown && (
+                                        <li className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Roles</Link></li>
+                                    )
+                                }
                             </ul>
                         ) : (
                             <ul className="grid gap-y-4">
