@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -45,4 +46,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function role():BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_users');
+     }
+
+     public function permission()
+     {
+        return $this->belongsToMany(Permission::class, 'role_permissions');
+     }
+
+     public function hasPermission($permission)
+     {
+        $this->permission()->contains('name', $permission);
+     }
 }
