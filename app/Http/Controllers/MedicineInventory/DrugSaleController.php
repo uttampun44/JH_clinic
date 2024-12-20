@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DrugSaleRequest;
 use App\Models\DrugSale;
 use App\Repositories\DrugSaleRepositoryInterface;
-use App\Repositories\DrugSupplierInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -23,8 +21,8 @@ class DrugSaleController extends Controller
     }
     public function index()
     {
-        $drugs = $this->drugSaleRepositoryInterface->index();
-        return Inertia::render('MedicineInventory/Sales/Index', compact('drugs'));
+        $datas = $this->drugSaleRepositoryInterface->index();
+        return Inertia::render('MedicineInventory/Sales/Index', compact('datas'));
     }
 
     /**
@@ -40,8 +38,7 @@ class DrugSaleController extends Controller
      */
     public function store(DrugSaleRequest $request)
     {
-        // dd($request);
-
+       
         try {
             $data = $request->validated();
 
@@ -70,9 +67,19 @@ class DrugSaleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DrugSale $drugSale)
+    public function update(DrugSaleRequest $request, DrugSale $drugSale)
     {
-        //
+        try {
+            $data = $request->validated();
+
+            $this->drugSaleRepositoryInterface->update($drugSale, $data);
+          
+            return to_route('drug-sales.index');
+
+        } catch (\Throwable $th) {
+            Log::error('Unable to update' . $th->getMessage());
+
+        }
     }
 
     /**

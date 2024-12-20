@@ -6,14 +6,15 @@ import React, { useContext, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Input, Textarea } from "@headlessui/react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import DangerButton from "@/Components/DangerButton";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
+import Paginate from "@/Components/Paginate";
 
 export default function Index({ drug_categories }) {
 
@@ -115,7 +116,7 @@ export default function Index({ drug_categories }) {
                                             }
                                         </div>
                                         <div className="submit">
-                                            <DangerButton>{isEditingMode ? 'Update Drug Category' : 'Register Drug Category'}</DangerButton>
+                                            <DangerButton>{isEditingMode ? 'Update Category' : 'Register Category'}</DangerButton>
                                         </div>
                                     </div>
                                 </form>
@@ -123,7 +124,7 @@ export default function Index({ drug_categories }) {
                         </Modal>
                     </div>
                     <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                        <h5 className="text-xl font-bold">Drug Category Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Drug Category</PrimaryButton>
+                        <h5 className="text-xl font-bold">Category Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Category</PrimaryButton>
                     </div>
                     <div className="search py-3 flex gap-x-4">
                         <div className="search relative">
@@ -173,32 +174,7 @@ export default function Index({ drug_categories }) {
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {drug_categories.prev_page_url && (
-                            <Link
-                                href={drug_categories.prev_page_url}
-
-                            >
-                                <ArrowLeft />
-                            </Link>
-                        )}
-
-
-                        {drug_categories.links.map((link: any, index: number) => (
-                            <Link href={`${link.url}`} key={index}>
-                                <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
-                                    {link.label}
-                                </span>
-                            </Link>
-                        ))}
-
-                        {drug_categories.next_page_url && (
-                            <Link
-                                href={drug_categories.next_page_url}
-
-                            >
-                                <ArrowRight />
-                            </Link>
-                        )}
+                       <Paginate links={drug_categories.links} />
                     </div>
                 </div>
             </div>

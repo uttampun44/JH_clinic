@@ -17,7 +17,7 @@ class DrugCategoryRepository implements DrugCategoryRepositoryInterface
     }
     public function index()
     {
-        return DrugCategory::paginate(25);
+        return DrugCategory::paginate(10);
     }
 
     public function store(array $data):DrugCategory

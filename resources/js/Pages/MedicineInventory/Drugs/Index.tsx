@@ -8,6 +8,7 @@ import React, { useContext } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "@inertiajs/react";
+import Paginate from "@/Components/Paginate";
 
 export default function Index({ drugs = { data: [] } }) {
 
@@ -76,6 +77,10 @@ export default function Index({ drugs = { data: [] } }) {
                             }
                         </tbody>
                     </table>
+                </div>
+                <div className="flex items-center justify-center my-4 space-x-4">
+
+                    <Paginate links={drugs.links} />
                 </div>
             </div>
         </Authenticated>

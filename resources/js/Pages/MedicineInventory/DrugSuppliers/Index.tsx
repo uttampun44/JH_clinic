@@ -5,16 +5,17 @@ import Siderbar from "@/Components/Sidebar";
 import TextInput from "@/Components/TextInput";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import React, { useContext, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import { ArrowLeft, ArrowRight, Edit } from "@mui/icons-material";
+import {  Edit } from "@mui/icons-material";
 import SearchIcon from '@mui/icons-material/Search';
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Input, Textarea } from "@headlessui/react";
 import useModal from "@/Hooks/useModal";
 import { toast } from "sonner";
+import Paginate from "@/Components/Paginate";
 
 export default function Index({ suppliers }) {
 
@@ -165,7 +166,7 @@ export default function Index({ suppliers }) {
                         </Modal>
                     </div>
                     <div className="headingRow flex justify-between border-b-[1px] pb-1">
-                        <h5 className="text-xl font-bold">Supperlier Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Drug Suppliers</PrimaryButton>
+                        <h5 className="text-xl font-bold">Supperlier Info</h5>  <PrimaryButton className="bg-primary rounded-md p-2" onClick={handleModal}><AddIcon className="text-white" />Add Suppliers</PrimaryButton>
                     </div>
                     <div className="search py-3 flex gap-x-4">
                         <div className="search relative">
@@ -222,32 +223,7 @@ export default function Index({ suppliers }) {
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {suppliers.prev_page_url && (
-                            <Link
-                                href={suppliers.prev_page_url}
-
-                            >
-                                <ArrowLeft />
-                            </Link>
-                        )}
-
-
-                        {suppliers.links.map((link: any, index: number) => (
-                            <Link href={`${link.url}`} key={index}>
-                                <span className={`bg-gray-200 ${link.active ? 'text-primary' : 'black'} text-lg font-semibold py-2 px-4 rounded-md text-black`}>
-                                    {link.label}
-                                </span>
-                            </Link>
-                        ))}
-
-                        {suppliers.next_page_url && (
-                            <Link
-                                href={suppliers.next_page_url}
-
-                            >
-                                <ArrowRight />
-                            </Link>
-                        )}
+                        <Paginate links={suppliers.links} />
                     </div>
                 </div>
             </div>

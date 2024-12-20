@@ -1,7 +1,7 @@
 import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -15,17 +15,20 @@ import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import { Autocomplete, TextField } from "@mui/material";
 import { toast } from "sonner";
+import { Edit } from "@mui/icons-material";
 
-export default function Index({ drugs }) {
+export default function Index({ datas }) {
 
 
+    const filteredDrugsName = datas.drugs.filter((drug) => { return drug.name.toLowerCase() })
 
-    const filteredDrugsName = drugs.filter((drug) => {return drug.name.toLowerCase()})
 
-   
     const { isToggle } = useContext(AuthContext)
 
-    const { modal, setModal, editing, setEditing } = useModal()
+    const { modal, setModal, isEditing, setEditing } = useModal()
+
+    const [saleid, setSaleid] = useState("");
+
     const handleClose = () => {
         setModal(false)
     }
@@ -39,19 +42,44 @@ export default function Index({ drugs }) {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-      post(route("drugs-sales.store"), {
-         onSuccess: () => {
-            reset(),
-            toast.success("Sales Created Successfull")
-         },
-         onError: () =>{
-            toast.success("Unable to create")
-         }
-      })
+        if(isEditing){
+            put(route("drugs-sales.update", saleid),{
+                data,
+                onSuccess: () =>{
+                    reset();
+                    toast.success("Successufully Update")
+                },
+                onError: () =>{
+                    toast.error("Unable to update")
+                }
+            })
+        }else{
+            post(route("drugs-sales.store"), {
+                onSuccess: () => {
+                    reset(),
+                        toast.success("Sales Created Successfull")
+                },
+                onError: () => {
+                    toast.success("Unable to create")
+                }
+            })
+        }
     }
 
     const handleShowModal = () => {
         setModal(true);
+    }
+
+    const handleEdit = (sale:any) =>{
+         setModal(true)
+         setEditing(true)
+         setSaleid(sale.id)
+         setData({
+            drug_id: sale.drug_id,
+            quantity: sale.quantity,
+            sale_price: sale.sale_price,
+            sale_date: sale.sale_date
+         })
     }
 
     return (
@@ -83,7 +111,7 @@ export default function Index({ drugs }) {
 
                                         getOptionLabel={(drug) => drug.name || ''}
                                         className="w-full rounded-md my-1"
-                                        value={drugs.find(drug => drug.id === data.drug_id) || null}
+                                        value={datas.drugs.find(drug => drug.id === data.drug_id) || null}
                                         onChange={(event, newValue) => {
 
                                             setData("drug_id", newValue ? newValue.id : "");
@@ -138,7 +166,7 @@ export default function Index({ drugs }) {
                                 </div>
 
                                 <div className="submit">
-                                    <DangerButton>{editing ? 'Update Suppliers' : 'Register Suppliers'}</DangerButton>
+                                    <DangerButton>{isEditing ? 'Update Sales' : 'Register Sales'}</DangerButton>
                                 </div>
                             </div>
                         </form>
@@ -157,6 +185,28 @@ export default function Index({ drugs }) {
                             </tr>
                         </thead>
                         <tbody>
+                            {
+                                datas.sales.data.length > 0 ? (
+                                    <React.Fragment>
+                                         {
+                                            datas.sales.data.map((sale, index) => (
+                                                 <tr className="p-2 text-center text-gray-500" key={index}>
+                                                     <td>{index + 1}</td>
+                                                     <td>{sale.drug_id}</td>
+                                                     <td>{sale.quantity}</td>
+                                                     <td>{sale.sale_price}</td>
+                                                     <td>{sale.sale_date}</td>
+                                                       <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(sale)} /></td>
+                                                 </tr>
+                                            ))
+                                         }
+                                    </React.Fragment>
+                                ) : (
+                                    <tr className="p-2 text-center">
+                                        <td className="p-2" colSpan={10}>No Data Found</td>
+                                    </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </div>

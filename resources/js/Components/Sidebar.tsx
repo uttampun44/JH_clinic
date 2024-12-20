@@ -45,13 +45,13 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500"><AppRegistrationIcon /><Link href="/appointments" className="text-base font-medium ">Appointments</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><MessageIcon /><Link href="/messages" className="text-base font-medium ">Messages</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500" ><CastForEducationIcon /><Link href="/education-content" className="text-base font-medium ">Education Content</Link></li>
-                                <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleInventory}><MedicalServicesIcon /><span className="text-base font-medium ">Medicine Inventory</span></li>
+                                <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleInventory}><MedicalServicesIcon /><span className="text-base font-medium ">Inventory</span></li>
                                 {
                                     dropDown && (
                                         <ul>
                                     
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Drug Supplier</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Drug Category</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Supplier</Link></li>
+                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Category</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href={route("drugs-purchases.index")} className="text-base font-medium">Purchases</Link></li>
                                             <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href={route("drugs-sales.index")} className="text-base font-medium">Sales</Link></li>

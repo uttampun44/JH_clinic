@@ -18,7 +18,13 @@ class DrugSaleRepository implements DrugSaleRepositoryInterface
 
     public function index()
     {
-        return Drug::select('id', 'name')->get();
+        $drugs =  Drug::select('id', 'name')->get();
+        $sales = DrugSale::paginate(10);
+
+        return [
+           'drugs' => $drugs,
+           'sales' => $sales
+        ];
 
     }
 

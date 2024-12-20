@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\MedicineInventory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Requests\DrugRequest;
 use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Repositories\DrugsRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
