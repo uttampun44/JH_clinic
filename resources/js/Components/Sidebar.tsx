@@ -28,6 +28,9 @@ export default function Siderbar() {
         setDropDown((prev) => !prev)
     }
 
+    const handleContent = () => {
+        setDropDown((prev) => !prev)
+    }
     return (
         <aside>
             <div className={`sidebarContent bg-white fixed top-0 left-0 p-5 h-screen ${isToggle ? 'w-52' : 'w-20'}`}>
@@ -44,17 +47,27 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500"><PersonIcon /><Link href="/doctors" className="text-base font-medium ">Doctors</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><AppRegistrationIcon /><Link href="/appointments" className="text-base font-medium ">Appointments</Link></li>
                                 <li className="flex items-center gap-x-2 text-gray-500"><MessageIcon /><Link href="/messages" className="text-base font-medium ">Messages</Link></li>
-                                <li className="flex items-center gap-x-2 text-gray-500" ><CastForEducationIcon /><Link href="/education-content" className="text-base font-medium ">Education Content</Link></li>
+                                <li className="flex items-center gap-x-2 text-gray-500" ><CastForEducationIcon /><span className="text-base font-medium " onClick={handleContent}>Education Content</span></li>
+
+                                {
+                                    dropDown && (
+                                        <ul>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /><Link href={route("blog-categories.index")} className="text-base font-medium ">Post Category</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicalServicesIcon /><Link href={route("blog-categories.index")} className="text-base font-medium ">Post</Link></li>
+                                        </ul>
+                                    )
+                                }
+
                                 <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleInventory}><MedicalServicesIcon /><span className="text-base font-medium ">Inventory</span></li>
                                 {
                                     dropDown && (
                                         <ul>
-                                    
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Supplier</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Category</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href={route("drugs-purchases.index")} className="text-base font-medium">Purchases</Link></li>
-                                            <li  className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href={route("drugs-sales.index")} className="text-base font-medium">Sales</Link></li>
+
+                                            <li className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Supplier</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicationIcon /><Link href={route("drug-categories.index")} className="text-base font-medium">Category</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><MedicationLiquidIcon /><Link href={route('drugs.index')} className="text-base font-medium">Drugs</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><ShowChartIcon /><Link href={route("drugs-purchases.index")} className="text-base font-medium">Purchases</Link></li>
+                                            <li className="flex items-center gap-x-2 text-gray-500"><TrendingDownIcon /><Link href={route("drugs-sales.index")} className="text-base font-medium">Sales</Link></li>
                                         </ul>
                                     )
                                 }

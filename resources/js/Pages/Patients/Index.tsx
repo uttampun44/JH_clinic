@@ -11,8 +11,8 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
-import { Link, useForm, usePage } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
+import { useForm, usePage } from "@inertiajs/react";
+import {  Delete, Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
 
 
