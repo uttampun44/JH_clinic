@@ -101,7 +101,7 @@ export default function Index({ doctors }) {
         <Authenticated>
             <div className={`patients bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
-                <div className="patientContainer">
+                <div className="doctorContainer">
                     <div className="modal">
                         <Modal show={modal} onClose={handleClose} maxWidth="xl">
                             <div className="modalForm p-4 relative">
@@ -252,13 +252,13 @@ export default function Index({ doctors }) {
                                         </tr>
                                     )
                                 }
-                            </tbody> 
+                            </tbody>
                         </table>
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
                        <Paginate links={doctors.links}/>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </Authenticated>
