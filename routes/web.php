@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('drug-suppliers', DrugSupplierController::class)->only(['index', 'store', 'edit', 'update']);
         Route::resource('drugs-purchases', DrugPurchaseController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::resource('drugs-sales', DrugSaleController::class)->only(['index', 'store', 'edit', 'update']);
-        Route::resource('blog-categories', PostCategoryController::class)->only(['index', 'store', 'update', 'delete']);
+        Route::resource('blog-categories', PostCategoryController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::resource('blog-post', PostController::class)->only(['index', 'store', 'edit', 'update', 'delete']);
         Route::resource('comments', PostCommentController::class)->only(['index', 'store', 'edit', 'update', 'delete']);
 });

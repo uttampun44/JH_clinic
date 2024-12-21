@@ -33,8 +33,7 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
 
     const [postcategoryId, setPostcategoryId] = useState<string>("")
 
-  
-console.log(postcategoryId)
+
     const { post: post, data, setData, errors, delete: destroy, put: put, reset } = useForm({
         title: '',
         meta_title: '',
@@ -93,6 +92,18 @@ console.log(postcategoryId)
             meta_title: category.meta_title || "",
             slug: category.slug || "",
         })
+    }
+
+    const handleDelete = (id: number) => {
+      console.log(id)
+      destroy(route('blog-categories.destroy', id),{
+        onSuccess: () =>{
+            toast.success("Successfully Delete")
+        },
+        onError: () => {
+            toast.error("Unable to delete")
+        }
+      })
     }
 
     return (
@@ -169,7 +180,7 @@ console.log(postcategoryId)
                                         </React.Fragment>
                                     ):(
                                 <tr className="p-2 text-center">
-                                    <td className="p-2 " colSpan={3}>No Data Found</td>
+                                    <td className="p-2 " colSpan={4}>No Data Found</td>
                                 </tr>
                                 )
                                }
@@ -178,7 +189,7 @@ console.log(postcategoryId)
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                        {/* <Paginate /> */}
+                        <Paginate links={datas.links}/>
                     </div>
                 </div>
             </div>

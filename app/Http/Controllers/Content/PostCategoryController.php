@@ -100,15 +100,16 @@ class PostCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostCategory $postCategory)
+    public function destroy(PostCategory $postCategory, $id)
     {
-        $postCategory = $postCategory::findOrFail($postCategory->id);
+      
+        $delete = PostCategory::findOrFail($id);
 
-        if($postCategory)
+        if($delete)
         {
-            $postCategory->delete();
-
-            return to_route('blog-categories.index');
+            $delete->delete();
         }
+
+        return to_route('blog-categories.index');
     }
 }

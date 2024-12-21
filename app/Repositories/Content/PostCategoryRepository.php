@@ -39,6 +39,8 @@ class PostCategoryRepository implements PostCategoryRepositoryInterface
 
     public function deletePostCategory(PostCategory $postCategory)
     {
-        
+       
+       return $postCategory->delete();    
     }
+    
 }
