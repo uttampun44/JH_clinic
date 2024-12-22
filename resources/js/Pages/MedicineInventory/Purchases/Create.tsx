@@ -3,10 +3,10 @@ import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link, useForm } from "@inertiajs/react";
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import { ArrowLeft } from "@mui/icons-material";
 import InputLabel from "@/Components/InputLabel";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Input } from "@headlessui/react";
+import { Input } from "@headlessui/react";
 import { toast } from "sonner";
 import DangerButton from "@/Components/DangerButton";
 import { Autocomplete, TextField } from "@mui/material";
@@ -92,7 +92,7 @@ export default function Create({ datas }) {
                                             getOptionLabel={(supp) => supp.name || ''}
                                             className="w-full rounded-md my-1"
                                             value={suppliers.find(supplier => supplier.id === data.supplier_id) || null}
-                                          
+
                                             onChange={(event, newValue) => {
 
                                                 setData("supplier_id", newValue ? newValue.id : "");

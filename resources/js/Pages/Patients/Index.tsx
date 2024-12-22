@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useForm, usePage } from "@inertiajs/react";
 import {  Delete, Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
+import { toast } from "sonner";
 
 
 
@@ -69,13 +70,17 @@ export default function Index({ patients }) {
                     reset();
                     setModal(false);
                     setEditing(false);
+                    toast.success("Patient Successfully update");
                 },
             });
         } else {
             post(route("patients.store", {
                 _token: props.csrf_token,
                 preserveScroll: true,
-                onSuccess: () => reset()
+                onSuccess: () => {
+                    reset();
+                    toast.success("Patient Successfully create");
+                }
             }))
         }
     }

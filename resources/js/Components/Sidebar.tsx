@@ -20,18 +20,26 @@ import CategoryIcon from '@mui/icons-material/Category';
 import PagesIcon from '@mui/icons-material/Pages';
 
 
+
 export default function Siderbar() {
 
     const { isToggle } = useContext(AuthContext);
-    const [dropDown, setDropDown] = useState(false)
+
     const [post, setPost] = useState(false);
 
+    const [dropDown, setDropDown] = useState(false);
+    const [settings, setSettings] = useState(false);
+
     const handleInventory = () => {
-        setDropDown((prev) => !prev)
+        setDropDown((prev) => !prev);
     }
 
     const handleContent = () => {
         setPost((prev) => !prev)
+    }
+
+    const handleSettings = () => {
+        setSettings((prev) => !prev)
     }
     return (
         <aside>
@@ -73,9 +81,9 @@ export default function Siderbar() {
                                         </ul>
                                     )
                                 }
-                                <li className="flex items-center gap-x-2 text-gray-500"><SettingsIcon /><Link href="/settings" className="text-base font-medium ">Settings</Link></li>
+                                <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleSettings}><SettingsIcon />Settings</li>
                                 {
-                                    dropDown && (
+                                    settings && (
                                         <li className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Roles</Link></li>
                                     )
                                 }

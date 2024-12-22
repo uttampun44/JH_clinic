@@ -11,9 +11,10 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
-import { Link, useForm, usePage } from "@inertiajs/react";
-import { ArrowLeft, ArrowRight, Delete, Edit } from "@mui/icons-material";
+import { useForm, usePage } from "@inertiajs/react";
+import {  Delete, Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
+import { toast } from "sonner";
 
 
 export default function Index({ doctors }) {
@@ -65,13 +66,17 @@ export default function Index({ doctors }) {
                     reset();
                     setModal(false);
                     setEditing(false);
+                    toast.success("Doctor Successfully update");
                 },
             });
         } else {
             post(route("doctors.store", {
                 _token: props.csrf_token,
                 preserveScroll: true,
-                onSuccess: () => reset()
+                onSuccess: () => {
+                    reset();
+                    toast.success("Doctor Successfully create");
+                }
             }))
         }
     }

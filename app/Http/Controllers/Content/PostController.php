@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Content\PostRequest;
 use App\Models\Post;
 use App\Repositories\PostRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+
 
 class PostController extends Controller
 {
@@ -31,15 +36,34 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Content/Post/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        try {
+            $data = $request->validated();
+
+            if(isset($data['slug']) && $data['slug'])
+            {
+                $data['slug'] = Str::slug($data['title']);
+            }
+
+            if(isset($data['image']) && $data['image'] instanceof UploadedFile)
+            {
+                $data['image'] = uploadImage($data['image']);
+            }
+
+            $this->postRepositoryInterface->storePostStore($data);
+
+            return to_route('blog-post.index');
+
+        } catch (\Throwable $th) {
+            Log::error('Unable to create post');
+        }
     }
 
     /**
@@ -55,7 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('Content/Post/Edit');
     }
 
     /**
@@ -71,6 +95,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+
     }
 }

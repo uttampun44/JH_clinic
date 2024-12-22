@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('meta_title');
             $table->string('slug');
             $table->text('tags');
-            $table->text('short_summary');
+            $table->text('short_summary')->nullable();
             $table->longText('summary');
+            $table->longText('image')->nullable();
             $table->timestamps();
         });
     }

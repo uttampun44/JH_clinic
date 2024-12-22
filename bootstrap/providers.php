@@ -14,4 +14,6 @@ return [
     App\Providers\Patients\PattientServiceProvider::class,
     App\Providers\PostCategoryProvider::class,
     App\Providers\PostProvider::class,
+    App\Providers\Providers\Settings\Roles\RoleProvider::class,
+    App\Providers\Settings\Roles\RoleProvider::class,
 ];

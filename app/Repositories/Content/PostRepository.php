@@ -1,9 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Repositories\Content;
 
 use App\Models\Post;
 use App\Repositories\PostRepositoryInterface;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -17,25 +19,37 @@ class PostRepository implements PostRepositoryInterface
 
     public function getPost()
     {
+
     }
 
-    public function getPostStore(array $data): Post
+    public function storePostStore(array $data): Post
     {
-        return $this->post->create($data);
+
+        if(isset($data['slug']) && $data['slug'])
+        {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        if(isset($data['image']) && $data['image'] instanceof UploadedFile)
+        {
+            $data['image'] = uploadImage($data['image']);
+        }
+
+        return $this->data->create($data);
     }
 
     public function getPostEdit(Post $post): Post
     {
-      return $post;
+        return $post;
     }
 
-    public function getPostUpdate(Post $post, array $data): bool
+    public function updatePost(Post $post, array $data): bool
     {
-      return $post->update($data);
+         return $post->update($data);
     }
 
-    public function getPostDelete(Post $post): bool
+    public function postDelete(Post $post): bool
     {
-       return $post->delete();
+         return $post->delete();
     }
 }
