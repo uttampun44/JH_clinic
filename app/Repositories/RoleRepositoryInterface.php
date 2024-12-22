@@ -8,11 +8,8 @@ interface RoleRepositoryInterface
 {
     public function getRoles();
 
-    public function storeRoleStore(array $data): Role;
+    public function editShow();
 
-    public function editRole(Role $role): Role;
 
-    public function updateRole(Role $role, array $data): bool;
-
-    public function deleteRole(Role $role);
+    public function storeOrUpdateRole(array $data): Role;
 }

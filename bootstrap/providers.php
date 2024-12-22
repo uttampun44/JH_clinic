@@ -11,6 +11,7 @@ return [
     App\Providers\DrugSale\DrugSale::class,
     App\Providers\DrugSuppliers\DrugSuppliers::class,
     App\Providers\Drugs\DrugProvider::class,
+    App\Providers\Messages\MessageProvider::class,
     App\Providers\Patients\PattientServiceProvider::class,
     App\Providers\PostCategoryProvider::class,
     App\Providers\PostProvider::class,

@@ -14,12 +14,12 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         Permission::insert([
-            ['name' => 'view-dashboard', 'guard_name' => 'web'],
-            ['name' => 'view-patient-list', 'guard_name' => 'web'],
-            ['name' => 'view-doctor-list', 'guard_name' => 'web'],
-            ['name' => 'appointment-list', 'guard_name' => 'web'],
-            ['name' => 'view-inventory', 'guard_name' => 'web'],
-            ['name' => 'view-settings', 'guard_name' => 'web'],
+            ['name' => 'view-dashboard', 'display_name' => 'Dashboard', 'guard_name' => 'web'],
+            ['name' => 'view-patient-list', 'display_name' => 'Patient List', 'guard_name' => 'web'],
+            ['name' => 'view-doctor-list', 'display_name' => 'Doctor List', 'guard_name' => 'web'],
+            ['name' => 'appointment-list', 'display_name' => 'Appointment List', 'guard_name' => 'web'],
+            ['name' => 'view-inventory', 'display_name' => 'Inventory', 'guard_name' => 'web'],
+            ['name' => 'view-settings', 'display_name' => 'Settings', 'guard_name' => 'web'],
         ]);
     }
 }

@@ -84,7 +84,7 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleSettings}><SettingsIcon />Settings</li>
                                 {
                                     settings && (
-                                        <li className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('drug-suppliers.index')} className="text-base font-medium">Roles</Link></li>
+                                        <li className="flex items-center gap-x-2 text-gray-500"><Inventory2Icon /><Link href={route('roles.index')} className="text-base font-medium">Roles</Link></li>
                                     )
                                 }
                             </ul>

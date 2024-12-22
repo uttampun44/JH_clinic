@@ -10,9 +10,10 @@ use App\Http\Controllers\MedicineInventory\DrugController;
 use App\Http\Controllers\MedicineInventory\DrugPurchaseController;
 use App\Http\Controllers\MedicineInventory\DrugSaleController;
 use App\Http\Controllers\MedicineInventory\DrugSupplierController;
+use App\Http\Controllers\Messaging\MessageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
-use App\Models\PostCategory;
+use App\Http\Controllers\Settings\Role\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('blog-categories', PostCategoryController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::resource('blog-post', PostController::class)->only(['index', 'create', 'store', 'edit', 'update', 'delete']);
         Route::resource('comments', PostCommentController::class)->only(['index', 'store', 'edit', 'update', 'delete']);
+        Route::get('roles', [RoleController::class ,'getRoles'])->name('roles.index');
+        Route::get('roles/edit/{id}', [RoleController::class ,'editRolesAndPermissions'])->name('roles.edit');
+        Route::get('messages', [MessageController::class ,'getMessages'])->name('messages.index');
 });
 
 Route::middleware('auth')->group(function () {

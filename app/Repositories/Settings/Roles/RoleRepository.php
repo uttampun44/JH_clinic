@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Settings\Roles;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepositoryInterface;
+use Inertia\Inertia;
 
 class RoleRepository implements RoleRepositoryInterface
 {
@@ -17,26 +19,24 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function getRoles()
     {
+        $roles = Role::select('id', 'name')->get();
+
+
+        return [
+            'roles' => $roles
+        ];
     }
 
-    public function storeRoleStore(array $data): Role
+    public function storeOrUpdateRole(array $data): Role
     {
-      return  $this->data->create($data);
+      return  $this->role->create($data);
 
     }
 
-    public function editRole(Role $role): Role
+    public function editShow()
     {
-        return $role;
+        return Permission::select('id', 'name', 'display_name')->get();
+
     }
 
-    public function updateRole(Role $role, array $data): bool
-    {
-        return $this->role->update( $data);
-    }
-
-    public function deleteRole(Role $role)
-    {
-        return $role->delete($role);
-    }
 }

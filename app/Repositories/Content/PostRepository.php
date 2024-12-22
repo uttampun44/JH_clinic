@@ -35,7 +35,7 @@ class PostRepository implements PostRepositoryInterface
             $data['image'] = uploadImage($data['image']);
         }
 
-        return $this->data->create($data);
+        return $this->post->create($data);
     }
 
     public function getPostEdit(Post $post): Post
