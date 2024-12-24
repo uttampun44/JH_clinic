@@ -5,10 +5,10 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import React, { useContext } from "react";
 import Paginate from "@/Components/Paginate";
 import { Link } from "@inertiajs/react";
+import { Edit } from "@mui/icons-material";
+
 
 export default function Index({ datas }) {
-
-    console.log(datas);
 
     const { isToggle } = useContext(AuthContext);
 
@@ -38,7 +38,7 @@ export default function Index({ datas }) {
                                                     <tr className="p-2 text-center" key={index}>
                                                         <td className="p-2">{index + 1}</td>
                                                         <td className="p-2 capitalize">{role.name}</td>
-                                                        <td className="p-2"><Link href={route('roles.edit', role.id)} className="text-blue-500 hover:underline">Edit</Link></td>
+                                                        <td className="p-2 "><Link href={route('roles.edit', role.id)} className="text-gray-500 hover:underline"><Edit /></Link></td>
                                                     </tr>
                                                 ))
                                             }

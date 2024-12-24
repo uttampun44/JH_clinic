@@ -9,3 +9,11 @@ table tbody tr:nth-child(odd) {
     background-color: #F1F8FF;
     
   }
+
+  .editor {
+    text-align: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+  }

@@ -2,16 +2,23 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Siderbar from "@/Components/Sidebar";
 import { AuthContext } from "@/Context/ContextProvider";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link, useForm } from "@inertiajs/react";
-import { useContext } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { useContext, useState } from "react";
 import { ArrowLeft } from "@mui/icons-material";
 import { toast } from "sonner";
-import { Input, Textarea } from "@headlessui/react";
+import { Input, Select, Textarea } from "@headlessui/react";
 import InputLabel from "@/Components/InputLabel";
 import DangerButton from "@/Components/DangerButton";
+import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
 
+interface postCategory {
+    id: number,
+    title: string
+}
 
-export default function Create() {
+export default function Create({ post_category }: { post_category: postCategory[] }) {
+
 
     const { isToggle } = useContext(AuthContext);
 
@@ -23,6 +30,12 @@ export default function Create() {
         summary: '',
         image: '',
     })
+    const [value, setValue] = useState('simple text');
+
+    function onChange(e) {
+        setValue(e.target.value);
+    }
+
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -40,6 +53,7 @@ export default function Create() {
     }
     return (
         <Authenticated>
+            <Head title="Create Blogs" />
             <div className={`postCreateContainerIndex bg-white ${isToggle ? 'ml-56 p-10 rounded-md mr-8' : 'ml-24 p-10'}`}>
                 <Siderbar />
                 <div className="title flex justify-between">
@@ -50,7 +64,14 @@ export default function Create() {
                         <div className="formGrid my-2 grid grid-cols-3 gap-4">
                             <div className="title">
                                 <InputLabel htmlFor="title" value="Title" className="text-xl text-gray-500 font-medium" />
-                                <Input type="text" className="rounded-md my-1 w-full" value={data.title} onChange={(e) => setData("title", e.target.value)} />
+                                <Select className="w-full rounded-md">
+                                    <option>Select Post Category</option>
+                                    {
+                                        post_category.map((category, index) => (
+                                            <option value={category.id} key={index}>{category.title}</option>
+                                        ))
+                                    }
+                                </Select>
                                 {
                                     errors.title && (
                                         <p className="text-red-600">{errors.title}</p>
@@ -87,7 +108,8 @@ export default function Create() {
                             </div>
                             <div className="summary">
                                 <InputLabel htmlFor="summary" value="Summary" className="text-xl text-gray-500 font-medium" />
-                                <Textarea className="rounded-md my-1 w-full" value={data.summary} onChange={(e) => setData("summary", e.target.value)} />
+
+                                <ReactQuill theme="snow" />
                                 {
                                     errors.summary && (
                                         <p className="text-red-600">{errors.summary}</p>
@@ -98,7 +120,7 @@ export default function Create() {
                                 <InputLabel htmlFor="image" value="Image" className="text-xl text-gray-500 font-medium" />
 
                                 <Input type="file" className="rounded-md my-1 w-full"
-                                 onChange={(e) => setData("image", e.target.files[0])} accept="image/*" />
+                                    onChange={(e) => setData("image", e.target.files[0])} accept="image/*" />
                                 {
                                     errors.image && (
                                         <p className="text-red-600">{errors.image}</p>

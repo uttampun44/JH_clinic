@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from "sonner";
-import {Delete,  Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 
 
 interface pageCategoryData {
@@ -54,7 +54,7 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
                     setEditing(false);
                     toast.success("Update Successfully")
                 },
-                onError: () =>{
+                onError: () => {
                     toast.error("unable to update");
                 }
             });
@@ -83,7 +83,7 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
         setModal(false)
     }
 
-    const handleEdit = (category: any) =>{
+    const handleEdit = (category: any) => {
         setEditing(true);
         setModal(true)
         setPostcategoryId(category.id)
@@ -95,15 +95,15 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
     }
 
     const handleDelete = (id: number) => {
-      console.log(id)
-      destroy(route('blog-categories.destroy', id),{
-        onSuccess: () =>{
-            toast.success("Successfully Delete")
-        },
-        onError: () => {
-            toast.error("Unable to delete")
-        }
-      })
+       
+        destroy(route('blog-categories.destroy', id), {
+            onSuccess: () => {
+                toast.success("Successfully Delete")
+            },
+            onError: () => {
+                toast.error("Unable to delete")
+            }
+        })
     }
 
     return (
@@ -165,7 +165,7 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
                             </thead>
                             <tbody>
                                 {
-                                    datas.data.length > 0 ?(
+                                    datas.data.length > 0 ? (
                                         <React.Fragment>
                                             {
                                                 datas.data.map((category, index: number) => (
@@ -173,23 +173,23 @@ export default function Index({ datas = [] }: { datas: pageCategoryData }) {
                                                         <td className="capitalize p-2">{index + 1}</td>
                                                         <td className="capitalize p-2">{category.title}</td>
                                                         <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(category)} /></td>
-                                                          <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(category.id)} /></td>
+                                                        <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(category.id)} /></td>
                                                     </tr>
                                                 ))
                                             }
                                         </React.Fragment>
-                                    ):(
-                                <tr className="p-2 text-center">
-                                    <td className="p-2 " colSpan={4}>No Data Found</td>
-                                </tr>
-                                )
-                               }
+                                    ) : (
+                                        <tr className="p-2 text-center">
+                                            <td className="p-2 " colSpan={4}>No Data Found</td>
+                                        </tr>
+                                    )
+                                }
                             </tbody>
                         </table>
                     </div>
                     <div className="flex items-center justify-center my-4 space-x-4">
 
-                        <Paginate links={datas.links}/>
+                        <Paginate links={datas.links} />
                     </div>
                 </div>
             </div>
