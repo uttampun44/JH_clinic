@@ -30,11 +30,7 @@ export default function Create({ post_category }: { post_category: postCategory[
         summary: '',
         image: '',
     })
-    const [value, setValue] = useState('simple text');
-
-    function onChange(e) {
-        setValue(e.target.value);
-    }
+  
 
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -64,7 +60,7 @@ export default function Create({ post_category }: { post_category: postCategory[
                         <div className="formGrid my-2 grid grid-cols-3 gap-4">
                             <div className="title">
                                 <InputLabel htmlFor="title" value="Title" className="text-xl text-gray-500 font-medium" />
-                                <Select className="w-full rounded-md">
+                                <Select className="w-full rounded-md" value={data.title} onChange={(e) => setData("title", e.target.value)}>
                                     <option>Select Post Category</option>
                                     {
                                         post_category.map((category, index) => (
@@ -109,7 +105,7 @@ export default function Create({ post_category }: { post_category: postCategory[
                             <div className="summary">
                                 <InputLabel htmlFor="summary" value="Summary" className="text-xl text-gray-500 font-medium" />
 
-                                <ReactQuill theme="snow" />
+                                <ReactQuill theme="snow" value={data.summary } onChange={(content) => setData("summary", content)} />
                                 {
                                     errors.summary && (
                                         <p className="text-red-600">{errors.summary}</p>

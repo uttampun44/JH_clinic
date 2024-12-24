@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Content\PostRequest;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\PostCategoryID;
 use App\Repositories\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Illuminate\Http\UploadedFile;
-
 
 class PostController extends Controller
 {
@@ -47,25 +47,34 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        DB::beginTransaction();
         try {
+         
             $data = $request->validated();
+        
+         
+          $posts =  $this->postRepositoryInterface->storePostStore($data);
 
-            if(isset($data['slug']) && $data['slug'])
+            if(isset($data['title']) && $data['title'])
             {
-                $data['slug'] = Str::slug($data['title']);
+                PostCategoryID::create([
+                    'post_category_id' => $data['title'],
+                    'post_id' => $posts->id
+                ]);
             }
-
-            if(isset($data['image']) && $data['image'] instanceof UploadedFile)
-            {
-                $data['image'] = uploadImage($data['image']);
-            }
-
-            $this->postRepositoryInterface->storePostStore($data);
-
-            return to_route('blog-post.index');
+    
+            
+            DB::commit();
+            return to_route('blog-post.index')->with('success', 'Post created successfully.');
 
         } catch (\Throwable $th) {
-            Log::error('Unable to create post');
+            Log::error('Unable to create post: ' . $th->getMessage(), [
+                'request_data' => $request->all(),
+            ]);
+    
+            DB::rollBack();
+
+            return back()->withErrors(['error' => 'Unable to create post. Please try again.']);
         }
     }
 
