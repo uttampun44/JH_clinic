@@ -58,7 +58,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+     
     }
     
     /**
@@ -66,7 +66,8 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        
+      $datas = $this->patientRespository->editPatients($patient);
+      return Inertia::render("Patients/PatientAccount", compact('datas'));
      
     }
 

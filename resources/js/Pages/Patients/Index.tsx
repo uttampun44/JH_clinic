@@ -11,11 +11,11 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import DangerButton from "@/Components/DangerButton";
 import CloseIcon from '@mui/icons-material/Close';
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import {  Delete, Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
 import { toast } from "sonner";
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 export default function Index({ patients }) {
@@ -230,6 +230,7 @@ export default function Index({ patients }) {
                                     <th className="capitalize p-2">Address</th>
                                     <th className="capitalize p-2">Edit</th>
                                     <th className="capitalize p-2">Delete</th>
+                                    <th className="capitalize p-2">Create Account</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -249,6 +250,7 @@ export default function Index({ patients }) {
                                                         <td className="capitalize p-2">{patient.address}</td>
                                                         <td className="capitalize p-2"><Edit className="cursor-pointer" onClick={() => handleEdit(patient)} /></td>
                                                         <td className="capitalize p-2"><Delete className="text-red-700 cursor-pointer" onClick={(e) => handleDelete(patient.id)} /></td>
+                                                        <td className="capitalize p-2"><Link href={route('patients.edit', patient.id)}><AccountCircleIcon className="cursor-pointer" /></Link></td>
 
                                                     </tr>
                                                 ))
