@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
+use App\Models\Role;
 use App\Repositories\PatientRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -66,8 +67,10 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
+      $roles = Role::select('id', 'name')->get();
+
       $datas = $this->patientRespository->editPatients($patient);
-      return Inertia::render("Patients/PatientAccount", compact('datas'));
+      return Inertia::render("Patients/PatientAccount", compact('datas', 'roles'));
      
     }
 
