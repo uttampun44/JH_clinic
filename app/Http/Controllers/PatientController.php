@@ -67,7 +67,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-      $roles = Role::select('id', 'name')->get();
+      $roles = Role::where('name', 'patient')->get();
 
       $datas = $this->patientRespository->editPatients($patient);
       return Inertia::render("Patients/PatientAccount", compact('datas', 'roles'));

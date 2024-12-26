@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Content\PostCategoryController;
 use App\Http\Controllers\Content\PostCommentController;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::get('roles', [RoleController::class ,'getRoles'])->name('roles.index');
         Route::get('roles/edit/{id}', [RoleController::class ,'editRolesAndPermissions'])->name('roles.edit');
         Route::get('messages', [MessageController::class ,'getMessages'])->name('messages.index');
+        Route::post('create-account', [AccountController::class, 'createAccount'])->name('account.store');
 });
 
 Route::middleware('auth')->group(function () {
