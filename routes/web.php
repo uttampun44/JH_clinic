@@ -13,6 +13,7 @@ use App\Http\Controllers\MedicineInventory\DrugSaleController;
 use App\Http\Controllers\MedicineInventory\DrugSupplierController;
 use App\Http\Controllers\Messaging\MessageController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Settings\Role\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('comments', PostCommentController::class)->only(['index', 'store', 'edit', 'update', 'delete']);
         Route::get('roles', [RoleController::class ,'getRoles'])->name('roles.index');
         Route::get('roles/edit/{id}', [RoleController::class ,'editRolesAndPermissions'])->name('roles.edit');
+        Route::put('roles/edit/{id}', [RoleController::class ,'storeOrUpdateRole'])->name('roles.update');
         Route::get('messages', [MessageController::class ,'getMessages'])->name('messages.index');
         Route::post('create-account', [AccountController::class, 'createAccount'])->name('account.store');
 });
