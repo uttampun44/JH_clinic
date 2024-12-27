@@ -30,8 +30,19 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function storeOrUpdateRole(array $data): RolePermission
     {
-        dd($data);
-        
+
+        if(isset($data['role_id']) && isset($data['permission_id'])){
+             {
+            RolePermission::updateOrCreate(
+                [
+                    'role_id' => $data['role_id'],
+                    'permission_id' => $data['permission_id'], 
+                ],
+                
+            );
+           
+        }
+      }
       return  $this->role->create($data);
     }
 

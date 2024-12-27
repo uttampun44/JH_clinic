@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings\Role;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\RolePermission;
 use App\Repositories\RoleRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -36,9 +37,13 @@ class RoleController extends Controller
    public function storeOrUpdateRole(Request $request)
    {
       try {
+       
         $this->roleRepositoryInterface->storeOrUpdateRole($request->all());
+        return redirect()->route('roles.index');
       } catch (\Throwable $th) {
-         Log::info('Error while Creating or Updating Role' . $th->getMessage());
+         Log::info('Error while Creating or Updating Role' ,[
+            'error' => $th->getMessage(),
+         ]);
       }
    }
 }

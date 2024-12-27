@@ -13,9 +13,9 @@ use App\Http\Controllers\MedicineInventory\DrugSaleController;
 use App\Http\Controllers\MedicineInventory\DrugSupplierController;
 use App\Http\Controllers\Messaging\MessageController;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Settings\Role\RoleController;
+use App\Http\Middleware\RolePermissionMiddleware;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
             return Inertia::render('Dashboard');
         })->name('dashboard');
         Route::resource('patients', PatientController::class);
-        Route::resource('doctors', DoctorController::class);
+        Route::resource('doctors', DoctorController::class)->middleware(RolePermissionMiddleware::class);
         Route::resource('appointments', AppointmentController::class);
         Route::resource('drug-categories', DrugCategoriesController::class);
         Route::resource('drugs', DrugController::class)->only(['index', 'create', 'store', 'edit', 'update']);
