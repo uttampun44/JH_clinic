@@ -21,8 +21,8 @@ class DoctorController extends Controller
      }
     public function index()
     {
-        $doctors = $this->doctorRepository->index();
 
+        $doctors = $this->doctorRepository->index();
 
         return Inertia::render("Doctor/Index",[
             'doctors' => $doctors

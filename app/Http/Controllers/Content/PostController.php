@@ -55,7 +55,7 @@ class PostController extends Controller
          
           $posts =  $this->postRepositoryInterface->storePostStore($data);
 
-            if(isset($data['title']) && $data['title'])
+            if(isset($data['title']) )
             {
                 PostCategoryID::create([
                     'post_category_id' => $data['title'],

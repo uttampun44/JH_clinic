@@ -35,14 +35,8 @@ class RolePermissionMiddleware
             return response()->json(['message' => 'User does not have a role'], 401);
         }
 
-        if (!in_array($user->roles, $superRoles)) {
-           
-            $permissions = explode('|', $permission);
-
-            if (!$user->permissions()->whereIn('name', $permissions)->exists()) {
-                return response()->json(['message' => 'Sorry! You have no permission to perform this action'], 403);
-            }
-        }
+        $permissions = $user->permissions;
+        // dd($permissions);
 
         return $next($request);
 
