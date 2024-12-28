@@ -32,6 +32,7 @@
         "@mui/material": "^6.1.9",
         "chart.js": "^4.4.7",
         "react-quill": "^2.0.0",
+        "react-tag-input-component": "^2.0.2",
         "sonner": "^1.7.1"
     }
 }

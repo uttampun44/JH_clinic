@@ -11,6 +11,7 @@ import InputLabel from "@/Components/InputLabel";
 import DangerButton from "@/Components/DangerButton";
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from "react-quill";
+import { TagsInput } from "react-tag-input-component";
 
 interface postCategory {
     id: number,
@@ -86,7 +87,10 @@ export default function Create({ post_category }: { post_category: postCategory[
 
                             <div className="tags">
                                 <InputLabel htmlFor="tags" value="Tags" className="text-xl text-gray-500 font-medium" />
-                                <Input type="text" className="rounded-md my-1 w-full" value={data.tags} onChange={(e) => setData("tags", e.target.value)} />
+                                <TagsInput value={data.tags} className="rounded-md my-1 w-full" onChange={(tags) => setData("tags", tags)} 
+                                    
+                                    />
+                               
                                 {
                                     errors.tags && (
                                         <p className="text-red-600">{errors.tags}</p>

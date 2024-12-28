@@ -18,9 +18,8 @@ import {  Edit } from "@mui/icons-material";
 import Paginate from "@/Components/Paginate";
 
 
-export default function Index({ appointments, status}) {
+export default function Index({ appointments, status} ) {
 
-console.log(appointments)
     const props = usePage().props
 
     const patients = appointments.patients.map((patient) => patient)
@@ -30,7 +29,7 @@ console.log(appointments)
     const [isEditing, setEditing] = useState<boolean>(false)
     const [currentId, setCurrentId] = useState<string>("");
 
-    const [query, setQuery] = useState('');
+    
 
     const { post: post, data, setData, errors, reset, put: put } = useForm({
         patient_id: "",
@@ -40,18 +39,9 @@ console.log(appointments)
         status: "",
     })
 
-    const filteredPatients =
-        query === ''
-            ? patients
-            : patients.filter((patient) => {
-                return (patient.full_name ?? '').toLowerCase().includes(query.toLowerCase());
-            })
+    const filteredPatients =  patients.filter((patient) =>  patient.first_name)
 
-
-    const filteredDoctors = query === '' ? doctors : doctors.filter((doctor) => {
-        return (doctor.full_name ?? '').toLowerCase().includes(query.toLocaleLowerCase())
-    })
-
+    const filteredDoctors = doctors.filter((doctor) => doctor.first_name)
 
 
     const [modal, setModal] = useState<boolean>(false);
@@ -118,7 +108,7 @@ console.log(appointments)
                                                 getOptionLabel={(option) => option.first_name || ''}
                                                 className="w-full rounded-md z-50"
 
-                                                value={data.patient_id ? patients.find(patient => patient.id === data.patient_id) : null}
+                                                value={patients.find(patient => patient.id === data.patient_id) || null}
                                                 onChange={(event, newValue) => {
 
                                                     setData("patient_id", newValue ? newValue.id : "");
@@ -142,7 +132,7 @@ console.log(appointments)
 
                                                 getOptionLabel={(option) => option.first_name || ''}
                                                 className="w-full rounded-md"
-                                                value={data.doctor_id ? patients.find(doctor => doctor.id === data.doctor_id) : null}
+                                                value={doctors.find(doctor => doctor.id === data.doctor_id) || null}
                                                 onChange={(event, newValue) => {
 
                                                     setData("doctor_id", newValue ? newValue.id : "");

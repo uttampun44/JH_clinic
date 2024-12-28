@@ -10,7 +10,7 @@ export default function PrimaryButton({
         <button
             {...props}
             className={
-                `inline-flex items-center rounded-md border border-transparent bg-gray-800 text-xs font-semibold uppercase tracking-widest text-white ${
+                `inline-flex items-center p-1 rounded-md border border-transparent bg-gray-800 text-xs font-semibold uppercase tracking-widest text-white ${
                     disabled && 'opacity-25'
                 } ` + className
             }

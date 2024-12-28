@@ -19,6 +19,8 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import CategoryIcon from '@mui/icons-material/Category';
 import PagesIcon from '@mui/icons-material/Pages';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
 
 
 export default function Siderbar() {
@@ -84,7 +86,10 @@ export default function Siderbar() {
                                 <li className="flex items-center gap-x-2 text-gray-500 cursor-pointer" onClick={handleSettings}><SettingsIcon />Settings</li>
                                 {
                                     settings && (
-                                        <li className="flex items-center gap-x-2 text-gray-500"><SupervisorAccountIcon /><Link href={route('roles.index')} className="text-base font-medium">Roles</Link></li>
+                                      <ul>
+                                          <li className="flex items-center gap-x-2 text-gray-500"><SupervisorAccountIcon /><Link href={route('roles.index')} className="text-base font-medium">Roles</Link></li>
+                                          <li className="flex items-center gap-x-2 text-gray-500"><AccountBoxIcon /><Link href={route('profile.edit')} className="text-base font-medium">Profile</Link></li>
+                                      </ul>
                                     )
                                 }
                             </ul>
